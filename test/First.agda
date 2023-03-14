@@ -1,4 +1,5 @@
-postulate A : Set
+-- postulate A : Set
+variable A : Set
 
 id : A → A
 id x = x
@@ -10,77 +11,94 @@ not : Bool → Bool
 not true  = false
 not false = true
 
-ite : {A : Set} → Bool → A → A → A
-ite true x y = x
-ite false x y = y
+-- ite : {A : Set} → Bool → A → A → A
+-- ite true x y = id x
+-- ite false x y = id y
 
-{-# NON_TERMINATING #-}
-loop : Bool
-loop = loop
+ite2 : {A : Set} → Bool → A → A → A
+ite2 true = λ x y → x
+ite2 false = λ x y → y
 
-test1 = ite false loop true
+-- module _ {A : Set} where
+--   ite3 : Bool → A → A → A
+--   ite3 true  = λ x y → x
+--   ite3 false = λ x y → y
 
-data Nat : Set where
-  zero : Nat
-  suc  : Nat → Nat
+-- module _ {A : Set} (b : Bool) where
+--   ite4 : A → A → A
+--   ite4 x y = go b
+--     where
+--       go : Bool → A
+--       go true = x
+--       go false = y
 
-one = suc zero
-two = suc one
-three = suc two
+-- {-# NON_TERMINATING #-}
+-- loop : Bool
+-- loop = loop
 
-pred : Nat → Nat
-pred zero = zero
-pred (suc n) = n
+-- test1 = ite false loop true
 
+-- data Nat : Set where
+--   zero : Nat
+--   suc  : Nat → Nat
 
-_+_ : Nat → Nat → Nat
-zero + n = n
-(suc m) + n = suc (m + n)
+-- one = suc zero
+-- two = suc one
+-- three = suc two
 
-twice : Nat → Nat
-twice zero = zero
-twice (suc n) = suc (suc (twice n))
-
-pow2 : Nat → Nat
-pow2 zero = suc zero
-pow2 (suc n) = twice (pow2 n)
-
-consume : Nat → Nat
-consume zero = zero
-consume (suc n) = consume n
-
-test2 = consume (pow2 (twice (twice (twice three))))
+-- pred : Nat → Nat
+-- pred zero = zero
+-- pred (suc n) = n
 
 
-data Vec (@0 A : Set) : @0 Nat → Set where
-  nil : Vec A zero
-  con : {@0 n : Nat} → A → Vec A n → Vec A (suc n)
+-- _+_ : Nat → Nat → Nat
+-- zero + n = n
+-- (suc m) + n = suc (m + n)
 
-head : {@0 A : Set} {@0 n : Nat} → Vec A (suc n) → A
-head (con x xs) = x
+-- twice : Nat → Nat
+-- twice zero = zero
+-- twice (suc n) = suc (suc (twice n))
 
-tail : {@0 A : Set} {@0 n : Nat} → Vec A (suc n) → Vec A n
-tail (con x xs) = xs
+-- pow2 : Nat → Nat
+-- pow2 zero = suc zero
+-- pow2 (suc n) = twice (pow2 n)
 
-map : {@0 A B : Set} {@0 n : Nat} → (A → B) → Vec A n → Vec B n
-map f nil = nil
-map f (con x xs) = con (f x) (map f xs)
+-- consume : Nat → Nat
+-- consume zero = zero
+-- consume (suc n) = consume n
 
-test3 = head (tail (map suc (con zero (con (suc zero) (con (suc (suc zero)) nil)))))
+-- test2 = consume (pow2 (twice (twice (twice three))))
 
--- Testing that names are properly sanitized
-123'#|H\x65llo = zero
 
-test4 = 123'#|H\x65llo
+-- data Vec (@0 A : Set) : @0 Nat → Set where
+--   nil : Vec A zero
+--   con : {@0 n : Nat} → A → Vec A n → Vec A (suc n)
 
-module M (n : Nat) where
-  fie : Nat
-  fie = suc n
+-- head : {@0 A : Set} {@0 n : Nat} → Vec A (suc n) → A
+-- head (con x xs) = x
 
-  foe : Nat
-  foe = suc fie
+-- tail : {@0 A : Set} {@0 n : Nat} → Vec A (suc n) → Vec A n
+-- tail (con x xs) = xs
 
-open M (suc (suc zero))
+-- map : {@0 A B : Set} {@0 n : Nat} → (A → B) → Vec A n → Vec B n
+-- map f nil = nil
+-- map f (con x xs) = con (f x) (map f xs)
 
-fun : Nat
-fun = fie + foe
+-- test3 = head (tail (map suc (con zero (con (suc zero) (con (suc (suc zero)) nil)))))
+
+-- -- Testing that names are properly sanitized
+-- 123'#|H\x65llo = zero
+
+-- test4 = 123'#|H\x65llo
+
+-- module M (n : Nat) where
+--   fie : Nat
+--   fie = suc n
+
+--   foe : Nat
+--   foe = suc fie
+
+-- open M (suc (suc zero))
+
+-- fun : Nat
+-- fun = fie + foe
