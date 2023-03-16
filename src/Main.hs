@@ -9,6 +9,9 @@ import Agda.Syntax.Scope.Monad
 
 import ToTrain
 
+-- github :: IO ()
+-- github =
+
 main :: IO ()
 main = runAgda [mkBackend "agda2train" train]
 

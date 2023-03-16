@@ -1,3 +1,39 @@
+{-# OPTIONS --cubical-compatible #-}
+open import Level
+open import Agda.Builtin.Bool
+open import Data.Empty using (⊥)
+open import Data.Empty.Irrelevant using (⊥-elim)
+
+private variable ℓ : Level
+
+¬_ : Set ℓ → Set ℓ
+¬ P = P → ⊥
+
+data Reflects (P : Set ℓ) : Bool → Set ℓ where
+  ofʸ : ( p :   P) → Reflects P true
+  ofⁿ : (¬p : ¬ P) → Reflects P false
+
+record Dec (P : Set ℓ) : Set ℓ where
+  constructor _because_
+  field does  : Bool
+        proof : Reflects P does
+open Dec public
+
+-- pattern yes p =  true because ofʸ  p
+-- pattern no ¬p = false because ofⁿ ¬p
+
+-- data Dec {a} (A : Set a) : Set a where
+--   yes : A  → Dec A
+--   no  : ¬ A → Dec A
+
+recompute : ∀ {a} {A : Set a} → Dec A → A → A
+recompute (true because ofʸ x) _ = x
+recompute _ x = x
+-- recompute (false because ofⁿ ¬p) x = ⊥-elim (¬p x)
+-- recompute (yes x) _ = x
+-- recompute (no ¬p) x = ⊥-elim (¬p x)
+
+{-
 -- postulate A : Set
 variable A : Set
 
@@ -11,94 +47,95 @@ not : Bool → Bool
 not true  = false
 not false = true
 
--- ite : {A : Set} → Bool → A → A → A
--- ite true x y = id x
--- ite false x y = id y
+ite : {A : Set} → Bool → A → A → A
+ite true x y = id x
+ite false x y = id y
 
 ite2 : {A : Set} → Bool → A → A → A
 ite2 true = λ x y → x
 ite2 false = λ x y → y
 
--- module _ {A : Set} where
---   ite3 : Bool → A → A → A
---   ite3 true  = λ x y → x
---   ite3 false = λ x y → y
+module _ {A : Set} where
+  ite3 : Bool → A → A → A
+  ite3 true  = λ x y → x
+  ite3 false = λ x y → y
 
--- module _ {A : Set} (b : Bool) where
---   ite4 : A → A → A
---   ite4 x y = go b
---     where
---       go : Bool → A
---       go true = x
---       go false = y
+module _ {A : Set} (b : Bool) where
+  ite4 : A → A → A
+  ite4 x y = go b
+    where
+      go : Bool → A
+      go true = x
+      go false = y
 
--- {-# NON_TERMINATING #-}
--- loop : Bool
--- loop = loop
+{-# NON_TERMINATING #-}
+loop : Bool
+loop = loop
 
--- test1 = ite false loop true
+test1 = ite false loop true
 
--- data Nat : Set where
---   zero : Nat
---   suc  : Nat → Nat
+data Nat : Set where
+  zero : Nat
+  suc  : Nat → Nat
 
--- one = suc zero
--- two = suc one
--- three = suc two
+one = suc zero
+two = suc one
+three = suc two
 
--- pred : Nat → Nat
--- pred zero = zero
--- pred (suc n) = n
-
-
--- _+_ : Nat → Nat → Nat
--- zero + n = n
--- (suc m) + n = suc (m + n)
-
--- twice : Nat → Nat
--- twice zero = zero
--- twice (suc n) = suc (suc (twice n))
-
--- pow2 : Nat → Nat
--- pow2 zero = suc zero
--- pow2 (suc n) = twice (pow2 n)
-
--- consume : Nat → Nat
--- consume zero = zero
--- consume (suc n) = consume n
-
--- test2 = consume (pow2 (twice (twice (twice three))))
+pred : Nat → Nat
+pred zero = zero
+pred (suc n) = n
 
 
--- data Vec (@0 A : Set) : @0 Nat → Set where
---   nil : Vec A zero
---   con : {@0 n : Nat} → A → Vec A n → Vec A (suc n)
+_+_ : Nat → Nat → Nat
+zero + n = n
+(suc m) + n = suc (m + n)
 
--- head : {@0 A : Set} {@0 n : Nat} → Vec A (suc n) → A
--- head (con x xs) = x
+twice : Nat → Nat
+twice zero = zero
+twice (suc n) = suc (suc (twice n))
 
--- tail : {@0 A : Set} {@0 n : Nat} → Vec A (suc n) → Vec A n
--- tail (con x xs) = xs
+pow2 : Nat → Nat
+pow2 zero = suc zero
+pow2 (suc n) = twice (pow2 n)
 
--- map : {@0 A B : Set} {@0 n : Nat} → (A → B) → Vec A n → Vec B n
--- map f nil = nil
--- map f (con x xs) = con (f x) (map f xs)
+consume : Nat → Nat
+consume zero = zero
+consume (suc n) = consume n
 
--- test3 = head (tail (map suc (con zero (con (suc zero) (con (suc (suc zero)) nil)))))
+test2 = consume (pow2 (twice (twice (twice three))))
 
--- -- Testing that names are properly sanitized
--- 123'#|H\x65llo = zero
 
--- test4 = 123'#|H\x65llo
+data Vec (@0 A : Set) : @0 Nat → Set where
+  nil : Vec A zero
+  con : {@0 n : Nat} → A → Vec A n → Vec A (suc n)
 
--- module M (n : Nat) where
---   fie : Nat
---   fie = suc n
+head : {@0 A : Set} {@0 n : Nat} → Vec A (suc n) → A
+head (con x xs) = x
 
---   foe : Nat
---   foe = suc fie
+tail : {@0 A : Set} {@0 n : Nat} → Vec A (suc n) → Vec A n
+tail (con x xs) = xs
 
--- open M (suc (suc zero))
+map : {@0 A B : Set} {@0 n : Nat} → (A → B) → Vec A n → Vec B n
+map f nil = nil
+map f (con x xs) = con (f x) (map f xs)
 
--- fun : Nat
--- fun = fie + foe
+test3 = head (tail (map suc (con zero (con (suc zero) (con (suc (suc zero)) nil)))))
+
+-- Testing that names are properly sanitized
+123'#|H\x65llo = zero
+
+test4 = 123'#|H\x65llo
+
+module M (n : Nat) where
+  fie : Nat
+  fie = suc n
+
+  foe : Nat
+  foe = suc fie
+
+open M (suc (suc zero))
+
+fun : Nat
+fun = fie + foe
+-}
