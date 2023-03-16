@@ -1,0 +1,3 @@
+:def stdlib (\_ -> return ":r\n :set args -i /home/omelkonian/git/agda-stdlib/ /home/omelkonian/git/agda-stdlib/Everything.agda\n main")
+:def prelude (\_ -> return ":r\n :set args -i /home/omelkonian/git/formal-prelude/ /home/omelkonian/git/formal-prelude/Prelude/Main.agda\n main")
+:def test (\x -> return $ ":r\n :set args -v tc.check.internal:50 -v tc.infer.internal:50 -v tc.conv.fun:50 -itest test/" <> x <> ".agda\n main")

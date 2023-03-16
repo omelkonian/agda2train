@@ -5,7 +5,10 @@ import Control.Monad ( mapM_ )
 import Agda.Main ( runAgda )
 import Agda.Compiler.Backend
 
+import Agda.Syntax.Scope.Base
 import Agda.Syntax.Scope.Monad
+import Agda.TypeChecking.Pretty
+-- import Agda.Utils.Pretty
 
 import ToTrain
 
@@ -18,6 +21,7 @@ main = runAgda [mkBackend "agda2train" train]
 mkBackend :: String -> TrainF -> Backend
 mkBackend name train = Backend $ Backend'
   { backendName           = name
+  , backendVersion        = Nothing
   , options               = ()
   , commandLineFlags      = []
   , isEnabled             = \ _ -> True
@@ -25,13 +29,14 @@ mkBackend name train = Backend $ Backend'
   , postCompile           = \ _ _ _ -> return ()
   , preModule             = \ _ _ _ _ -> return $ Recompile ()
   , compileDef            = \ _ _ _ def -> return def
-  , postModule            = \ _ _ _ _ defs -> do
+  , postModule            = \ () () isMain md defs -> do
     sc <- getCurrentScope
-    report "************************ SCOPE ***********************************"
-    printScope "unbound" 1 ""
-    report "******************************************************************"
+    -- md <- getCurrentModule
+    report $ "************************ " <> prettyTCM md <> " (" <> prettyTCM (show isMain) <> ") ***********************************"
+    -- printScope "unbound" 1 ""
+    -- report $ return $ text $ prettyShow $ everythingInScope sc
+    -- report "******************************************************************"
     mapM_ (forEachHole train) defs
-  , backendVersion        = Nothing
   , scopeCheckingSuffices = False
   , mayEraseType          = \ _ -> return True
   }
