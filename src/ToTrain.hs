@@ -28,8 +28,9 @@ import Agda.TypeChecking.ReconstructParameters
 
 import Agda.Interaction.Options ( optProjectionLike )
 
-report = reportSDoc "toTrain" 1
-noop   = return ()
+report     = reportSDoc "toTrain" 1
+debugPrint = reportSDoc "toTrain" 10
+noop       = return ()
 
 -- A training function generates training data for each typed sub-term,
 -- with access to the local context via the typechecking monad.
@@ -37,29 +38,22 @@ type TrainF = Type -> Term -> TCM ()
 
 -- an example training function that just prints the relevant (local) information
 train :: TrainF
-train ty t = do
+train ty t = let ns = names t in unless (null ns) $ do
   ctx <- getContextTelescope
   report "{"
   report $ " ctx: " <> prettyTCM ctx
-  report $ "  db:" <> prettyTCM (prettyShow ctx)
-  report $ " type: " <> prettyTCM ty
-  report $ "  db:" <> prettyTCM (prettyShow ty)
-  report $ " term: " <> prettyTCM t
-  report $ "  db:" <> prettyTCM (prettyShow t)
-  -- report $ " elims: " <> prettyTCM (elims t)
+  debugPrint $ "  db:" <> prettyTCM (prettyShow ctx)
+  report $ " goal: " <> prettyTCM ty
+  debugPrint $ "  db:" <> prettyTCM (prettyShow ty)
+  debugPrint $ " term: " <> prettyTCM t
+  debugPrint $ "  db:" <> prettyTCM (prettyShow t)
+  report $ " names: " <> prettyTCM ns
   report "}"
-  where
-    elims :: Term -> Elims
-    elims = \case
-      Def _ es -> es
-      Var _ es -> es
-      Con _ _ es -> es
-      _ -> []
 
 -- Run the training function on each subterm of a definition.
 forEachHole :: TrainF -> Definition -> TCM ()
 forEachHole k def@Defn{..} = {-unless (null $ getRange defName) $-} do
-  report $ "------ definition: " <> prettyTCM defName <> " -------"
+  debugPrint $ "------ definition: " <> prettyTCM defName <> " -------"
   -- Defn{..} <- instantiateDef def
   sc <- getScope
   unless (ignoreDef def) $ case theDef of
@@ -67,14 +61,9 @@ forEachHole k def@Defn{..} = {-unless (null $ getRange defName) $-} do
       -- withPragmaOptions (\o -> o { optProjectionLike = False }) $
       forM_ funClauses $ \c@(Clause{..}) -> addContext clauseTel $
         case (clauseBody, unArg <$> clauseType) of
-          (Just t, Just ty) -> do
-            -- train ty t
-            -- t <- reconstruct ty t
-            -- ctx <- getContextTelescope
-            -- report $ "ctx: " <> prettyTCM ctx
-            go ty t
-          _ -> report "no clause body" >> noop
-    _ -> report "not a function" >> noop
+          (Just t, Just ty) -> go ty t
+          _ -> debugPrint "no clause body" >> noop
+    _ -> debugPrint "not a function" >> noop
   where
     ignoreDef :: Definition -> Bool
     ignoreDef Defn{..}
@@ -105,37 +94,14 @@ forEachHole k def@Defn{..} = {-unless (null $ getRange defName) $-} do
     go :: Type -> Term -> TCM ()
     go ty t = whenM (not <$> ignore ty)
             $ void
-            -- $ checkInternal' act t CmpLeq ty
-            $ reconstructParameters' act ty t
+            $ checkInternal' act t CmpLeq ty
+            -- $ reconstructParameters' act ty t
 
     act :: Action TCM
-    act = defaultAction {preAction = pre, postAction = post}
+    act = defaultAction {preAction = pre}
 
-    pre, post :: Type -> Term -> TCM Term
-    pre  ty t =
-      -- unlessM (ignore ty) $
-        train ty t >> return t
-    post ty t =
-      -- unlessM (ignore ty) $
-        -- reconstruct ty t
-        reduceProjectionLike t
-          -- return t
-      -- train ty t >> return t
-
-    {-elim :: Term -> TCM Term
-    elim t = do
-      report "****** elimView ******"
-      report $ " t: " <> prettyTCM (prettyShow t)
-      report $ " elims: " <> prettyTCM (elims t)
-      t' <-
-        -- return t
-        elimView EvenLone t
-        -- elimView ButLone t
-        -- elimView NoPostfix t
-      report $ " t': " <> prettyTCM (prettyShow t')
-      report $ " elims: " <> prettyTCM (elims t')
-      report "**********************"
-      return t'-}
+    pre :: Type -> Term -> TCM Term
+    pre ty t = train ty t >> return t
 
 -- ** Gathering names from terms
 names' :: TermLike a => a -> S.Set QName
