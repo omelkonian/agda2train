@@ -41,9 +41,12 @@ train ty t = do
   ctx <- getContextTelescope
   report "{"
   report $ " ctx: " <> prettyTCM ctx
+  report $ "  db:" <> prettyTCM (prettyShow ctx)
   report $ " type: " <> prettyTCM ty
+  report $ "  db:" <> prettyTCM (prettyShow ty)
   report $ " term: " <> prettyTCM t
-  report $ " elims: " <> prettyTCM (elims t)
+  report $ "  db:" <> prettyTCM (prettyShow t)
+  -- report $ " elims: " <> prettyTCM (elims t)
   report "}"
   where
     elims :: Term -> Elims
@@ -58,7 +61,6 @@ forEachHole :: TrainF -> Definition -> TCM ()
 forEachHole k def@Defn{..} = {-unless (null $ getRange defName) $-} do
   report $ "------ definition: " <> prettyTCM defName <> " -------"
   -- Defn{..} <- instantiateDef def
-  -- Defn{..} <- return def
   sc <- getScope
   unless (ignoreDef def) $ case theDef of
     (Function{..}) ->
@@ -77,7 +79,7 @@ forEachHole k def@Defn{..} = {-unless (null $ getRange defName) $-} do
     ignoreDef :: Definition -> Bool
     ignoreDef Defn{..}
        = False
-      || defCopy
+      -- || defCopy
       -- || defNoCompilation
       -- || null (inverseScopeLookupName defName sc)
       -- || isAnonymousModuleName (qnameModule defName)

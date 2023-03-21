@@ -1,15 +1,18 @@
 module Main where
 
 import System.Environment ( getArgs, withArgs )
-import Control.Monad ( mapM_ )
+import Control.Monad
+import qualified Data.Map as M
 
 import Agda.Main ( runAgda )
 import Agda.Compiler.Backend
 
 import Agda.Syntax.Scope.Base
 import Agda.Syntax.Scope.Monad
+import Agda.Syntax.Internal
 import Agda.TypeChecking.Pretty
--- import Agda.Utils.Pretty
+import Agda.TypeChecking.Monad.Signature
+import Agda.Utils.Pretty
 
 import ToTrain
 
@@ -34,14 +37,24 @@ mkBackend name train = Backend $ Backend'
   , preModule             = \ _ _ _ _ -> return $ Recompile ()
   , compileDef            = \ _ _ _ def -> return def
   , postModule            = \ () () isMain md defs -> do
-    sc <- getCurrentScope
-    -- md <- getCurrentModule
-    report $ "************************ " <> prettyTCM md <> " (" <> prettyTCM (show isMain) <> ") ***********************************"
-    -- printScope "unbound" 1 ""
-    -- report $ return $ text $ prettyShow $ everythingInScope sc
-    -- report "******************************************************************"
+    report $ "************************ " <> prettyTCM md <> " ("
+          <> prettyTCM (show isMain) <> ") ***********************************"
+    reportScope =<< getCurrentScope
+    report "******************************************************************"
     mapM_ (forEachHole train) defs
   , scopeCheckingSuffices = False
   , mayEraseType          = \ _ -> return True
   }
 
+reportScope :: Scope -> TCM ()
+reportScope = reportNamespace . allThingsInScope
+
+reportModule :: AbstractModule -> TCM ()
+reportModule m = reportScope =<< getNamedScope (amodName m)
+
+reportNamespace :: NameSpace -> TCM ()
+reportNamespace (NameSpace names mods _) = do
+  forM_ (M.toList names) $ \(cn, n) -> do
+    ty <- typeOfConst (anameName (head n))
+    report $ prettyTCM cn <> " : " <> prettyTCM ty
+  mapM_ (mapM_ reportModule) (M.elems mods)
