@@ -7,11 +7,9 @@ record X : Set where
 
 record Y (a : A) : Set where
   field x : X
-  open X x public
+  module XX = X x
 
 record Z : Set where
   field y : Y a0
-  open Y y public
-
-  _ : A
-  _ = a
+  module M = Y y
+  -- open M public

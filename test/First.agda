@@ -1,5 +1,5 @@
-{-
--- postulate A : Set
+module First where
+
 variable A : Set
 
 id : A → A
@@ -103,4 +103,3 @@ open M (suc (suc zero))
 
 fun : Nat
 fun = fie + foe
--}

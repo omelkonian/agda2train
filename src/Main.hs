@@ -1,5 +1,6 @@
 module Main where
 
+import System.Environment ( getArgs, withArgs )
 import Control.Monad ( mapM_ )
 
 import Agda.Main ( runAgda )
@@ -12,11 +13,14 @@ import Agda.TypeChecking.Pretty
 
 import ToTrain
 
--- github :: IO ()
--- github =
 
 main :: IO ()
-main = runAgda [mkBackend "agda2train" train]
+main = do
+  as <- getArgs
+  let extraFlags = []
+  -- let extraFlags = ["--no-projection-like"]
+  withArgs (extraFlags ++ as) $
+    runAgda [mkBackend "agda2train" train]
 
 mkBackend :: String -> TrainF -> Backend
 mkBackend name train = Backend $ Backend'
