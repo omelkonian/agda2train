@@ -1,5 +1,7 @@
 module OpenModule where
 
+open import Importee
+
 module M (A : Set) where
   postulate P : A → Set
 
@@ -7,4 +9,4 @@ module M (A : Set) where
   f _ p = p
 
 postulate A : Set
-open M A
+open M A public

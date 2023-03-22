@@ -9,3 +9,4 @@ MAlonzo
 *.agda#
 *~
 .#*.agda
+*.json

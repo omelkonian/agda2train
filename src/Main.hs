@@ -20,13 +20,13 @@ import Agda.TypeChecking.Pretty
 import Agda.TypeChecking.Monad.Signature
 
 import ToTrain
-
+import Output ( testJSON )
 
 main :: IO ()
 main = do
   as <- getArgs
-  let extraFlags = []
-  -- let extraFlags = ["--no-projection-like"]
+  -- let extraFlags = []
+  let extraFlags = ["--no-projection-like"]
   withArgs (extraFlags ++ as) $
     runAgda [mkBackend "agda2train" train]
 
@@ -45,6 +45,8 @@ mkBackend name train = Backend $ Backend'
     report $ "************************ " <> prettyTCM md <> " ("
           <> prettyTCM (show isMain) <> ") ***********************************"
     -- printScope "" 1 ""
+    -- sc <- getCurrentScope
+    -- report $ prettyTCM (prettyShow $ scopeNameSpaces sc)
     reportScope =<< getCurrentScope
     report "******************************************************************"
     mapM_ (forEachHole train) defs
@@ -59,11 +61,18 @@ reportModule :: AbstractModule -> TCM ()
 reportModule = reportModuleName . amodName
 
 reportScope :: Scope -> TCM ()
-reportScope = reportNamespace . allThingsInScope
+reportScope scope = do
+  sc <- getScope
+  debugPrint $ "locals: " <> prettyTCM (prettyShow $ sc ^. scopeLocals)
+  reportNamespace $ allThingsInScope scope
 
 reportNamespace :: NameSpace -> TCM ()
-reportNamespace (NameSpace names mods _) = do
+reportNamespace (NameSpace names mods ns) = do
+  debugPrint $ "ns: " <> prettyTCM (prettyShow ns)
   forM_ (M.toList names) $ \(cn, n) -> do
-    ty <- typeOfConst (anameName (head n))
-    report $ prettyTCM (prettyShow cn) <> " : " <> prettyTCM ty
+    let hn = head n
+    ty <- typeOfConst (anameName hn)
+    -- TODO: clean up qualifiers of the form: CurrentModule.(_.)*
+    report $ prettyTCM (prettyShow hn) <> " : " <> prettyTCM (prettyShow ty)
+    report $ "  pp: " <> prettyTCM ty
   mapM_ (mapM_ reportModule) (M.elems mods)

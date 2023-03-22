@@ -11,8 +11,8 @@ import Agda.Syntax.Abstract.Name ( QName(..) )
 import Agda.Syntax.Internal
 import Agda.Syntax.Internal.Generic
 import Agda.Syntax.Position ( getRange )
-import Agda.Syntax.Scope.Base ( inverseScopeLookupName )
-
+import Agda.Syntax.Scope.Base ( nsInScope, allThingsInScope, inverseScopeLookupName )
+import Agda.Syntax.Scope.Monad ( getCurrentScope )
 import Agda.Utils.Pretty ( prettyShow )
 import Agda.Utils.Monad ( whenM, unlessM )
 
@@ -38,17 +38,21 @@ type TrainF = Type -> Term -> TCM ()
 
 -- an example training function that just prints the relevant (local) information
 train :: TrainF
-train ty t = let ns = names t in unless (null ns) $ do
+train ty t = do
   ctx <- getContextTelescope
-  report "{"
-  report $ " ctx: " <> prettyTCM ctx
-  debugPrint $ "  db:" <> prettyTCM (prettyShow ctx)
-  report $ " goal: " <> prettyTCM ty
-  debugPrint $ "  db:" <> prettyTCM (prettyShow ty)
-  debugPrint $ " term: " <> prettyTCM t
-  debugPrint $ "  db:" <> prettyTCM (prettyShow t)
-  report $ " names: " <> prettyTCM ns
-  report "}"
+  let ns = names' t
+  unless (null ns) $
+    whenM (S.isSubsetOf ns . nsInScope . allThingsInScope <$> getCurrentScope) $ do
+      report "{"
+      report $ " ctx: " <> prettyTCM (prettyShow ctx)
+      debugPrint $ "   pp:" <> prettyTCM ctx
+      report $ " goal: " <> prettyTCM (prettyShow ty)
+      debugPrint $ "   pp:" <> prettyTCM ty
+      report $ " term: " <> prettyTCM (prettyShow t)
+      debugPrint $ "   names: " <> prettyTCM (prettyShow ns)
+      debugPrint $ "   pp: " <> prettyTCM t
+      report "}"
+
 
 -- Run the training function on each subterm of a definition.
 forEachHole :: TrainF -> Definition -> TCM ()
@@ -112,6 +116,3 @@ names' = foldTerm $ \case
 
 names :: TermLike a => a -> [QName]
 names = S.toList . names'
-
-
-
