@@ -3,7 +3,7 @@
 default: repl
 
 repl :
-	cabal repl # e.g. `:set args -itest test/First.agda ... main ... :r ... main`
+	cabal repl # e.g. `:set args -o json -itest test/First.agda ... main ... :r ... main`
 
 build :
 	cabal build

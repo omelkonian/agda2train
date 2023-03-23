@@ -1,6 +1,6 @@
 :def! . readFile
-:def! stdlib (\_ -> return ":r\n :set args -i /home/omelkonian/git/agda-stdlib/ /home/omelkonian/git/agda-stdlib/Everything.agda\n main")
-:def! prelude (\_ -> return ":r\n :set args -i /home/omelkonian/git/formal-prelude/ /home/omelkonian/git/formal-prelude/Prelude/Main.agda\n main")
--- :def! test (\x -> return $ ":r\n :set args -v tc.check.internal:60 -v tc.infer.internal:50 -v tc.conv.fun:50 -v tc.conv.elim:100 -itest test/" <> x <> ".agda\n main")
-:def! test (\x -> return $ ":r\n :set args -r -v toTrain:10 -itest test/" <> x <> ".agda\n main")
--- :def! test (\x -> return $ ":r\n :set args -itest test/" <> x <> ".agda\n main")
+:def! reset (\_ -> return ":. .ghci\n")
+:def! stdlib (\_ -> return ":r\n :set args -ojson/ -i /home/omelkonian/git/agda-stdlib/ /home/omelkonian/git/agda-stdlib/Everything.agda\n main")
+:def! prelude (\_ -> return ":r\n :set args -ojson/ -i /home/omelkonian/git/formal-prelude/ /home/omelkonian/git/formal-prelude/Prelude/Main.agda\n main")
+:def! test (\x -> return $ ":r\n :set args -r -v toTrain:20 -ojson/ -itest test/" <> x <> ".agda\n main")
+:def! testStdlib (\x -> return $ ":r\n :set args -r -v toTrain:10 -ojson/ -i /home/omelkonian/git/agda-stdlib/ /home/omelkonian/git/agda-stdlib/src/" <> x <> ".agda\n main")

@@ -51,6 +51,8 @@ train ty t = do
   let ns = names t
   sc <- liftTCM getCurrentScope
   unless (null ns) $
+    -- TODO: we drop samples that use private definitions for now, but it would
+    -- be more informative to peek into a module's private parts...
     when (S.fromList ns `S.isSubsetOf` nsInScope (allThingsInScope sc)) $ do
       ctx <- getContextTelescope
       pctx <- liftTCM $ ppm ctx

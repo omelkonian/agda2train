@@ -1,3 +1,5 @@
+module Importee where
+
 postulate
   ℕ : Set
   𝟘 𝟙 𝟚 𝟛 : ℕ
@@ -7,6 +9,7 @@ postulate
   +-assoc : ∀ {x y z} → (x + (y + z)) ≡ ((x + y) + z)
   example : (𝟙 + 𝟙) ≡ 𝟚
 
+-- TODO: figure out a way to utilize these as well
 private postulate
   nastyℕ : ℕ
   nastyLem : (𝟙 + 𝟙) ≡ 𝟛

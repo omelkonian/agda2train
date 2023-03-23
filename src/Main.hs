@@ -3,8 +3,8 @@ module Main where
 import GHC.Generics
 
 import System.Environment ( getArgs, withArgs )
-import System.Directory ( setCurrentDirectory, createDirectoryIfMissing )
-import System.FilePath ( dropFileName )
+import System.Directory ( createDirectoryIfMissing )
+import System.FilePath ( dropFileName, (</>) )
 import System.Console.GetOpt ( OptDescr(..), ArgDescr(..) )
 
 import qualified Data.Map as M
@@ -51,7 +51,10 @@ mkBackend name train = Backend'
   , backendVersion        = Nothing
   , options               = defaultOptions
   , commandLineFlags      =
-      [ Option ['r'] [] (NoArg recOpt) "Recurse into imports/dependencies."
+      [ Option ['r'] ["recurse"] (NoArg recOpt)
+        "Recurse into imports/dependencies."
+      , Option ['o'] ["out-dir"] (ReqArg outDirOpt "DIR")
+        "Generate data at DIR. (default: project root)"
       ]
   , isEnabled             = \ _ -> True
   , preCompile            = return
@@ -63,16 +66,22 @@ mkBackend name train = Backend'
                     <> ") ***********************************"
         -- printScope "" 1 ""
         setScope . iInsideScope =<< curIF
+        -- sc <- getScope
+        -- sc <- getCurrentScope
+        -- reportTCM 10 $ "scopeNS: " <> ppm (show $ scopeNameSpaces sc)
+        -- reportTCM 10 $ "varsToBind: " <> ppm (pp $ sc ^. scopeVarsToBind)
+        -- reportTCM 10 $ "locals: " <> ppm (pp $ sc ^. scopeLocals)
         NameSpace names mods ns <- allThingsInScope <$> getCurrentScope
         scopeEntries <- mapMaybeM processScopeEntry (S.toList ns)
         reportTCM 10 "******************************************************************"
-        whenJust mfp (liftIO . setCurrentDirectory . dropFileName)
         return $ Recompile scopeEntries
   , compileDef            = \ _ _ _ def -> runC $ forEachHole train def
   , postModule            = \ opts scopeEntries isMain md samples ->
     unless (skip opts isMain) $ do
       mn <- render <$> ppm md
-      liftIO $ JSON.encodeFile (mn <> ".json") $ TrainData
+      -- TODO: skip if .json already generated (ideally use hashes)
+      whenJust (outDir opts) (liftIO . createDirectoryIfMissing True)
+      liftIO $ JSON.encodeFile (getOutDir opts </> mn <> ".json") $ TrainData
         { scope   = mn :~ scopeEntries
         , samples = concat samples
         }
@@ -92,9 +101,20 @@ mkBackend name train = Backend'
         reportTCM 30 $ "  pp: " <> ppm ty
         return $ Just (pp qn :~ render pty :> convert ty)
 
-data Options = Options {recurse :: Bool} deriving (Generic, NFData)
+data Options = Options
+  { recurse :: Bool
+  , outDir  :: Maybe FilePath
+  } deriving (Generic, NFData)
 
-defaultOptions = Options { recurse = False }
+getOutDir :: Options -> FilePath
+getOutDir opts = case outDir opts of
+  Just fp -> fp
+  Nothing -> "."
+
+defaultOptions = Options { recurse = False, outDir = Nothing }
 
 recOpt :: Monad m => Options -> m Options
 recOpt opts = return $ opts { recurse = True }
+
+outDirOpt :: Monad m => FilePath -> Options -> m Options
+outDirOpt fp opts = return $ opts { outDir = Just fp }
