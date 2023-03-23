@@ -66,11 +66,6 @@ mkBackend name train = Backend'
                     <> ") ***********************************"
         -- printScope "" 1 ""
         setScope . iInsideScope =<< curIF
-        -- sc <- getScope
-        -- sc <- getCurrentScope
-        -- reportTCM 10 $ "scopeNS: " <> ppm (show $ scopeNameSpaces sc)
-        -- reportTCM 10 $ "varsToBind: " <> ppm (pp $ sc ^. scopeVarsToBind)
-        -- reportTCM 10 $ "locals: " <> ppm (pp $ sc ^. scopeLocals)
         NameSpace names mods ns <- allThingsInScope <$> getCurrentScope
         scopeEntries <- mapMaybeM processScopeEntry (S.toList ns)
         reportTCM 10 "******************************************************************"

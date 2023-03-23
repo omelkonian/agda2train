@@ -39,3 +39,6 @@ executable agda2train
                        , TupleSections
                        , DeriveGeneric
                        , DeriveAnyClass
+                       , DerivingVia
+                       , PatternSynonyms
+                       , TypeFamilies

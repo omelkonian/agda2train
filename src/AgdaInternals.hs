@@ -1,5 +1,5 @@
 {-# LANGUAGE FlexibleInstances, MultiParamTypeClasses #-}
-module AgdaInternals where
+module AgdaInternals () where
 
 import Data.String
 

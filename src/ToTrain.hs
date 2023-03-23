@@ -1,6 +1,13 @@
-module ToTrain where
+module ToTrain
+  ( TrainF
+  , train
+  , forEachHole
+  , runC
+  , reportTCM
+  , ppm
+  ) where
 
-import Data.List ( nub, isPrefixOf, isInfixOf )
+import Data.List ( isPrefixOf, isInfixOf )
 import qualified Data.Set as S
 
 import Control.Monad ( forM_, void, when, unless )
@@ -18,8 +25,7 @@ import Agda.Syntax.Scope.Monad ( getCurrentScope )
 import Agda.Utils.Monad ( whenM, tell1 )
 import Agda.TypeChecking.Monad
 import Agda.TypeChecking.Pretty
-import Agda.TypeChecking.CheckInternal
-  ( Action(..), defaultAction, checkInternal' )
+import Agda.TypeChecking.CheckInternal ( Action(..), defaultAction, checkInternal' )
 
 import AgdaInternals
 import Output
@@ -49,15 +55,17 @@ train :: TrainF
 train ty t = do
   ctx <- liftTCM getContextTelescope
   let ns = names t
-  sc <- liftTCM getCurrentScope
+  allNs <- nsInScope . allThingsInScope <$> liftTCM getCurrentScope
   unless (null ns) $
     -- TODO: we drop samples that use private definitions for now, but it would
     -- be more informative to peek into a module's private parts...
-    when (S.fromList ns `S.isSubsetOf` nsInScope (allThingsInScope sc)) $ do
+    when (S.fromList ns `S.isSubsetOf` allNs) $ do
       ctx <- getContextTelescope
       pctx <- liftTCM $ ppm ctx
       pty  <- liftTCM $ ppm ty
       pt   <- liftTCM $ ppm t
+      -- TODO: figure out a way to run Agsy.Auto here and provide training data
+      -- on successful invocations only
       tell1 $ Sample
         { ctx  = render pctx :> convert ctx
         , goal = render pty  :> convert ty
@@ -90,7 +98,8 @@ forEachHole k def@Defn{..} = do
   where
     ignoreDef :: Definition -> Bool
     ignoreDef Defn{..}
-       = False
+        = False
+       || tooSlow (pp defName)
       -- || defCopy
       -- || defNoCompilation
       -- || null (inverseScopeLookupName defName sc)
@@ -111,13 +120,13 @@ forEachHole k def@Defn{..} = do
     ignoreType    = any cubicalRelated . map pp . names
     ignoreCtxType = any cubicalRelated . map pp . names
 
-    cubicalRelated :: String -> Bool
+    cubicalRelated, tooSlow :: String -> Bool
     cubicalRelated = ("Agda.Primitive.Cubical.I" `isInfixOf`)
+    tooSlow        = ("Data.Rational.Properties" `isPrefixOf`)
 
     go :: Type -> Term -> C ()
     go ty t = whenM (not <$> ignore ty)
-            $ void (checkInternal' act t CmpLeq ty)
-              `catchError` \ _ -> noop
+            $ silently (checkInternal' act t CmpLeq ty)
 
     act :: Action C
     act = defaultAction {preAction = pre}

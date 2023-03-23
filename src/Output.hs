@@ -1,13 +1,11 @@
-{-# LANGUAGE DeriveGeneric, TypeFamilies, FlexibleInstances, DerivingVia #-}
-{-# LANGUAGE PatternSynonyms #-}
+{-# LANGUAGE FlexibleInstances #-}
 module Output
   ( Sample(..)
   , TrainData(..)
   , ScopeEntry
   , convert
-  , pp
-  , testJSON
   , pattern (:~), pattern (:>)
+  , pp
   )
   where
 
