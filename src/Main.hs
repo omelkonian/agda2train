@@ -3,7 +3,7 @@ module Main where
 import GHC.Generics
 
 import System.Environment ( getArgs, withArgs )
-import System.Directory ( createDirectoryIfMissing )
+import System.Directory ( createDirectoryIfMissing, doesFileExist )
 import System.FilePath ( dropFileName, (</>) )
 import System.Console.GetOpt ( OptDescr(..), ArgDescr(..) )
 
@@ -60,7 +60,7 @@ mkBackend name train = Backend'
   , preCompile            = return
   , postCompile           = \ _ _ _ -> return ()
   , preModule             = \ opts isMain md mfp ->
-      if skip opts isMain then return $ Skip () else do
+      ifM (skip opts isMain md) (return $ Skip ()) $ do
         reportTCM 10 $ "************************ "
                     <> ppm md <> " (" <> ppm (show isMain)
                     <> ") ***********************************"
@@ -76,12 +76,10 @@ mkBackend name train = Backend'
         reportTCM 10 "******************************************************************"
         return $ Recompile scopeEntries
   , compileDef            = \ _ _ _ def -> runC $ forEachHole train def
-  , postModule            = \ opts scopeEntries isMain md samples ->
-    unless (skip opts isMain) $ do
-      mn <- render <$> ppm md
-      -- TODO: skip if .json already generated (ideally use hashes)
+  , postModule            = \ opts scopeEntries isMain md samples -> let mn = pp md in
+    unlessM (skip opts isMain md) $ do
       whenJust (outDir opts) (liftIO . createDirectoryIfMissing True)
-      liftIO $ JSON.encodeFile (getOutDir opts </> mn <> ".json") $ TrainData
+      liftIO $ JSON.encodeFile (getOutFn opts mn) $ TrainData
         { scope   = mn :~ scopeEntries
         , samples = concat samples
         }
@@ -89,8 +87,10 @@ mkBackend name train = Backend'
   , mayEraseType          = \ _ -> return True
   }
   where
-    skip :: Options -> IsMain -> Bool
-    skip opts isMain = not (recurse opts) && (isMain == NotMain)
+    skip :: Options -> IsMain -> TopLevelModuleName -> TCM Bool
+    skip opts isMain md = liftIO $
+      ((not (recurse opts) && (isMain == NotMain)) ||) <$>
+        doesFileExist (getOutFn opts $ pp md)
 
     processScopeEntry :: QName -> TCM (Maybe ScopeEntry)
     processScopeEntry qn = do
@@ -110,6 +110,9 @@ getOutDir :: Options -> FilePath
 getOutDir opts = case outDir opts of
   Just fp -> fp
   Nothing -> "."
+
+getOutFn :: Options -> String -> FilePath
+getOutFn opts mn = getOutDir opts </> mn <> ".json"
 
 defaultOptions = Options { recurse = False, outDir = Nothing }
 
