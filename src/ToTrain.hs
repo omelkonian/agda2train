@@ -1,44 +1,28 @@
 module ToTrain where
 
-import Data.Maybe ( fromJust )
 import Data.List ( nub, isPrefixOf, isInfixOf )
 import qualified Data.Set as S
-import qualified Data.ByteString.Lazy as BS
-import Data.String
 
 import Control.Monad ( forM_, void, when, unless )
-import Control.Monad.IO.Class ( liftIO )
-import Control.Monad.Writer -- ( WriterT, runWriterT, tell )
-import Control.Monad.State
+import Control.Monad.Writer ( WriterT(runWriterT) )
+import Control.Monad.Error.Class ( catchError )
 
 import Text.PrettyPrint ( render )
 
-import Agda.Syntax.Common
+import Agda.Syntax.Common ( unArg )
 import Agda.Syntax.Abstract.Name ( QName(..) )
 import Agda.Syntax.Internal
-import Agda.Syntax.Internal.Generic
-import Agda.Syntax.Position ( getRange )
-import Agda.Syntax.Scope.Base ( nsInScope, allThingsInScope, inverseScopeLookupName )
+import Agda.Syntax.Internal.Generic ( TermLike, foldTerm )
+import Agda.Syntax.Scope.Base ( nsInScope, allThingsInScope )
 import Agda.Syntax.Scope.Monad ( getCurrentScope )
-import Agda.Utils.Monad ( whenM, unlessM )
-
-import Agda.TypeChecking.CheckInternal
-
+import Agda.Utils.Monad ( whenM, tell1 )
 import Agda.TypeChecking.Monad
-import Agda.TypeChecking.Warnings ( MonadWarning )
 import Agda.TypeChecking.Pretty
 import Agda.TypeChecking.CheckInternal
-import Agda.TypeChecking.ProjectionLike
-  ( ProjEliminator(..), elimView, reduceProjectionLike )
-import Agda.TypeChecking.ReconstructParameters
-  ( reconstruct, dropParameters, reconstructParameters' )
-
-import Agda.Interaction.Options ( optProjectionLike )
-
-import Output
-import Data.Aeson ( encode )
+  ( Action(..), defaultAction, checkInternal' )
 
 import AgdaInternals
+import Output
 
 ppm :: PrettyTCM a => a -> TCM Doc
 ppm = prettyTCM
@@ -47,11 +31,14 @@ report    = liftTCM . reportTCM
 
 type C = WriterT [Sample] TCM
 
+runC :: C () -> TCM [Sample]
+runC = (snd <$>) . runWriterT
+
 noop :: C ()
 noop = return ()
 
-runC :: C () -> TCM [Sample]
-runC = (snd <$>) . runWriterT
+silently :: C a -> C ()
+silently k = void k `catchError` \ _ -> noop
 
 -- A training function generates training data for each typed sub-term,
 -- with access to the local context via the typechecking monad.
@@ -69,12 +56,12 @@ train ty t = do
       pctx <- liftTCM $ ppm ctx
       pty  <- liftTCM $ ppm ty
       pt   <- liftTCM $ ppm t
-      tell [Sample
+      tell1 $ Sample
         { ctx  = (render pctx, convert ctx)
         , goal = (render pty,  convert ty)
         , term = (render pt,   convert t)
         , namesUsed = map pp ns
-        }]
+        }
       report "{"
       report $ " ctx: " <> ppm (pp ctx)
       report $ "   pp:" <> ppm ctx
@@ -127,8 +114,8 @@ forEachHole k def@Defn{..} = do
 
     go :: Type -> Term -> C ()
     go ty t = whenM (not <$> ignore ty)
-            $ void
-            $ checkInternal' act t CmpLeq ty
+            $ void (checkInternal' act t CmpLeq ty)
+              `catchError` \ _ -> noop
 
     act :: Action C
     act = defaultAction {preAction = pre}

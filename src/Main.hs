@@ -1,13 +1,19 @@
 module Main where
 
+import GHC.Generics
+
 import System.Environment ( getArgs, withArgs )
 import System.Directory ( setCurrentDirectory, createDirectoryIfMissing )
 import System.FilePath ( dropFileName )
-import Control.Monad
-import Control.Monad.IO.Class ( liftIO )
+import System.Console.GetOpt ( OptDescr(..), ArgDescr(..) )
+
 import qualified Data.Map as M
 import qualified Data.Set as S
 import qualified Data.Aeson as JSON
+
+import Control.Monad
+import Control.Monad.IO.Class ( liftIO )
+import Control.DeepSeq ( NFData )
 
 import Agda.Main ( runAgda )
 import Agda.Compiler.Backend
@@ -16,6 +22,7 @@ import Agda.Utils.Pretty
 import Agda.Utils.Lens
 import Agda.Utils.BiMap
 import Agda.Utils.Maybe
+import Agda.Utils.Monad
 
 import Agda.Syntax.Scope.Base
 import Agda.Syntax.Scope.Monad
@@ -38,12 +45,14 @@ main = do
   withArgs (extraFlags ++ as) $
     runAgda [Backend $ mkBackend "agda2train" train]
 
-mkBackend :: String -> TrainF -> Backend' () () [ScopeEntry] () [Sample]
+mkBackend :: String -> TrainF -> Backend' Options Options [ScopeEntry] () [Sample]
 mkBackend name train = Backend'
   { backendName           = name
   , backendVersion        = Nothing
-  , options               = ()
-  , commandLineFlags      = []
+  , options               = defaultOptions
+  , commandLineFlags      =
+      [ Option ['r'] [] (NoArg recOpt) "Recurse into imports/dependencies."
+      ]
   , isEnabled             = \ _ -> True
   , preCompile            = return
   , postCompile           = \ _ _ _ -> return ()
@@ -55,13 +64,13 @@ mkBackend name train = Backend'
       -- printScope "" 1 ""
       setScope . iInsideScope =<< curIF
       NameSpace names mods ns <- allThingsInScope <$> getCurrentScope
-      scopeEntries <- forM (S.toList ns) $ \qn -> do
-        ty  <- typeOfConst qn
+      scopeEntries <- forMaybeM (S.toList ns) $ \qn -> do
         -- TODO: clean up qualifiers of the form: CurrentModule.(_.)*
-        pty <- ppm ty
-        reportTCM $ ppm (pp qn) <> " : " <> ppm (pp ty)
-        reportTCM $ "  pp: " <> ppm ty
-        return (pp qn, (render pty, convert ty))
+        caseMaybeM (tryMaybe $ typeOfConst qn) (pure Nothing) $ \ty -> do
+          pty <- ppm ty
+          reportTCM $ ppm (pp qn) <> " : " <> ppm (pp ty)
+          reportTCM $ "  pp: " <> ppm ty
+          return $ Just (pp qn, (render pty, convert ty))
       reportTCM "******************************************************************"
 
       whenJust mfp (liftIO . setCurrentDirectory . dropFileName)
@@ -76,3 +85,10 @@ mkBackend name train = Backend'
   , scopeCheckingSuffices = False
   , mayEraseType          = \ _ -> return True
   }
+
+data Options = Options {recurse :: Bool} deriving (Generic, NFData)
+
+defaultOptions = Options { recurse = False }
+
+recOpt :: Monad m => Options -> m Options
+recOpt opts = return $ opts { recurse = True }
