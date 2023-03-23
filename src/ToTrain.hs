@@ -26,7 +26,7 @@ import Output
 
 ppm :: PrettyTCM a => a -> TCM Doc
 ppm = prettyTCM
-reportTCM = reportSDoc "toTrain" 1
+reportTCM = reportSDoc "toTrain" 10
 report    = liftTCM . reportTCM
 
 type C = WriterT [Sample] TCM
