@@ -26,8 +26,8 @@ import Output
 
 ppm :: PrettyTCM a => a -> TCM Doc
 ppm = prettyTCM
-reportTCM = reportSDoc "toTrain" 10
-report    = liftTCM . reportTCM
+reportTCM = reportSDoc "toTrain"
+report k = liftTCM . reportTCM k
 
 type C = WriterT [Sample] TCM
 
@@ -62,20 +62,20 @@ train ty t = do
         , term = (render pt,   convert t)
         , namesUsed = map pp ns
         }
-      report "{"
-      report $ " ctx: " <> ppm (pp ctx)
-      report $ "   pp:" <> ppm ctx
-      report $ " goal: " <> ppm (pp ty)
-      report $ "   pp:" <> ppm ty
-      report $ " term: " <> ppm (pp t)
-      report $ "   names: " <> ppm ns
-      report $ "   pp: " <> ppm t
-      report "}"
+      report 20 "{"
+      report 20 $ " ctx: " <> ppm (pp ctx)
+      report 30 $ "   pp:" <> ppm ctx
+      report 20 $ " goal: " <> ppm (pp ty)
+      report 30 $ "   pp:" <> ppm ty
+      report 20 $ " term: " <> ppm (pp t)
+      report 30 $ "   names: " <> ppm ns
+      report 30 $ "   pp: " <> ppm t
+      report 20 "}"
 
 -- Run the training function on each subterm of a definition.
 forEachHole :: TrainF -> Definition -> C ()
 forEachHole k def@Defn{..} = do
-  report $ "------ definition: " <> ppm defName <> " -------"
+  report 10 $ "------ definition: " <> ppm defName <> " -------"
   sc <- getScope
   unless (ignoreDef def) $ case theDef of
     (Function{..}) ->

@@ -58,14 +58,14 @@ mkBackend name train = Backend'
   , postCompile           = \ _ _ _ -> return ()
   , preModule             = \ opts isMain md mfp ->
       if skip opts isMain then return $ Skip () else do
-        reportTCM $ "************************ "
-                  <> ppm md <> " (" <> ppm (show isMain)
-                  <> ") ***********************************"
+        reportTCM 10 $ "************************ "
+                    <> ppm md <> " (" <> ppm (show isMain)
+                    <> ") ***********************************"
         -- printScope "" 1 ""
         setScope . iInsideScope =<< curIF
         NameSpace names mods ns <- allThingsInScope <$> getCurrentScope
         scopeEntries <- mapMaybeM processScopeEntry (S.toList ns)
-        reportTCM "******************************************************************"
+        reportTCM 10 "******************************************************************"
         whenJust mfp (liftIO . setCurrentDirectory . dropFileName)
         return $ Recompile scopeEntries
   , compileDef            = \ _ _ _ def -> runC $ forEachHole train def
@@ -88,8 +88,8 @@ mkBackend name train = Backend'
       -- TODO: clean up qualifiers of the form: CurrentModule.(_.)*
       caseMaybeM (tryMaybe $ typeOfConst qn) (pure Nothing) $ \ty -> do
         pty <- ppm ty
-        reportTCM $ ppm (pp qn) <> " : " <> ppm (pp ty)
-        reportTCM $ "  pp: " <> ppm ty
+        reportTCM 20 $ ppm (pp qn) <> " : " <> ppm (pp ty)
+        reportTCM 30 $ "  pp: " <> ppm ty
         return $ Just (pp qn, (render pty, convert ty))
 
 data Options = Options {recurse :: Bool} deriving (Generic, NFData)
