@@ -1,5 +1,15 @@
 {-# LANGUAGE DeriveGeneric, TypeFamilies, FlexibleInstances, DerivingVia #-}
-module Output (Sample(..), TrainData(..), ScopeEntry, convert, pp, testJSON) where
+{-# LANGUAGE PatternSynonyms #-}
+module Output
+  ( Sample(..)
+  , TrainData(..)
+  , ScopeEntry
+  , convert
+  , pp
+  , testJSON
+  , pattern (:~), pattern (:>)
+  )
+  where
 
 import Data.Maybe ( fromMaybe )
 import Control.Arrow ( second )
@@ -14,34 +24,48 @@ import Agda.Syntax.Internal ( absName, unAbs, unEl, unDom )
 import qualified Agda.Syntax.Internal.Elim as A
 import qualified Agda.TypeChecking.Telescope as A
 
-import Agda.Utils.Pretty
+import qualified Agda.Utils.Pretty as P
 
-pp :: Pretty a => a -> String
-pp = prettyShow
+pp :: P.Pretty a => a -> String
+pp = P.prettyShow
 
 -- ** types
 
 type Name = String
 type DB   = Int
 type Head = Either Name DB
-type Named a = (Name, a)
-type WithPretty a = (String, a)
+
+infixr 4 :>; pattern x :> y = Pretty {pretty = x, thing = y}
+data Pretty a = Pretty
+  { pretty :: String
+  , thing  :: a
+  } deriving Generic
+instance ToJSON a => ToJSON (Pretty a)
+instance FromJSON a => FromJSON (Pretty a)
+
+infixr 4 :~; pattern x :~ y = Named {name = x, item = y}
+data Named a = Named
+  { name :: Name
+  , item :: a
+  } deriving (Generic, Show)
+instance ToJSON a => ToJSON (Named a)
+instance FromJSON a => FromJSON (Named a)
 
 data TrainData = TrainData
   { scope   :: Named [ScopeEntry]
   , samples :: [Sample]
   } deriving Generic
-    deriving ToJSON via Generically TrainData
+    deriving (ToJSON, FromJSON) via Generically TrainData
 
-type ScopeEntry = Named (WithPretty Type)
+type ScopeEntry = Named (Pretty Type)
 
 data Sample = Sample
-  { ctx   :: WithPretty Telescope
-  , goal  :: WithPretty Type
-  , term  :: WithPretty Term
+  { ctx   :: Pretty Telescope
+  , goal  :: Pretty Type
+  , term  :: Pretty Term
   , namesUsed :: [Name]
   } deriving Generic
-    deriving ToJSON via Generically Sample
+    deriving (ToJSON, FromJSON) via Generically Sample
 
 type Telescope = [Named Type]
 
@@ -51,15 +75,14 @@ data Term
   | App Head [Term]      -- ^ e.g. `f x (x + x)` or `@0 (λ x. x)`
   | Lit String | Sort String | Level String -- ^ e.g. Set/42/"sth",0ℓ,...
   deriving (Generic, Show)
-  deriving ToJSON   via Generically Term
-  deriving FromJSON via Generically Term
+  deriving (ToJSON, FromJSON) via Generically Term
 
 type Type = Term
 
 testJSON :: IO ()
 testJSON = do
-  let ty = Pi ("A", Sort "Set") (Pi ("_", App (Left "A") []) (App (Left "A") []))
-      t = Lam ("a", App (Right 0) [])
+  let ty = Pi ("A" :~ Sort "Set") (Pi ("_" :~ App (Left "A") []) (App (Left "A") []))
+      t = Lam ("a" :~ App (Right 0) [])
   encodeFile "type.json" ty >> encodeFile "term.json" t
   Just ty <- decodeFileStrict "type.json" :: IO (Maybe Term)
   putStrLn $ "ty: " <> show ty
@@ -73,13 +96,9 @@ class From a where
  convert, go :: a -> To a
  convert = go
 
--- instance From A.?? where
---   type To A.?? = TrainData
---   go =
-
 instance From A.Telescope where
   type To A.Telescope = Telescope
-  go = map (second go . unDom) . A.telToList
+  go = map (uncurry (:~) . second go . unDom) . A.telToList
 
 instance From A.Type where
   type To A.Type = Type
@@ -89,8 +108,8 @@ instance From A.Term where
   type To A.Term = Term
   go = \case
     -- ** abstractions
-    (A.Pi ty ab) -> Pi (pp (absName ab), go (unEl $ unDom ty)) (go $ unEl $ unAbs ab)
-    (A.Lam _ ab) -> Lam (pp (absName ab), go (unAbs ab))
+    (A.Pi ty ab) -> Pi (pp (absName ab) :~ go (unEl $ unDom ty)) (go $ unEl $ unAbs ab)
+    (A.Lam _ ab) -> Lam (pp (absName ab) :~ go (unAbs ab))
     -- ** applications.
     (A.Var i   xs) -> App (Right i)     (go <$> xs)
     (A.Def f   xs) -> App (Left $ pp f) (go <$> xs)

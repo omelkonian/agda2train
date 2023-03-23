@@ -57,9 +57,9 @@ train ty t = do
       pty  <- liftTCM $ ppm ty
       pt   <- liftTCM $ ppm t
       tell1 $ Sample
-        { ctx  = (render pctx, convert ctx)
-        , goal = (render pty,  convert ty)
-        , term = (render pt,   convert t)
+        { ctx  = render pctx :> convert ctx
+        , goal = render pty  :> convert ty
+        , term = render pt   :> convert t
         , namesUsed = map pp ns
         }
       report 20 "{"

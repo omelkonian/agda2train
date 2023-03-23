@@ -73,7 +73,7 @@ mkBackend name train = Backend'
     unless (skip opts isMain) $ do
       mn <- render <$> ppm md
       liftIO $ JSON.encodeFile (mn <> ".json") $ TrainData
-        { scope   = (mn, scopeEntries)
+        { scope   = mn :~ scopeEntries
         , samples = concat samples
         }
   , scopeCheckingSuffices = False
@@ -90,7 +90,7 @@ mkBackend name train = Backend'
         pty <- ppm ty
         reportTCM 20 $ ppm (pp qn) <> " : " <> ppm (pp ty)
         reportTCM 30 $ "  pp: " <> ppm ty
-        return $ Just (pp qn, (render pty, convert ty))
+        return $ Just (pp qn :~ render pty :> convert ty)
 
 data Options = Options {recurse :: Bool} deriving (Generic, NFData)
 
