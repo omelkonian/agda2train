@@ -24,6 +24,7 @@ import Agda.Utils.BiMap
 import Agda.Utils.Maybe
 import Agda.Utils.Monad
 
+import Agda.Syntax.Position
 import Agda.Syntax.Scope.Base
 import Agda.Syntax.Scope.Monad
 import Agda.Syntax.Internal
@@ -55,6 +56,8 @@ mkBackend name train = Backend'
         "Recurse into imports/dependencies."
       , Option ['o'] ["out-dir"] (ReqArg outDirOpt "DIR")
         "Generate data at DIR. (default: project root)"
+      , Option ['x'] ["no-json"] (NoArg noJsonOpt)
+        "Skip generation of JSON files. (just debug print)"
       ]
   , isEnabled             = \ _ -> True
   , preCompile            = return
@@ -74,7 +77,8 @@ mkBackend name train = Backend'
   , postModule            = \ opts scopeEntries isMain md samples -> let mn = pp md in
     unlessM (skip opts isMain md) $ do
       whenJust (outDir opts) (liftIO . createDirectoryIfMissing True)
-      liftIO $ JSON.encodeFile (getOutFn opts mn) $ TrainData
+      unless (noJson opts) $
+        liftIO $ JSON.encodeFile (getOutFn opts mn) $ TrainData
         { scope   = mn :~ scopeEntries
         , samples = concat samples
         }
@@ -83,9 +87,10 @@ mkBackend name train = Backend'
   }
   where
     skip :: Options -> IsMain -> TopLevelModuleName -> TCM Bool
-    skip opts isMain md = liftIO $
-      ((not (recurse opts) && (isMain == NotMain)) ||) <$>
-        doesFileExist (getOutFn opts $ pp md)
+    skip opts@Options{..} isMain md = do
+      jsonExists <- liftIO $ doesFileExist (getOutFn opts $ pp md)
+      return $ (not recurse && (isMain == NotMain))
+            || (not noJson && jsonExists)
 
     processScopeEntry :: QName -> TCM (Maybe ScopeEntry)
     processScopeEntry qn = do
@@ -93,13 +98,31 @@ mkBackend name train = Backend'
       caseMaybeM (tryMaybe $ typeOfConst qn) (pure Nothing) $ \ty -> do
         pty <- ppm ty
         reportTCM 20 $ ppm (pp qn) <> " : " <> ppm (pp ty)
+        -- reportTCM 20 $ "(range) " <> ppm (getRange $ nameBindingSite $ qnameName qn)
+        -- reportTCM 20 $ "(rangeCur) " <> (ppm =<< asksTC envHighlightingRange)
         reportTCM 30 $ "  pp: " <> ppm ty
         return $ Just (pp qn :~ render pty :> convert ty)
+
+-- ** command-line flags
 
 data Options = Options
   { recurse :: Bool
   , outDir  :: Maybe FilePath
+  , noJson  :: Bool
   } deriving (Generic, NFData)
+
+defaultOptions = Options
+  { recurse = False
+  , outDir = Nothing
+  , noJson = False
+  }
+
+recOpt, noJsonOpt :: Monad m => Options -> m Options
+recOpt    opts = return $ opts { recurse = True }
+noJsonOpt opts = return $ opts { noJson  = True }
+
+outDirOpt :: Monad m => FilePath -> Options -> m Options
+outDirOpt fp opts = return $ opts { outDir = Just fp }
 
 getOutDir :: Options -> FilePath
 getOutDir opts = case outDir opts of
@@ -108,11 +131,3 @@ getOutDir opts = case outDir opts of
 
 getOutFn :: Options -> String -> FilePath
 getOutFn opts mn = getOutDir opts </> mn <> ".json"
-
-defaultOptions = Options { recurse = False, outDir = Nothing }
-
-recOpt :: Monad m => Options -> m Options
-recOpt opts = return $ opts { recurse = True }
-
-outDirOpt :: Monad m => FilePath -> Options -> m Options
-outDirOpt fp opts = return $ opts { outDir = Just fp }

@@ -2,5 +2,5 @@
 :def! reset (\_ -> return ":. .ghci\n")
 :def! stdlib (\_ -> return ":r\n :set args -r -ojson/ -i /home/omelkonian/git/agda-stdlib/ /home/omelkonian/git/agda-stdlib/Everything.agda\n main")
 :def! prelude (\_ -> return ":r\n :set args -r -ojson/ -i /home/omelkonian/git/formal-prelude/ /home/omelkonian/git/formal-prelude/Prelude/Main.agda\n main")
-:def! test (\x -> return $ ":r\n :set args -r -ojson/ -v toTrain:20 -itest test/" <> x <> ".agda\n main")
+:def! test (\x -> return $ ":r\n :set args -r -x -ojson/ -v toTrain:20 -itest test/" <> x <> ".agda\n main")
 :def! testStdlib (\x -> return $ ":r\n :set args -r -ojson/ -v toTrain:10 -i /home/omelkonian/git/agda-stdlib/ /home/omelkonian/git/agda-stdlib/src/" <> x <> ".agda\n main")

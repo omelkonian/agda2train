@@ -73,11 +73,16 @@ train ty t = do
         , namesUsed = map pp ns
         }
       report 20 "{"
+      -- TODO: figure out how to get the range of each subterm (for type-on-hover)
+      -- report 20 $ "(range) " <> (ppm =<< getCurrentRange)
       report 20 $ " ctx: " <> ppm (pp ctx)
+      -- report 20 $ "  (range) " <> (ppm $ getRange ctx)
       report 30 $ "   pp:" <> ppm ctx
       report 20 $ " goal: " <> ppm (pp ty)
+      -- report 20 $ "  (range) " <> (ppm $ getRange ty)
       report 30 $ "   pp:" <> ppm ty
       report 20 $ " term: " <> ppm (pp t)
+      -- report 20 $ "  (range) " <> (ppm $ getRange t)
       report 30 $ "   names: " <> ppm ns
       report 30 $ "   pp: " <> ppm t
       report 20 "}"
