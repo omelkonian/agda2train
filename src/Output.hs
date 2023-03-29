@@ -4,6 +4,7 @@ module Output
   , TrainData(..)
   , ScopeEntry
   , convert
+  , Reduced(..)
   , pattern (:~), pattern (:>)
   , pp
   )
@@ -41,6 +42,15 @@ data Pretty a = Pretty
 instance ToJSON a => ToJSON (Pretty a)
 instance FromJSON a => FromJSON (Pretty a)
 
+data Reduced a = Reduced
+  { normalised :: a
+  , reduced    :: a
+  , simplified :: a
+  , original   :: a
+  } deriving Generic
+instance ToJSON a => ToJSON (Reduced a)
+instance FromJSON a => FromJSON (Reduced a)
+
 infixr 4 :~; pattern x :~ y = Named {name = x, item = y}
 data Named a = Named
   { name :: Name
@@ -55,12 +65,12 @@ data TrainData = TrainData
   } deriving Generic
     deriving (ToJSON, FromJSON) via Generically TrainData
 
-type ScopeEntry = Named (Pretty Type)
+type ScopeEntry = Named (Pretty (Reduced Type))
 
 data Sample = Sample
   { ctx   :: Pretty Telescope
-  , goal  :: Pretty Type
-  , term  :: Pretty Term
+  , goal  :: Pretty (Reduced Type)
+  , term  :: Pretty (Reduced Term)
   , namesUsed :: [Name]
   } deriving Generic
     deriving (ToJSON, FromJSON) via Generically Sample

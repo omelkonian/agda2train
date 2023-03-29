@@ -16,7 +16,7 @@ import Control.Monad.IO.Class ( liftIO )
 import Control.DeepSeq ( NFData )
 
 import Agda.Main ( runAgda )
-import Agda.Compiler.Backend
+import Agda.Compiler.Backend hiding (Reduced)
 
 import Agda.Utils.Pretty
 import Agda.Utils.Lens
@@ -32,6 +32,7 @@ import Agda.Syntax.TopLevelModuleName
 
 import Agda.TypeChecking.Pretty
 import Agda.TypeChecking.Monad.Signature
+import Agda.TypeChecking.Reduce
 
 import Agda.Compiler.Common ( curIF )
 
@@ -97,11 +98,19 @@ mkBackend name train = Backend'
       -- TODO: clean up qualifiers of the form: CurrentModule.(_.)*
       caseMaybeM (tryMaybe $ typeOfConst qn) (pure Nothing) $ \ty -> do
         pty <- ppm ty
+        normTy <- normalise ty; redTy <- reduce ty; simTy <- simplify ty
         reportTCM 20 $ ppm (pp qn) <> " : " <> ppm (pp ty)
         -- reportTCM 20 $ "(range) " <> ppm (getRange $ nameBindingSite $ qnameName qn)
         -- reportTCM 20 $ "(rangeCur) " <> (ppm =<< asksTC envHighlightingRange)
-        reportTCM 30 $ "  pp: " <> ppm ty
-        return $ Just (pp qn :~ render pty :> convert ty)
+        reportTCM 30 $ "  pretty: " <> ppm ty
+        reportTCM 30 $ "  normalised: " <> ppm normTy
+        reportTCM 30 $ "  reduced: " <> ppm redTy
+        reportTCM 30 $ "  simplified: " <> ppm simTy
+        return $ Just $ pp qn :~ render pty :> Reduced
+          { normalised = convert normTy
+          , reduced    = convert redTy
+          , simplified = convert simTy
+          , original   = convert ty }
 
 -- ** command-line flags
 

@@ -23,7 +23,8 @@ import Agda.Syntax.Internal.Generic ( TermLike, foldTerm )
 import Agda.Syntax.Scope.Base ( nsInScope, allThingsInScope )
 import Agda.Syntax.Scope.Monad ( getCurrentScope )
 import Agda.Utils.Monad ( whenM, tell1 )
-import Agda.TypeChecking.Monad
+import Agda.TypeChecking.Monad hiding (Reduced)
+import Agda.TypeChecking.Reduce ( normalise, reduce, simplify )
 import Agda.TypeChecking.Pretty
 import Agda.TypeChecking.CheckInternal ( Action(..), defaultAction, checkInternal' )
 
@@ -61,15 +62,24 @@ train ty t = do
     -- be more informative to peek into a module's private parts...
     when (S.fromList ns `S.isSubsetOf` allNs) $ do
       ctx <- getContextTelescope
-      pctx <- liftTCM $ ppm ctx
-      pty  <- liftTCM $ ppm ty
-      pt   <- liftTCM $ ppm t
+      pctx <- liftTCM $ ppm ctx; pty <- liftTCM $ ppm ty; pt <- liftTCM $ ppm t
+      normT <- normalise t; normTy <- normalise ty
+      redT <- reduce t; redTy <- reduce ty
+      simT <- simplify t; simTy <- simplify ty
       -- TODO: figure out a way to run Agsy.Auto here and provide training data
       -- on successful invocations only
       tell1 $ Sample
         { ctx  = render pctx :> convert ctx
-        , goal = render pty  :> convert ty
-        , term = render pt   :> convert t
+        , goal = render pty  :> Reduced
+            { normalised = convert normTy
+            , reduced    = convert redTy
+            , simplified = convert simTy
+            , original   = convert ty }
+        , term = render pt :> Reduced
+            { normalised = convert normT
+            , reduced    = convert redT
+            , simplified = convert simT
+            , original   = convert t }
         , namesUsed = map pp ns
         }
       report 20 "{"
@@ -77,14 +87,14 @@ train ty t = do
       -- report 20 $ "(range) " <> (ppm =<< getCurrentRange)
       report 20 $ " ctx: " <> ppm (pp ctx)
       -- report 20 $ "  (range) " <> (ppm $ getRange ctx)
-      report 30 $ "   pp:" <> ppm ctx
+      report 30 $ "   pretty:" <> ppm ctx
       report 20 $ " goal: " <> ppm (pp ty)
       -- report 20 $ "  (range) " <> (ppm $ getRange ty)
-      report 30 $ "   pp:" <> ppm ty
+      report 30 $ "   pretty:" <> ppm ty
       report 20 $ " term: " <> ppm (pp t)
       -- report 20 $ "  (range) " <> (ppm $ getRange t)
       report 30 $ "   names: " <> ppm ns
-      report 30 $ "   pp: " <> ppm t
+      report 30 $ "   pretty: " <> ppm t
       report 20 "}"
 
 -- Run the training function on each subterm of a definition.

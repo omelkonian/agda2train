@@ -1,10 +1,16 @@
 module Importee where
 
+Rel₂ : Set → Set₁
+Rel₂ A = A → A → Set
+
+Op₂ : Set → Set
+Op₂ A = A → A → A
+
 postulate
   ℕ : Set
   𝟘 𝟙 𝟚 𝟛 : ℕ
-  _≡_ : ℕ → ℕ → Set
-  _+_ _*_ _/_ _-_ : ℕ → ℕ → ℕ
+  _≡_ : Rel₂ ℕ
+  _+_ _*_ _/_ _-_ : Op₂ ℕ
   +-comm : ∀ {x y} → (x + y) ≡ (y + x)
   +-assoc : ∀ {x y z} → (x + (y + z)) ≡ ((x + y) + z)
   example : (𝟙 + 𝟙) ≡ 𝟚
