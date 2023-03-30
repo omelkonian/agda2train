@@ -74,14 +74,14 @@ train ty t = do
         }
       report 20 "{"
       report 20 $ " ctx: " <> ppm (pp ctx)
-      report 30 $ "   pretty: " <> pure pctx
+      report 30 $ "      *pretty: " <> pure pctx
       report 20 $ " goal: " <> ppm (pp ty)
-      report 30 $ "       pretty: " <> pure pty
+      report 30 $ "      *pretty: " <> pure pty
       reportReduced rty
       report 20 $ " term: " <> ppm (pp t)
-      report 30 $ "       pretty: " <> pure pt
+      report 30 $ "      *pretty: " <> pure pt
       reportReduced rt
-      report 20 $ "namesUsed: " <> ppm ns
+      report 20 $ " namesUsed: " <> ppm ns
       report 20 "}"
   where
     mkReduced :: (PrettyTCM a, Simplify a, Reduce a, Normalise a) => a -> C (Reduced a)
@@ -92,16 +92,16 @@ train ty t = do
 
     reportReduced :: PrettyTCM a => Reduced a -> C ()
     reportReduced Reduced{..} = do
-      report 30 $ "   simplified: " <> ppm simplified
-      report 30 $ "      reduced: " <> ppm reduced
-      report 30 $ "   normalised: " <> ppm normalised
+      report 30 $ "  *simplified: " <> ppm simplified
+      report 30 $ "     *reduced: " <> ppm reduced
+      report 30 $ "  *normalised: " <> ppm normalised
 
 -- Run the training function on each subterm of a definition.
 forEachHole :: TrainF -> Definition -> C ()
-forEachHole trainF def@Defn{..} = do
-  report 10 $ "------ definition: " <> ppm defName <> " -------"
+forEachHole trainF def@Defn{..} = unless (ignoreDef def) $ do
+  report 10 $ "------ definition: " <> ppm (pp defName) <> " -------"
   sc <- getScope
-  unless (ignoreDef def) $ case theDef of
+  case theDef of
     (Function{..}) ->
       forM_ funClauses $ \c@(Clause{..}) -> addContext clauseTel $
         case (clauseBody, unArg <$> clauseType) of
@@ -119,11 +119,8 @@ forEachHole trainF def@Defn{..} = do
       -- || null (inverseScopeLookupName defName sc)
       -- || isAnonymousModuleName (qnameModule defName)
       -- || ("._." `isInfixOf` pp defName)
-      -- || (getOrigin defName == UserWritten)
+      -- || (getOrigin defName /= UserWritten)
       -- || ( ("with-" `isPrefixOf` pp (qnameName defName))
-      --   && ("Data.Record" `isPrefixOf` pp (qnameModule defName))
-      --    )
-      -- || "Binary.Reasoning.Setoid.Base" `isInfixOf` pp defName
 
     ignore :: Type -> C Bool
     ignore ty = do
@@ -137,7 +134,7 @@ forEachHole trainF def@Defn{..} = do
     cubicalRelated, tooSlow :: String -> Bool
     cubicalRelated = ("Agda.Primitive.Cubical.I" `isInfixOf`)
     tooSlow        = ("Data.Rational.Properties" `isPrefixOf`)
-                  \/ ("Prelude.Solvers.solveWith" ==)
+                  \/ ("Prelude.Solvers" `isPrefixOf`)
 
     go :: Type -> Term -> C ()
     go ty t = whenM (not <$> ignore ty)
