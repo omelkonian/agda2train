@@ -28,6 +28,10 @@ import qualified Agda.Utils.Pretty as P
 pp :: P.Pretty a => a -> String
 pp = P.prettyShow
 
+panic :: (P.Pretty a, Show a) => String -> a -> b
+panic s t = error $
+  "[PANIC] unexpected " <> s <> ": " <> pp t <> "\n show: " <> pp (show t)
+
 -- ** types
 
 type Name = String
@@ -126,14 +130,14 @@ instance From A.Term where
     (A.Lit   x) -> Lit   $ pp x
     (A.Level x) -> Level $ pp x
     (A.Sort  x) -> Sort  $ pp x
+    -- ** there are some occurrences of `DontCare` in the standard library
+    (A.DontCare t) -> go t
     -- ** crash on the rest (should never be encountered)
-    t -> error $ "[PANIC] unexpected term: " <> pp t
+    t {-MetaV|Dummy-} -> panic "term" t
 
 instance From A.Elim where
   type To A.Elim = Term
   go = \case
     (A.Apply x)        -> go (unArg x)
     (A.Proj _ qn)      -> App (Left $ pp qn) []
-    e@(A.IApply _ _ _) -> error $ "[PANIC] unexpected elim: " <> pp e
-
-
+    e@(A.IApply _ _ _) -> panic "elim" e
