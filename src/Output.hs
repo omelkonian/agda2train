@@ -10,27 +10,15 @@ module Output
   )
   where
 
-import Data.Maybe ( fromMaybe )
 import Control.Arrow ( second )
-
 import GHC.Generics
 import Data.Aeson
 
-import qualified Agda.Syntax.Common as A
 import Agda.Syntax.Common ( unArg )
 import qualified Agda.Syntax.Internal as A
 import Agda.Syntax.Internal ( absName, unAbs, unEl, unDom )
-import qualified Agda.Syntax.Internal.Elim as A
-import qualified Agda.TypeChecking.Telescope as A
 
 import qualified Agda.Utils.Pretty as P
-
-pp :: P.Pretty a => a -> String
-pp = P.prettyShow
-
-panic :: (P.Pretty a, Show a) => String -> a -> b
-panic s t = error $
-  "[PANIC] unexpected " <> s <> ": " <> pp t <> "\n show: " <> pp (show t)
 
 -- ** types
 
@@ -47,11 +35,11 @@ instance ToJSON a => ToJSON (Pretty a)
 instance FromJSON a => FromJSON (Pretty a)
 
 data Reduced a = Reduced
-  { normalised :: a
+  { simplified :: a
   , reduced    :: a
-  , simplified :: a
+  , normalised :: a
   , original   :: a
-  } deriving Generic
+  } deriving (Generic, Functor)
 instance ToJSON a => ToJSON (Reduced a)
 instance FromJSON a => FromJSON (Reduced a)
 
@@ -141,3 +129,14 @@ instance From A.Elim where
     (A.Apply x)        -> go (unArg x)
     (A.Proj _ qn)      -> App (Left $ pp qn) []
     e@(A.IApply _ _ _) -> panic "elim" e
+
+-- ** utilities
+
+pp :: P.Pretty a => a -> String
+pp = P.prettyShow
+
+panic :: (P.Pretty a, Show a) => String -> a -> b
+panic s t = error $
+  "[PANIC] unexpected " <> s <> ": " <> pp t <> "\n show: " <> pp (show t)
+
+

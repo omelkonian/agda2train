@@ -10,7 +10,6 @@ import Control.Monad.State
 import Agda.TypeChecking.Monad
 import Agda.TypeChecking.Warnings
 import Agda.TypeChecking.Pretty
-import Agda.TypeChecking.CheckInternal
 
 instance (Monoid r, Monad m, Semigroup (m Doc)) => Semigroup (WriterT r m Doc) where
   (<>) = liftM2 (<>)

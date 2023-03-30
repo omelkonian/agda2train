@@ -30,6 +30,7 @@ executable agda2train
                        , directory
                        , filepath
                        , deepseq
+                       , async
     hs-source-dirs:      src
     default-language:    Haskell2010
     default-extensions:  LambdaCase
@@ -39,6 +40,8 @@ executable agda2train
                        , TupleSections
                        , DeriveGeneric
                        , DeriveAnyClass
+                       , DeriveFunctor
                        , DerivingVia
                        , PatternSynonyms
                        , TypeFamilies
+    ghc-options: -threaded -rtsopts -with-rtsopts=-N

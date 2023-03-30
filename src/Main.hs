@@ -4,10 +4,9 @@ import GHC.Generics
 
 import System.Environment ( getArgs, withArgs )
 import System.Directory ( createDirectoryIfMissing, doesFileExist )
-import System.FilePath ( dropFileName, (</>) )
+import System.FilePath ( (</>) )
 import System.Console.GetOpt ( OptDescr(..), ArgDescr(..) )
 
-import qualified Data.Map as M
 import qualified Data.Set as S
 import qualified Data.Aeson as JSON
 
@@ -19,19 +18,13 @@ import Agda.Main ( runAgda )
 import Agda.Compiler.Backend hiding (Reduced)
 
 import Agda.Utils.Pretty
-import Agda.Utils.Lens
-import Agda.Utils.BiMap
 import Agda.Utils.Maybe
 import Agda.Utils.Monad
 
-import Agda.Syntax.Position
 import Agda.Syntax.Scope.Base
 import Agda.Syntax.Scope.Monad
-import Agda.Syntax.Internal
 import Agda.Syntax.TopLevelModuleName
 
-import Agda.TypeChecking.Pretty
-import Agda.TypeChecking.Monad.Signature
 import Agda.TypeChecking.Reduce
 
 import Agda.Compiler.Common ( curIF )
@@ -48,7 +41,7 @@ main = do
     runAgda [Backend $ mkBackend "agda2train" train]
 
 mkBackend :: String -> TrainF -> Backend' Options Options [ScopeEntry] () [Sample]
-mkBackend name train = Backend'
+mkBackend name trainF = Backend'
   { backendName           = name
   , backendVersion        = Nothing
   , options               = defaultOptions
@@ -59,22 +52,24 @@ mkBackend name train = Backend'
         "Generate data at DIR. (default: project root)"
       , Option ['x'] ["no-json"] (NoArg noJsonOpt)
         "Skip generation of JSON files. (just debug print)"
+      , Option [] ["ignore-existing-json"] (NoArg ignoreExistingJsonOpt)
+        "Ignore existing JSON files. (i.e. always overwrite)"
       ]
   , isEnabled             = \ _ -> True
   , preCompile            = return
   , postCompile           = \ _ _ _ -> return ()
-  , preModule             = \ opts isMain md mfp ->
+  , preModule             = \ opts isMain md _ ->
       ifM (skip opts isMain md) (return $ Skip ()) $ do
         reportTCM 10 $ "************************ "
                     <> ppm md <> " (" <> ppm (show isMain)
                     <> ") ***********************************"
         -- printScope "" 1 ""
         setScope . iInsideScope =<< curIF
-        NameSpace names mods ns <- allThingsInScope <$> getCurrentScope
+        NameSpace _ _ ns <- allThingsInScope <$> getCurrentScope
         scopeEntries <- mapMaybeM processScopeEntry (S.toList ns)
         reportTCM 10 "******************************************************************"
         return $ Recompile scopeEntries
-  , compileDef            = \ _ _ _ def -> runC $ forEachHole train def
+  , compileDef            = \ _ _ _ def -> execC $ forEachHole trainF def
   , postModule            = \ opts scopeEntries isMain md samples -> let mn = pp md in
     unlessM (skip opts isMain md) $ do
       whenJust (outDir opts) (liftIO . createDirectoryIfMissing True)
@@ -91,7 +86,7 @@ mkBackend name train = Backend'
     skip opts@Options{..} isMain md = do
       jsonExists <- liftIO $ doesFileExist (getOutFn opts $ pp md)
       return $ (not recurse && (isMain == NotMain))
-            || (not noJson && jsonExists)
+            || (not noJson && jsonExists && not ignoreExistingJson)
 
     processScopeEntry :: QName -> TCM (Maybe ScopeEntry)
     processScopeEntry qn = do
@@ -118,17 +113,20 @@ data Options = Options
   { recurse :: Bool
   , outDir  :: Maybe FilePath
   , noJson  :: Bool
+  , ignoreExistingJson :: Bool
   } deriving (Generic, NFData)
 
 defaultOptions = Options
   { recurse = False
   , outDir = Nothing
   , noJson = False
+  , ignoreExistingJson = False
   }
 
-recOpt, noJsonOpt :: Monad m => Options -> m Options
+recOpt, noJsonOpt, ignoreExistingJsonOpt :: Monad m => Options -> m Options
 recOpt    opts = return $ opts { recurse = True }
 noJsonOpt opts = return $ opts { noJson  = True }
+ignoreExistingJsonOpt opts = return $ opts { ignoreExistingJson = True }
 
 outDirOpt :: Monad m => FilePath -> Options -> m Options
 outDirOpt fp opts = return $ opts { outDir = Just fp }

@@ -2,7 +2,7 @@ module ToTrain
   ( TrainF
   , train
   , forEachHole
-  , runC
+  , execC
   , reportTCM
   , ppm
   ) where
@@ -13,39 +13,39 @@ import qualified Data.Set as S
 import Control.Monad ( forM_, void, when, unless )
 import Control.Monad.Writer ( WriterT(runWriterT) )
 import Control.Monad.Error.Class ( catchError )
+import Control.Monad.IO.Class ( liftIO )
+import Control.Concurrent ( threadDelay )
+import Control.Concurrent.Async ( race )
 
 import Text.PrettyPrint ( render )
 
 import Agda.Syntax.Common ( unArg )
-import Agda.Syntax.Abstract.Name ( QName(..) )
 import Agda.Syntax.Internal
 import Agda.Syntax.Internal.Generic ( TermLike, foldTerm )
 import Agda.Syntax.Scope.Base ( nsInScope, allThingsInScope )
 import Agda.Syntax.Scope.Monad ( getCurrentScope )
-import Agda.Utils.Monad ( whenM, tell1 )
-import Agda.TypeChecking.Monad hiding (Reduced)
-import Agda.TypeChecking.Reduce ( normalise, reduce, simplify )
-import Agda.TypeChecking.Pretty
-import Agda.TypeChecking.CheckInternal ( Action(..), defaultAction, checkInternal' )
 
-import AgdaInternals
+import Agda.Utils.Monad ( whenM, tell1 )
+import Agda.Utils.Either ( caseEitherM )
+
+import Agda.TypeChecking.Monad hiding (Reduced)
+import Agda.TypeChecking.Reduce
+  ( Simplify, simplify, Normalise, normalise, Reduce, reduce )
+import Agda.TypeChecking.Pretty
+import Agda.TypeChecking.CheckInternal
+  ( Action(..), defaultAction, checkInternal' )
+
+import AgdaInternals ()
 import Output
 
-ppm :: PrettyTCM a => a -> TCM Doc
-ppm = prettyTCM
-reportTCM = reportSDoc "toTrain"
-report k = liftTCM . reportTCM k
-
+-- ** Extending the typechecking monad to also record/output training samples.
 type C = WriterT [Sample] TCM
 
-runC :: C () -> TCM [Sample]
-runC = (snd <$>) . runWriterT
+execC :: C () -> TCM [Sample]
+execC = (snd <$>) . runWriterT
 
-noop :: C ()
-noop = return ()
-
-silently :: C a -> C ()
-silently k = void k `catchError` \ _ -> noop
+runC :: C a -> TCM a
+runC = (fst <$>) . runWriterT
 
 -- A training function generates training data for each typed sub-term,
 -- with access to the local context via the typechecking monad.
@@ -54,7 +54,6 @@ type TrainF = Type -> Term -> C ()
 -- an example training function that just prints the relevant (local) information
 train :: TrainF
 train ty t = do
-  ctx <- liftTCM getContextTelescope
   let ns = names t
   allNs <- nsInScope . allThingsInScope <$> liftTCM getCurrentScope
   unless (null ns) $
@@ -63,43 +62,43 @@ train ty t = do
     when (S.fromList ns `S.isSubsetOf` allNs) $ do
       ctx <- getContextTelescope
       pctx <- liftTCM $ ppm ctx; pty <- liftTCM $ ppm ty; pt <- liftTCM $ ppm t
-      normT <- normalise t; normTy <- normalise ty
-      redT <- reduce t; redTy <- reduce ty
-      simT <- simplify t; simTy <- simplify ty
-      -- TODO: figure out a way to run Agsy.Auto here and provide training data
-      -- on successful invocations only
+      rty <- mkReduced ty
+      report 30 $ "rty: " <> ppm (original rty)
+
+      rt <- mkReduced t
       tell1 $ Sample
         { ctx  = render pctx :> convert ctx
-        , goal = render pty  :> Reduced
-            { normalised = convert normTy
-            , reduced    = convert redTy
-            , simplified = convert simTy
-            , original   = convert ty }
-        , term = render pt :> Reduced
-            { normalised = convert normT
-            , reduced    = convert redT
-            , simplified = convert simT
-            , original   = convert t }
+        , goal = render pty  :> fmap convert rty
+        , term = render pt   :> fmap convert rt
         , namesUsed = map pp ns
         }
       report 20 "{"
-      -- TODO: figure out how to get the range of each subterm (for type-on-hover)
-      -- report 20 $ "(range) " <> (ppm =<< getCurrentRange)
       report 20 $ " ctx: " <> ppm (pp ctx)
-      -- report 20 $ "  (range) " <> (ppm $ getRange ctx)
-      report 30 $ "   pretty:" <> ppm ctx
+      report 30 $ "   pretty: " <> pure pctx
       report 20 $ " goal: " <> ppm (pp ty)
-      -- report 20 $ "  (range) " <> (ppm $ getRange ty)
-      report 30 $ "   pretty:" <> ppm ty
+      report 30 $ "       pretty: " <> pure pty
+      reportReduced rty
       report 20 $ " term: " <> ppm (pp t)
-      -- report 20 $ "  (range) " <> (ppm $ getRange t)
-      report 30 $ "   names: " <> ppm ns
-      report 30 $ "   pretty: " <> ppm t
+      report 30 $ "       pretty: " <> pure pt
+      reportReduced rt
+      report 20 $ "namesUsed: " <> ppm ns
       report 20 "}"
+  where
+    mkReduced :: (PrettyTCM a, Simplify a, Reduce a, Normalise a) => a -> C (Reduced a)
+    mkReduced t = do
+      [simplified, reduced, normalised] <-
+        mapM (withTimeout t) [simplify t, reduce t, normalise t]
+      return $ Reduced {original = t, ..}
+
+    reportReduced :: PrettyTCM a => Reduced a -> C ()
+    reportReduced Reduced{..} = do
+      report 30 $ "   simplified: " <> ppm simplified
+      report 30 $ "      reduced: " <> ppm reduced
+      report 30 $ "   normalised: " <> ppm normalised
 
 -- Run the training function on each subterm of a definition.
 forEachHole :: TrainF -> Definition -> C ()
-forEachHole k def@Defn{..} = do
+forEachHole trainF def@Defn{..} = do
   report 10 $ "------ definition: " <> ppm defName <> " -------"
   sc <- getScope
   unless (ignoreDef def) $ case theDef of
@@ -138,6 +137,7 @@ forEachHole k def@Defn{..} = do
     cubicalRelated, tooSlow :: String -> Bool
     cubicalRelated = ("Agda.Primitive.Cubical.I" `isInfixOf`)
     tooSlow        = ("Data.Rational.Properties" `isPrefixOf`)
+                  \/ ("Prelude.Solvers.solveWith" ==)
 
     go :: Type -> Term -> C ()
     go ty t = whenM (not <$> ignore ty)
@@ -147,11 +147,39 @@ forEachHole k def@Defn{..} = do
     act = defaultAction {preAction = pre}
 
     pre :: Type -> Term -> C Term
-    pre ty t = train ty t >> return t
+    pre ty t = trainF ty t >> return t
 
 -- ** Gathering names from terms
+
 names :: TermLike a => a -> [QName]
 names = foldTerm $ \case
   (Def n _) -> [n]
   (Con c _ _) -> [conName c]
   _ -> []
+
+-- ** Utilities
+
+ppm :: PrettyTCM a => a -> TCM Doc
+ppm = prettyTCM
+
+reportTCM = reportSDoc "toTrain"
+report k  = liftTCM . reportTCM k
+
+(\/) :: (a -> Bool) -> (a -> Bool) -> (a -> Bool)
+(f \/ g) x = f x || g x
+
+noop :: C ()
+noop = return ()
+
+silently :: C a -> C ()
+silently k = void k `catchError` \ _ -> noop
+
+maxDuration = 2 -- seconds
+
+withTimeout :: a -> C a -> C a
+withTimeout t k = getTC >>= \ s -> liftIO $
+  caseEitherM
+    (race (threadDelay (maxDuration * 1000000))
+          (fst <$> runSafeTCM (runC k) s))
+    (\() -> return t)
+    return

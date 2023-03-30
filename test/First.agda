@@ -70,7 +70,6 @@ consume (suc n) = consume n
 
 test2 = consume (pow2 (twice (twice (twice three))))
 
-
 data Vec (@0 A : Set) : @0 Nat → Set where
   nil : Vec A zero
   con : {@0 n : Nat} → A → Vec A n → Vec A (suc n)
