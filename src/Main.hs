@@ -60,16 +60,16 @@ mkBackend name trainF = Backend'
   , postCompile           = \ _ _ _ -> return ()
   , preModule             = \ opts isMain md _ ->
       ifM (skip opts isMain md) (return $ Skip ()) $ do
-        reportTCM 10 $ "************************ "
-                    <> ppm md <> " (" <> ppm (show isMain)
-                    <> ") ***********************************"
+        report 10 $ "************************ "
+                 <> ppm md <> " (" <> ppm (show isMain)
+                 <> ") ***********************************"
         -- printScope "" 1 ""
         setScope . iInsideScope =<< curIF
         NameSpace _ _ ns <- allThingsInScope <$> getCurrentScope
         scopeEntries <- mapMaybeM processScopeEntry (S.toList ns)
-        reportTCM 10 "******************************************************************"
+        report 10 "******************************************************************"
         return $ Recompile scopeEntries
-  , compileDef            = \ _ _ _ def -> execC $ forEachHole trainF def
+  , compileDef            = \ _ _ _ def -> runC $ forEachHole trainF def
   , postModule            = \ opts scopeEntries isMain md samples -> let mn = pp md in
     unlessM (skip opts isMain md) $ do
       whenJust (outDir opts) (liftIO . createDirectoryIfMissing True)
@@ -93,19 +93,11 @@ mkBackend name trainF = Backend'
       -- TODO: clean up qualifiers of the form: CurrentModule.(_.)*
       caseMaybeM (tryMaybe $ typeOfConst qn) (pure Nothing) $ \ty -> do
         pty <- ppm ty
-        normTy <- normalise ty; redTy <- reduce ty; simTy <- simplify ty
-        reportTCM 20 $ ppm (pp qn) <> " : " <> ppm (pp ty)
-        -- reportTCM 20 $ "(range) " <> ppm (getRange $ nameBindingSite $ qnameName qn)
-        -- reportTCM 20 $ "(rangeCur) " <> (ppm =<< asksTC envHighlightingRange)
-        reportTCM 30 $ "  pretty: " <> ppm ty
-        reportTCM 30 $ "  normalised: " <> ppm normTy
-        reportTCM 30 $ "  reduced: " <> ppm redTy
-        reportTCM 30 $ "  simplified: " <> ppm simTy
-        return $ Just $ pp qn :~ render pty :> Reduced
-          { normalised = convert normTy
-          , reduced    = convert redTy
-          , simplified = convert simTy
-          , original   = convert ty }
+        rty <- mkReduced ty
+        report 20 $ ppm (pp qn) <> " : " <> ppm (pp ty)
+        report 30 $ "      *pretty: " <> ppm ty
+        reportReduced rty
+        return $ Just $ pp qn :~ render pty :> fmap convert rty
 
 -- ** command-line flags
 

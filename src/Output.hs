@@ -35,9 +35,9 @@ instance ToJSON a => ToJSON (Pretty a)
 instance FromJSON a => FromJSON (Pretty a)
 
 data Reduced a = Reduced
-  { simplified :: a
-  , reduced    :: a
-  , normalised :: a
+  { simplified :: Maybe a
+  , reduced    :: Maybe a
+  , normalised :: Maybe a
   , original   :: a
   } deriving (Generic, Functor)
 instance ToJSON a => ToJSON (Reduced a)
@@ -138,5 +138,3 @@ pp = P.prettyShow
 panic :: (P.Pretty a, Show a) => String -> a -> b
 panic s t = error $
   "[PANIC] unexpected " <> s <> ": " <> pp t <> "\n show: " <> pp (show t)
-
-

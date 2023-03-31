@@ -2,8 +2,9 @@ module ToTrain
   ( TrainF
   , train
   , forEachHole
-  , execC
-  , reportTCM
+  , runC
+  , mkReduced
+  , report, reportReduced
   , ppm
   ) where
 
@@ -41,17 +42,20 @@ import Output
 -- ** Extending the typechecking monad to also record/output training samples.
 type C = WriterT [Sample] TCM
 
-execC :: C () -> TCM [Sample]
-execC = (snd <$>) . runWriterT
+runC :: C () -> TCM [Sample]
+runC = (snd <$>) . runWriterT
 
-runC :: C a -> TCM a
-runC = (fst <$>) . runWriterT
+noop :: C ()
+noop = return ()
 
--- A training function generates training data for each typed sub-term,
+silently :: C a -> C ()
+silently k = void k `catchError` \ _ -> noop
+
+-- | A training function generates training data for each typed sub-term,
 -- with access to the local context via the typechecking monad.
 type TrainF = Type -> Term -> C ()
 
--- an example training function that just prints the relevant (local) information
+-- | An example training function that just prints the relevant (local) information.
 train :: TrainF
 train ty t = do
   let ns = names t
@@ -83,20 +87,8 @@ train ty t = do
       reportReduced rt
       report 20 $ " namesUsed: " <> ppm ns
       report 20 "}"
-  where
-    mkReduced :: (PrettyTCM a, Simplify a, Reduce a, Normalise a) => a -> C (Reduced a)
-    mkReduced t = do
-      [simplified, reduced, normalised] <-
-        mapM (withTimeout t) [simplify t, reduce t, normalise t]
-      return $ Reduced {original = t, ..}
 
-    reportReduced :: PrettyTCM a => Reduced a -> C ()
-    reportReduced Reduced{..} = do
-      report 30 $ "  *simplified: " <> ppm simplified
-      report 30 $ "     *reduced: " <> ppm reduced
-      report 30 $ "  *normalised: " <> ppm normalised
-
--- Run the training function on each subterm of a definition.
+-- | Run the training function on each subterm of a definition.
 forEachHole :: TrainF -> Definition -> C ()
 forEachHole trainF def@Defn{..} = unless (ignoreDef def) $ do
   report 10 $ "------ definition: " <> ppm (pp defName) <> " -------"
@@ -146,37 +138,44 @@ forEachHole trainF def@Defn{..} = unless (ignoreDef def) $ do
     pre :: Type -> Term -> C Term
     pre ty t = trainF ty t >> return t
 
--- ** Gathering names from terms
-
+-- | Gathering names from terms.
 names :: TermLike a => a -> [QName]
 names = foldTerm $ \case
   (Def n _) -> [n]
   (Con c _ _) -> [conName c]
   _ -> []
 
--- ** Utilities
+-- ** reduction
+
+maxDuration = 2 -- seconds
+
+withTimeout :: TCM a -> TCM (Maybe a)
+withTimeout k = getTC >>= \ s -> liftIO $
+  caseEitherM
+    (race (threadDelay (maxDuration * 1000000))
+          (fst <$> runSafeTCM k s))
+    (\() -> pure Nothing)
+    (pure . Just)
+
+mkReduced :: (MonadFail m, MonadTCM m, PrettyTCM a, Simplify a, Reduce a, Normalise a)
+          => a -> m (Reduced a)
+mkReduced t = do
+  [simplified, reduced, normalised] <- mapM (liftTCM . withTimeout) [simplify t, reduce t, normalise t]
+  return $ Reduced {original = t, ..}
+
+reportReduced :: (MonadTCM m, PrettyTCM a) => Reduced a -> m ()
+reportReduced Reduced{..} = do
+  report 30 $ "  *simplified: " <> ppm simplified
+  report 30 $ "     *reduced: " <> ppm reduced
+  report 30 $ "  *normalised: " <> ppm normalised
+
+-- ** utilities
 
 ppm :: PrettyTCM a => a -> TCM Doc
 ppm = prettyTCM
 
-reportTCM = reportSDoc "toTrain"
-report k  = liftTCM . reportTCM k
+report :: MonadTCM m => VerboseLevel -> TCM Doc -> m ()
+report n x = liftTCM $ reportSDoc "agda2train" n x
 
 (\/) :: (a -> Bool) -> (a -> Bool) -> (a -> Bool)
 (f \/ g) x = f x || g x
-
-noop :: C ()
-noop = return ()
-
-silently :: C a -> C ()
-silently k = void k `catchError` \ _ -> noop
-
-maxDuration = 2 -- seconds
-
-withTimeout :: a -> C a -> C a
-withTimeout t k = getTC >>= \ s -> liftIO $
-  caseEitherM
-    (race (threadDelay (maxDuration * 1000000))
-          (fst <$> runSafeTCM (runC k) s))
-    (\() -> return t)
-    return
