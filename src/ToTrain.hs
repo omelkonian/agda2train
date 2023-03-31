@@ -8,7 +8,7 @@ module ToTrain
   , ppm
   ) where
 
-import Data.List ( isPrefixOf, isInfixOf )
+import Data.List ( isPrefixOf, isInfixOf, find )
 import qualified Data.Set as S
 
 import Control.Monad ( forM_, void, when, unless )
@@ -125,8 +125,10 @@ forEachHole trainF def@Defn{..} = unless (ignoreDef def) $ do
 
     cubicalRelated, tooSlow :: String -> Bool
     cubicalRelated = ("Agda.Primitive.Cubical.I" `isInfixOf`)
-    tooSlow        = ("Data.Rational.Properties" `isPrefixOf`)
-                  \/ ("Prelude.Solvers" `isPrefixOf`)
+    tooSlow
+       = ("Data.Rational.Properties" `isPrefixOf`)
+      \/ ("Prelude.Solvers" `isPrefixOf`)
+      \/ (== "Data.Relation.Binary.Subset.Propositional.Properties.filter⁺")
 
     go :: Type -> Term -> C ()
     go ty t = whenM (not <$> ignore ty)
@@ -157,10 +159,15 @@ withTimeout k = getTC >>= \ s -> liftIO $
     (\() -> pure Nothing)
     (pure . Just)
 
-mkReduced :: (MonadFail m, MonadTCM m, PrettyTCM a, Simplify a, Reduce a, Normalise a)
-          => a -> m (Reduced a)
+mkReduced ::
+  ( MonadFail m, MonadTCM m, PrettyTCM a
+  , Simplify a, Reduce a, Normalise a, Eq a
+  ) => a -> m (Reduced a)
 mkReduced t = do
-  [simplified, reduced, normalised] <- mapM (liftTCM . withTimeout) [simplify t, reduce t, normalise t]
+  -- try different reductions (with timeout)
+  xs <- mapM (liftTCM . withTimeout) [simplify t, reduce t, normalise t]
+  -- compress Reduced representation (erase idential terms)
+  let [simplified, reduced, normalised] = find (/= t) <$> xs
   return $ Reduced {original = t, ..}
 
 reportReduced :: (MonadTCM m, PrettyTCM a) => Reduced a -> m ()
