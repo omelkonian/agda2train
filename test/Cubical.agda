@@ -1,4 +1,4 @@
-{-# OPTIONS --cubical-compatible #-}
+{-# OPTIONS --cubical-compatible -WnoUnsupportedIndexedMatch #-}
 open import Level
 open import Agda.Builtin.Bool
 open import Data.Empty using (⊥)

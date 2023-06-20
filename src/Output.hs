@@ -5,7 +5,7 @@ module Output
   , ScopeEntry
   , convert
   , Reduced(..)
-  , pattern (:~), pattern (:>)
+  , pattern (:~), pattern (:>), pattern (:=)
   , pp
   )
   where
@@ -57,7 +57,8 @@ data TrainData = TrainData
   } deriving Generic
     deriving (ToJSON, FromJSON) via Generically TrainData
 
-type ScopeEntry = Named (Pretty (Reduced Type))
+infixr 4 :=; pattern x := y = (x, y)
+type ScopeEntry = Named (Pretty (Reduced Type), Maybe (Pretty Term))
 
 data Sample = Sample
   { ctx   :: Pretty Telescope
@@ -120,15 +121,16 @@ instance From A.Term where
     (A.Sort  x) -> Sort  $ pp x
     -- ** there are some occurrences of `DontCare` in the standard library
     (A.DontCare t) -> go t
+    (A.Dummy s xs) -> App (Left s) (go <$> xs)
     -- ** crash on the rest (should never be encountered)
-    t {-MetaV|Dummy-} -> panic "term" t
+    t@(A.MetaV _ _) -> panic "term" t
 
 instance From A.Elim where
   type To A.Elim = Term
   go = \case
-    (A.Apply x)        -> go (unArg x)
-    (A.Proj _ qn)      -> App (Left $ pp qn) []
-    e@(A.IApply _ _ _) -> panic "elim" e
+    (A.Apply x)      -> go (unArg x)
+    (A.Proj _ qn)    -> App (Left $ pp qn) []
+    (A.IApply _ _ x) -> go x
 
 -- ** utilities
 

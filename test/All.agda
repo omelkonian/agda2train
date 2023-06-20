@@ -32,3 +32,6 @@ open import With
 
 -- reduction
 open import Reduction
+
+-- constructor references to parent datatype
+open import ReasoningSetoid
