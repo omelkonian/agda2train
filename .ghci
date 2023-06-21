@@ -3,7 +3,8 @@
 :def! test (\x -> return $ ":r\n :set args --ignore-existing-json -ojson/ -v agda2train:20 -itest/ test/" <> x <> ".agda\n main")
 :def! testStdlib (\x -> return $ ":r\n :set args -ojson/ -v agda2train:20 -i /home/omelkonian/git/agda-stdlib/ /home/omelkonian/git/agda-stdlib/src/" <> x <> ".agda\n main")
 :def! testAll (\_ -> return ":r\n :set args -r -v agda2train:10 -ojson/ -itest/ test/All.agda\n main")
-:def! stdlib (\_ -> return ":r\n :set args -r -v agda2train:10 -ojson/ -i /home/omelkonian/git/agda-stdlib/ /home/omelkonian/git/agda-stdlib/Everything.agda\n main")
+:def! stdlib (\_ -> return ":r\n :set args -r -v agda2train:10 -ojson/ -i /home/xbejea/agda-stdlib/src /home/xbejea/agda-stdlib/src/Everything.agda\n main")
+:def! unimath (\_ -> return ":r\n :set args -r -v agda2train:10 -ojson/ -i /home/xbejea/agda-unimath/src /home/xbejea/agda-unimath/src/everything.lagda.md\n main")
+:def! typetopo (\_ -> return ":r\n :set args -r -v agda2train:10 -ojson/ -i /home/xbejea/TypeTopology/source /home/xbejea/TypeTopology/source/index.lagda\n main")
 :def! prelude (\_ -> return ":r\n :set args -r -v agda2train:10 -ojson/ -i /home/omelkonian/git/formal-prelude/ /home/omelkonian/git/formal-prelude/Prelude/Main.agda\n main")
-:def! unimath (\_ -> return ":r\n :set args -r -v agda2train:10 -ojson/ -i /home/omelkonian/git/agda-unimath/src/ /home/omelkonian/git/agda-unimath/src/everything.lagda.md\n main")
-:def! typetopology (\_ -> return ":r\n :set args -r -v agda2train:10 -ojson/ -i /home/omelkonian/git/TypeTopology/source/ /home/omelkonian/git/TypeTopology/source/index.lagda\n main")
+
