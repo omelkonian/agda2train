@@ -1,4 +1,4 @@
-.PHONY : repl build install
+.PHONY : repl build install stdlib unimath typetopology
 
 default: repl
 
@@ -10,3 +10,12 @@ build :
 
 install :
 	cabal install --overwrite-policy=always
+
+stdlib :
+	cabal run agda2train -- -r -v agda2train:10 -ojson/ -i /home/omelkonian/git/agda-stdlib/ /home/omelkonian/git/agda-stdlib/Everything.agda
+
+unimath :
+	cabal run agda2train -- -r -v agda2train:10 -ojson/ -i /home/omelkonian/git/agda-unimath/src/ /home/omelkonian/git/agda-unimath/src/everything.lagda.md
+
+typetopology :
+	cabal run agda2train -- -r -v agda2train:10 -ojson/ -i /home/omelkonian/git/TypeTopology/source/ /home/omelkonian/git/TypeTopology/source/index.lagda
