@@ -1,11 +1,11 @@
 {-# LANGUAGE FlexibleInstances, MultiWayIf #-}
 module Output
   ( Sample(..)
-  , TrainData(..)
-  , ScopeEntry
+  , FileData, TrainData(..)
+  , ScopeEntry, ScopeEntry'(..)
   , convert
   , Reduced(..)
-  , pattern (:~), pattern (:>), pattern (:=)
+  , pattern (:~), pattern (:>)
   , pp
   )
   where
@@ -31,6 +31,8 @@ import qualified Agda.Utils.Pretty as P
 jsonOpts = defaultOptions
   { omitNothingFields = True
   , fieldLabelModifier = \case
+      "scopeGlobal" -> "scope-global"
+      "scopeLocal" -> "scope-local"
       "_type" -> "type"
       s -> s
   }
@@ -91,26 +93,23 @@ instance FromJSON a => FromJSON (Named a) where
     <*> (v .: "item" <|> parseJSON (Object v))
 
 type FileData = Named TrainData
-
 data TrainData = TrainData
-  -- { scopeGlobal :: [ScopeEntry]
-  -- , scopeLocal  :: [(ScopeEntry, [Hole])]
-  -- }
-  { scope :: [ScopeEntry]
-  , holes :: [Sample]
-  }
-  deriving Generic
-  deriving (ToJSON, FromJSON) via Generically TrainData
-
-infixr 4 :=; pattern x := y = ScopeEntry' {_type = x, definition = y}
-data ScopeEntry' = ScopeEntry'
-  { _type      :: Pretty (Reduced Type)
-  , definition :: Maybe (Pretty Term)
-  } deriving (Generic, FromJSON)
-instance ToJSON ScopeEntry' where
+  { scopeGlobal :: [ScopeEntry] -- these will not contain any holes
+  , scopeLocal  :: [ScopeEntry]
+  } deriving Generic
+instance ToJSON TrainData where
   toJSON = genericToJSON jsonOpts
+instance FromJSON TrainData where
+  parseJSON = genericParseJSON jsonOpts
 
 type ScopeEntry = Named ScopeEntry'
+data ScopeEntry' = ScopeEntry
+  { _type      :: Pretty (Reduced Type)
+  , definition :: Maybe (Pretty Term)
+  , holes      :: Maybe [Sample]
+  } deriving Generic
+instance ToJSON   ScopeEntry' where toJSON    = genericToJSON    jsonOpts
+instance FromJSON ScopeEntry' where parseJSON = genericParseJSON jsonOpts
 
 data Sample = Sample
   { ctx      :: Pretty Telescope
@@ -120,13 +119,13 @@ data Sample = Sample
   } deriving Generic
     deriving (ToJSON, FromJSON) via Generically Sample
 
+type Type = Term
 type Telescope = [Named Type]
 
-type Type = Term
 data Term
   = Pi Bool (Named Term) Term -- ^ e.g. `∀ {A : Set}. A → A`
-  | Lam (Named Term)     -- ^ e.g. `λ x. x`
-  | App Head [Term]      -- ^ e.g. `f x (x + x)` or `@0 (λ x. x)`
+  | Lam (Named Term)          -- ^ e.g. `λ x. x`
+  | App Head [Term]           -- ^ e.g. `f x (x + x)` or `@0 (λ x. x)`
   | Lit String | Sort String | Level String -- ^ e.g. Set/42/"sth",0ℓ,...
   deriving (Generic, Show)
   deriving (FromJSON) via Generically Term

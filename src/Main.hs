@@ -43,7 +43,7 @@ main = do
   withArgs (extraFlags ++ as) $
     runAgda [Backend $ mkBackend "agda2train" train]
 
-mkBackend :: String -> TrainF -> Backend' Options Options [ScopeEntry] () [Sample]
+mkBackend :: String -> TrainF -> Backend' Options Options [ScopeEntry] () (String, [Sample])
 mkBackend name trainF = Backend'
   { backendName      = name
   , backendVersion   = Nothing
@@ -60,7 +60,9 @@ mkBackend name trainF = Backend'
       , Option ['o'] ["out-dir"] (ReqArg outDirOpt "DIR")
         "Generate data at DIR. (default: project root)"
       ]
-  , isEnabled   = \ _ -> True
+  , isEnabled             = \ _ -> True
+  , scopeCheckingSuffices = False
+  , mayEraseType          = \ _ -> return True
   , preCompile  = return
   , postCompile = \ _ _ _ -> return ()
   , preModule   = \ opts isMain md _ ->
@@ -79,11 +81,12 @@ mkBackend name trainF = Backend'
             report 20 $ ppm (pp qn) <> " = " <> ppm tdef
             report 30 $ "      *pretty: " <> ppm ty
             reportReduced rty
-            return $ Just
-               $ pp qn
-              :~ (render pty :> fmap convert rty)
-              := boolToMaybe (includeDefinitions opts)
-                             (render pdef :> convert tdef)
+            return $ Just $ pp qn :~ ScopeEntry
+              { _type      = render pty :> fmap convert rty
+              , definition = boolToMaybe (includeDefinitions opts)
+                                         (render pdef :> convert tdef)
+              , holes = Nothing
+              }
       in
         ifM (skip opts isMain md) (return $ Skip ()) $ do
           report 10 $ "************************ "
@@ -95,22 +98,35 @@ mkBackend name trainF = Backend'
           scopeEntries <- mapMaybeM processScopeEntry (S.toList ns)
           report 10 "******************************************************************"
           return $ Recompile scopeEntries
-  , compileDef = \ _ _ _ def -> runC $ forEachHole trainF def
+  , compileDef = \ _ _ _ def -> (pp (defName def) ,) <$> runC (forEachHole trainF def)
   , postModule = \ opts scopeEntries isMain md samples -> let mn = pp md in
     unlessM (skip opts isMain md) $ do
       whenJust (outDir opts) (liftIO . createDirectoryIfMissing True)
       unless (noJson opts) $ liftIO $ do
         putStrLn "************************ JSON ************************"
-        let fileData = mn :~ TrainData
-              { scope = scopeEntries
-              , holes = concat samples
-              }
+        let
+          -- divideEntries :: [ScopeEntry] -> [Samples] -> ([ScopeEntry], [ScopeEntry])
+          -- divideEntries [] _ = []
+          -- divideEntries (x:xs) () =
+          --   let
+          --     (globals, locals) = divideEntries xs
+          --   in
+          --     case
+          --     (x:globals, locals)
+          --     (globals, x:locals)
+
+          -- globals , locals = divideEntries scopeEntries samples
+
+          (globals, locals') = span (\(n :~ _) -> isNothing $ lookup n samples) scopeEntries
+          locals = flip map locals' $ \(n :~ l) ->
+            n :~ l {holes = Just $ fromJust $ lookup n samples }
+
+
+          fileData = mn :~ TrainData {scopeGlobal = globals, scopeLocal = locals}
+
         encodeFile (getOutFn opts mn) fileData
         L.putStr (encode fileData)
         putStrLn "******************************************************"
-
-  , scopeCheckingSuffices = False
-  , mayEraseType          = \ _ -> return True
   }
   where
     skip :: Options -> IsMain -> TopLevelModuleName -> TCM Bool
@@ -167,8 +183,8 @@ encode = encodePretty' $ defConfig
       , "head", "arguments"
       , "variants", "reference", "variant"
       , "index"
-      , "scope", "holes"
-      , "type", "definition"
+      , "scopeGlobal", "scopeLocal"
+      , "type", "definition", "holes"
       , "ctx", "goal", "term", "premises"
       ]
   }
