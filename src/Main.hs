@@ -8,7 +8,10 @@ import System.FilePath ( (</>) )
 import System.Console.GetOpt ( OptDescr(..), ArgDescr(..) )
 
 import qualified Data.Set as S
-import qualified Data.Aeson as JSON
+import Data.Aeson ( ToJSON )
+import Data.Aeson.Encode.Pretty
+  ( encodePretty', Config(..), defConfig, Indent(..), keyOrder )
+import qualified Data.ByteString.Lazy as L
 
 import Control.Monad
 import Control.Monad.IO.Class ( liftIO )
@@ -42,10 +45,10 @@ main = do
 
 mkBackend :: String -> TrainF -> Backend' Options Options [ScopeEntry] () [Sample]
 mkBackend name trainF = Backend'
-  { backendName           = name
-  , backendVersion        = Nothing
-  , options               = defaultOptions
-  , commandLineFlags      =
+  { backendName      = name
+  , backendVersion   = Nothing
+  , options          = defaultOptions
+  , commandLineFlags =
       [ Option ['r'] ["recurse"] (NoArg recOpt)
         "Recurse into imports/dependencies."
       , Option ['x'] ["no-json"] (NoArg noJsonOpt)
@@ -57,10 +60,10 @@ mkBackend name trainF = Backend'
       , Option ['o'] ["out-dir"] (ReqArg outDirOpt "DIR")
         "Generate data at DIR. (default: project root)"
       ]
-  , isEnabled             = \ _ -> True
-  , preCompile            = return
-  , postCompile           = \ _ _ _ -> return ()
-  , preModule             = \ opts isMain md _ ->
+  , isEnabled   = \ _ -> True
+  , preCompile  = return
+  , postCompile = \ _ _ _ -> return ()
+  , preModule   = \ opts isMain md _ ->
       let
         processScopeEntry :: QName -> TCM (Maybe ScopeEntry)
         processScopeEntry qn = do
@@ -92,15 +95,20 @@ mkBackend name trainF = Backend'
           scopeEntries <- mapMaybeM processScopeEntry (S.toList ns)
           report 10 "******************************************************************"
           return $ Recompile scopeEntries
-  , compileDef            = \ _ _ _ def -> runC $ forEachHole trainF def
-  , postModule            = \ opts scopeEntries isMain md samples -> let mn = pp md in
+  , compileDef = \ _ _ _ def -> runC $ forEachHole trainF def
+  , postModule = \ opts scopeEntries isMain md samples -> let mn = pp md in
     unlessM (skip opts isMain md) $ do
       whenJust (outDir opts) (liftIO . createDirectoryIfMissing True)
-      unless (noJson opts) $
-        liftIO $ JSON.encodeFile (getOutFn opts mn) $ TrainData
-        { scope   = mn :~ scopeEntries
-        , samples = concat samples
-        }
+      unless (noJson opts) $ liftIO $ do
+        putStrLn "************************ JSON ************************"
+        let fileData = mn :~ TrainData
+              { scope = scopeEntries
+              , holes = concat samples
+              }
+        encodeFile (getOutFn opts mn) fileData
+        L.putStr (encode fileData)
+        putStrLn "******************************************************"
+
   , scopeCheckingSuffices = False
   , mayEraseType          = \ _ -> return True
   }
@@ -143,3 +151,32 @@ getOutDir opts = case outDir opts of
 
 getOutFn :: Options -> String -> FilePath
 getOutFn opts mn = getOutDir opts </> mn <> ".json"
+
+-- ** JSON encoding
+
+encode :: ToJSON a => a -> L.ByteString
+encode = encodePretty' $ defConfig
+  { confIndent = Spaces 2
+  , confCompare = keyOrder
+      [ "pretty"
+      , "tag"
+      , "name"
+      , "domain", "codomain"
+      , "abstraction", "body"
+      , "sort", "level", "literal"
+      , "head", "arguments"
+      , "variants", "reference", "variant"
+      , "index"
+      , "scope", "holes"
+      , "type", "definition"
+      , "ctx", "goal", "term", "premises"
+      ]
+  }
+  where
+    -- named   = keyOrder . (["name", "item"] <>)
+    -- pretty  = keyOrder . (["pretty", "thing"] <>)
+    -- tagged  = keyOrder . ("tag" :)
+    -- reduced = ["original", "simplified", "reduced", "normalised"]
+
+encodeFile :: ToJSON a => FilePath -> a -> IO ()
+encodeFile = \fn -> L.writeFile fn . encode

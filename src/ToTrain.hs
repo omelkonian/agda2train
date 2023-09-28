@@ -75,10 +75,10 @@ train ty t = do
 
       rt <- mkReduced t
       tell1 $ Sample
-        { ctx  = render pctx :> convert ctx
-        , goal = render pty  :> fmap convert rty
-        , term = render pt   :> fmap convert rt
-        , namesUsed = map pp ns
+        { ctx      = render pctx :> convert ctx
+        , goal     = render pty  :> fmap convert rty
+        , term     = render pt   :> fmap convert rt
+        , premises = map pp ns
         }
       report 20 "{"
       report 20 $ " ctx: " <> ppm (pp ctx)

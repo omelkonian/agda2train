@@ -1,4 +1,4 @@
-.PHONY : repl build install stdlib unimath typetopology
+.PHONY : repl build install stdlib unimath typetopology test
 
 default: repl
 
@@ -19,3 +19,10 @@ unimath :
 
 typetopology :
 	cabal run agda2train -- -r -v agda2train:10 -ojson/ -i /home/omelkonian/git/TypeTopology/source/ /home/omelkonian/git/TypeTopology/source/index.lagda
+
+test :
+	cabal install --overwrite-policy=always --installdir=test --install-method=copy
+	make -C test
+
+golden :
+	make -C test golden
