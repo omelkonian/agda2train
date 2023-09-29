@@ -1,0 +1,223 @@
+{
+  "name": "Test.Sum",
+  "scope-global": [],
+  "scope-local": [
+    {
+      "name": "Test.Sum._⊎_",
+      "type": {
+        "pretty": "Set → Set → Set",
+        "tag": "Pi",
+        "name": "A",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "B",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Sort",
+            "sort": "Set"
+          }
+        }
+      },
+      "definition": {
+        "pretty": "\"⊕\" ({A B : Set} → A → A ⊎ B) ({A B : Set} → B → A ⊎ B)",
+        "tag": "ADT",
+        "variants": [
+          {
+            "tag": "Pi",
+            "name": "A",
+            "domain": {
+              "tag": "Sort",
+              "sort": "Set"
+            },
+            "codomain": {
+              "tag": "Pi",
+              "name": "B",
+              "domain": {
+                "tag": "Sort",
+                "sort": "Set"
+              },
+              "codomain": {
+                "tag": "Pi",
+                "name": "_",
+                "domain": {
+                  "tag": "deBruijn",
+                  "index": 1
+                },
+                "codomain": {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.Sum._⊎_"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "deBruijn",
+                      "index": 1
+                    },
+                    {
+                      "tag": "deBruijn",
+                      "index": 0
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "tag": "Pi",
+            "name": "A",
+            "domain": {
+              "tag": "Sort",
+              "sort": "Set"
+            },
+            "codomain": {
+              "tag": "Pi",
+              "name": "B",
+              "domain": {
+                "tag": "Sort",
+                "sort": "Set"
+              },
+              "codomain": {
+                "tag": "Pi",
+                "name": "_",
+                "domain": {
+                  "tag": "deBruijn",
+                  "index": 0
+                },
+                "codomain": {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.Sum._⊎_"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "deBruijn",
+                      "index": 1
+                    },
+                    {
+                      "tag": "deBruijn",
+                      "index": 0
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Sum._⊎_.inj₁",
+      "type": {
+        "pretty": "{A B : Set} → A → A ⊎ B",
+        "tag": "Pi",
+        "name": "A",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "B",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Pi",
+            "name": "_",
+            "domain": {
+              "tag": "deBruijn",
+              "index": 1
+            },
+            "codomain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.Sum._⊎_"
+              },
+              "arguments": [
+                {
+                  "tag": "deBruijn",
+                  "index": 1
+                },
+                {
+                  "tag": "deBruijn",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "\"⊙\" _⊎_ 0",
+        "tag": "Constructor",
+        "reference": "Test.Sum._⊎_",
+        "variant": "0"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Sum._⊎_.inj₂",
+      "type": {
+        "pretty": "{A B : Set} → B → A ⊎ B",
+        "tag": "Pi",
+        "name": "A",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "B",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Pi",
+            "name": "_",
+            "domain": {
+              "tag": "deBruijn",
+              "index": 0
+            },
+            "codomain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.Sum._⊎_"
+              },
+              "arguments": [
+                {
+                  "tag": "deBruijn",
+                  "index": 1
+                },
+                {
+                  "tag": "deBruijn",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "\"⊙\" _⊎_ 1",
+        "tag": "Constructor",
+        "reference": "Test.Sum._⊎_",
+        "variant": "1"
+      },
+      "holes": []
+    }
+  ]
+}

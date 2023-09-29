@@ -7,11 +7,12 @@ import System.Directory ( createDirectoryIfMissing, doesFileExist )
 import System.FilePath ( (</>) )
 import System.Console.GetOpt ( OptDescr(..), ArgDescr(..) )
 
+import qualified Data.List as L
 import qualified Data.Set as S
 import Data.Aeson ( ToJSON )
 import Data.Aeson.Encode.Pretty
   ( encodePretty', Config(..), defConfig, Indent(..), keyOrder )
-import qualified Data.ByteString.Lazy as L
+import qualified Data.ByteString.Lazy as BL
 
 import Control.Monad
 import Control.Monad.IO.Class ( liftIO )
@@ -41,11 +42,11 @@ main = do
   let extraFlags = []
   -- let extraFlags = ["--no-projection-like"]
   withArgs (extraFlags ++ as) $
-    runAgda [Backend $ mkBackend "agda2train" train]
+    runAgda [Backend $ mkBackend train]
 
-mkBackend :: String -> TrainF -> Backend' Options Options [ScopeEntry] () (String, [Sample])
-mkBackend name trainF = Backend'
-  { backendName      = name
+mkBackend :: TrainF -> Backend' Options Options [ScopeEntry] () (String, [Sample])
+mkBackend trainF = Backend'
+  { backendName      = "agda2train"
   , backendVersion   = Nothing
   , options          = defaultOptions
   , commandLineFlags =
@@ -55,6 +56,8 @@ mkBackend name trainF = Backend'
         "Skip generation of JSON files. (just debug print)"
       , Option [] ["ignore-existing-json"] (NoArg ignoreExistingJsonOpt)
         "Ignore existing JSON files. (i.e. always overwrite)"
+      , Option [] ["print-json"] (NoArg printJsonOpt)
+        "Print JSON output. (for debugging)"
       , Option [] ["no-terms"] (NoArg includeDefinitionsOpt)
         "Do not include definitions of things in scope"
       , Option ['o'] ["out-dir"] (ReqArg outDirOpt "DIR")
@@ -103,30 +106,19 @@ mkBackend name trainF = Backend'
     unlessM (skip opts isMain md) $ do
       whenJust (outDir opts) (liftIO . createDirectoryIfMissing True)
       unless (noJson opts) $ liftIO $ do
-        putStrLn "************************ JSON ************************"
         let
-          -- divideEntries :: [ScopeEntry] -> [Samples] -> ([ScopeEntry], [ScopeEntry])
-          -- divideEntries [] _ = []
-          -- divideEntries (x:xs) () =
-          --   let
-          --     (globals, locals) = divideEntries xs
-          --   in
-          --     case
-          --     (x:globals, locals)
-          --     (globals, x:locals)
-
-          -- globals , locals = divideEntries scopeEntries samples
-
-          (globals, locals') = span (\(n :~ _) -> isNothing $ lookup n samples) scopeEntries
+          isGlobal = \(n :~ _) -> isNothing $ lookup n samples
+          (globals, locals') = L.partition isGlobal scopeEntries
           locals = flip map locals' $ \(n :~ l) ->
-            n :~ l {holes = Just $ fromJust $ lookup n samples }
-
+              n :~ l {holes = Just $ fromJust $ lookup n samples }
 
           fileData = mn :~ TrainData {scopeGlobal = globals, scopeLocal = locals}
 
         encodeFile (getOutFn opts mn) fileData
-        L.putStr (encode fileData)
-        putStrLn "******************************************************"
+        when (printJson opts) $ do
+          putStrLn "************************ JSON ************************"
+          BL.putStr (encode fileData)
+          putStrLn "******************************************************"
   }
   where
     skip :: Options -> IsMain -> TopLevelModuleName -> TCM Bool
@@ -138,7 +130,7 @@ mkBackend name trainF = Backend'
 -- ** command-line flags
 
 data Options = Options
-  { recurse, noJson, ignoreExistingJson, includeDefinitions :: Bool
+  { recurse, noJson, ignoreExistingJson, printJson, includeDefinitions :: Bool
   , outDir  :: Maybe FilePath
   } deriving (Generic, NFData)
 
@@ -146,14 +138,16 @@ defaultOptions = Options
   { recurse            = False
   , noJson             = False
   , ignoreExistingJson = False
+  , printJson          = False
   , includeDefinitions = True
   , outDir             = Nothing
   }
 
-recOpt, noJsonOpt, ignoreExistingJsonOpt, includeDefinitionsOpt
+recOpt, noJsonOpt, ignoreExistingJsonOpt, printJsonOpt, includeDefinitionsOpt
   :: Monad m => Options -> m Options
 recOpt                opts = return $ opts { recurse            = True }
 noJsonOpt             opts = return $ opts { noJson             = True }
+printJsonOpt          opts = return $ opts { printJson          = True }
 ignoreExistingJsonOpt opts = return $ opts { ignoreExistingJson = True }
 includeDefinitionsOpt opts = return $ opts { includeDefinitions = False }
 
@@ -170,7 +164,7 @@ getOutFn opts mn = getOutDir opts </> mn <> ".json"
 
 -- ** JSON encoding
 
-encode :: ToJSON a => a -> L.ByteString
+encode :: ToJSON a => a -> BL.ByteString
 encode = encodePretty' $ defConfig
   { confIndent = Spaces 2
   , confCompare = keyOrder
@@ -195,4 +189,4 @@ encode = encodePretty' $ defConfig
     -- reduced = ["original", "simplified", "reduced", "normalised"]
 
 encodeFile :: ToJSON a => FilePath -> a -> IO ()
-encodeFile = \fn -> L.writeFile fn . encode
+encodeFile = \fn -> BL.writeFile fn . encode

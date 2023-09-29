@@ -1,10 +1,10 @@
-{-# LANGUAGE FlexibleInstances, MultiWayIf #-}
+{-# LANGUAGE FlexibleInstances, MultiWayIf, StandaloneDeriving #-}
 module Output
   ( Sample(..)
   , FileData, TrainData(..)
   , ScopeEntry, ScopeEntry'(..)
   , convert
-  , Reduced(..)
+  , Pretty(..), Reduced(..), Named(..)
   , pattern (:~), pattern (:>)
   , pp
   )
@@ -43,11 +43,14 @@ type Name = String
 type DB   = Int
 type Head = Either Name DB
 
+-- generic constructions
+
 infixr 4 :>; pattern x :> y = Pretty {pretty = x, thing = y}
 data Pretty a = Pretty
   { pretty :: String
   , thing  :: a
   } deriving Generic
+deriving instance Show a => Show (Pretty a)
 instance ToJSON a => ToJSON (Pretty a) where
   toJSON (Pretty{..}) = let pretty' = toJSON pretty in
     case toJSON thing of
@@ -64,6 +67,7 @@ data Reduced a = Reduced
   , normalised :: Maybe a
   , original   :: a
   } deriving (Generic, Functor)
+deriving instance Show a => Show (Reduced a)
 instance ToJSON a => ToJSON (Reduced a) where
   toJSON r@(Reduced{..})
     | Nothing <- simplified <|> reduced <|> normalised
@@ -92,6 +96,8 @@ instance FromJSON a => FromJSON (Named a) where
     <$> v .: "name"
     <*> (v .: "item" <|> parseJSON (Object v))
 
+-- concrete types (very close to JSON format)
+
 type FileData = Named TrainData
 data TrainData = TrainData
   { scopeGlobal :: [ScopeEntry] -- these will not contain any holes
@@ -107,7 +113,7 @@ data ScopeEntry' = ScopeEntry
   { _type      :: Pretty (Reduced Type)
   , definition :: Maybe (Pretty Term)
   , holes      :: Maybe [Sample]
-  } deriving Generic
+  } deriving (Generic, Show)
 instance ToJSON   ScopeEntry' where toJSON    = genericToJSON    jsonOpts
 instance FromJSON ScopeEntry' where parseJSON = genericParseJSON jsonOpts
 
@@ -116,7 +122,7 @@ data Sample = Sample
   , goal     :: Pretty (Reduced Type)
   , term     :: Pretty (Reduced Term)
   , premises :: [Name]
-  } deriving Generic
+  } deriving (Generic, Show)
     deriving (ToJSON, FromJSON) via Generically Sample
 
 type Type = Term
@@ -180,7 +186,7 @@ testJSON = do
   Just t <- decodeFileStrict "term.json" :: IO (Maybe Term)
   putStrLn $ "t: " <> show t
 
--- ** conversion from Agda's iternal syntax
+-- ** conversion from Agda's internal syntax
 
 class From a where
  type To a

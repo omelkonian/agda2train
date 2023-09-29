@@ -7,7 +7,7 @@ clean :
 	@rm -rf build/*
 
 all : Test/*.agda
-	for f in $^; do \
+	@for f in $^; do \
 			echo == Compiling $${f} == ; \
 			./agda2train $${f} -o build ; \
 	done

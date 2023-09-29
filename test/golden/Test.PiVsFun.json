@@ -1,0 +1,317 @@
+{
+  "name": "Test.PiVsFun",
+  "scope-global": [],
+  "scope-local": [
+    {
+      "name": "Test.PiVsFun._≡_",
+      "type": {
+        "pretty": "Set → Set → Set",
+        "tag": "Pi",
+        "name": "_",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "_",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Sort",
+            "sort": "Set"
+          }
+        }
+      },
+      "definition": {
+        "pretty": "\"⊤\"",
+        "tag": "ScopeReference",
+        "name": "⊤"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.PiVsFun.refl",
+      "type": {
+        "pretty": "{x y : Set} → x ≡ y",
+        "tag": "Pi",
+        "name": "x",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "y",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.PiVsFun._≡_"
+            },
+            "arguments": [
+              {
+                "tag": "deBruijn",
+                "index": 1
+              },
+              {
+                "tag": "deBruijn",
+                "index": 0
+              }
+            ]
+          }
+        }
+      },
+      "definition": {
+        "pretty": "\"⊤\"",
+        "tag": "ScopeReference",
+        "name": "⊤"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.PiVsFun.f",
+      "type": {
+        "pretty": "(x : Set) → Set → x ≡ x",
+        "tag": "Pi",
+        "name": "x",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "_",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.PiVsFun._≡_"
+            },
+            "arguments": [
+              {
+                "tag": "deBruijn",
+                "index": 0
+              },
+              {
+                "tag": "deBruijn",
+                "index": 0
+              }
+            ]
+          }
+        }
+      },
+      "definition": {
+        "pretty": "λ \"x\" → refl",
+        "tag": "Lambda",
+        "abstraction": "\"x\"",
+        "body": {
+          "tag": "Application",
+          "head": {
+            "tag": "ScopeReference",
+            "name": "Test.PiVsFun.refl"
+          },
+          "arguments": [
+            {
+              "tag": "deBruijn",
+              "index": 1
+            },
+            {
+              "tag": "deBruijn",
+              "index": 1
+            }
+          ]
+        }
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "(x : Set) (x₁ : Set)",
+            "thing": [
+              {
+                "tag": "Sort",
+                "name": "x",
+                "sort": "Set"
+              },
+              {
+                "tag": "Sort",
+                "name": "x",
+                "sort": "Set"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "x ≡ x",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.PiVsFun._≡_"
+            },
+            "arguments": [
+              {
+                "tag": "deBruijn",
+                "index": 1
+              },
+              {
+                "tag": "deBruijn",
+                "index": 1
+              }
+            ]
+          },
+          "term": {
+            "pretty": "refl",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.PiVsFun.refl"
+            },
+            "arguments": [
+              {
+                "tag": "deBruijn",
+                "index": 1
+              },
+              {
+                "tag": "deBruijn",
+                "index": 1
+              }
+            ]
+          },
+          "premises": [
+            "Test.PiVsFun.refl"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Test.PiVsFun.g",
+      "type": {
+        "pretty": "(x y : Set) → x ≡ y",
+        "tag": "Pi",
+        "name": "x",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "y",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.PiVsFun._≡_"
+            },
+            "arguments": [
+              {
+                "tag": "deBruijn",
+                "index": 1
+              },
+              {
+                "tag": "deBruijn",
+                "index": 0
+              }
+            ]
+          }
+        }
+      },
+      "definition": {
+        "pretty": "λ \"x\" \"y\" → refl",
+        "tag": "Lambda",
+        "abstraction": "\"x\"",
+        "body": {
+          "tag": "Lambda",
+          "abstraction": "\"y\"",
+          "body": {
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.PiVsFun.refl"
+            },
+            "arguments": [
+              {
+                "tag": "deBruijn",
+                "index": 1
+              },
+              {
+                "tag": "deBruijn",
+                "index": 0
+              }
+            ]
+          }
+        }
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "(x : Set) (y : Set)",
+            "thing": [
+              {
+                "tag": "Sort",
+                "name": "x",
+                "sort": "Set"
+              },
+              {
+                "tag": "Sort",
+                "name": "y",
+                "sort": "Set"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "x ≡ y",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.PiVsFun._≡_"
+            },
+            "arguments": [
+              {
+                "tag": "deBruijn",
+                "index": 1
+              },
+              {
+                "tag": "deBruijn",
+                "index": 0
+              }
+            ]
+          },
+          "term": {
+            "pretty": "refl",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.PiVsFun.refl"
+            },
+            "arguments": [
+              {
+                "tag": "deBruijn",
+                "index": 1
+              },
+              {
+                "tag": "deBruijn",
+                "index": 0
+              }
+            ]
+          },
+          "premises": [
+            "Test.PiVsFun.refl"
+          ]
+        }
+      ]
+    }
+  ]
+}

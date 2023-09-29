@@ -9,5 +9,7 @@ MAlonzo
 *.agda#
 *~
 .#*.agda
-*.json
 json/
+
+test/build/*
+test/agda2train
