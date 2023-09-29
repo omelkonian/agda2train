@@ -52,8 +52,8 @@ mkBackend name trainF = Backend'
         "Skip generation of JSON files. (just debug print)"
       , Option [] ["ignore-existing-json"] (NoArg ignoreExistingJsonOpt)
         "Ignore existing JSON files. (i.e. always overwrite)"
-      , Option ['t'] ["include-definitions"] (NoArg includeDefinitionsOpt)
-        "Also include definitions of things in scope"
+      , Option [] ["no-terms"] (NoArg includeDefinitionsOpt)
+        "Do not include definitions of things in scope"
       , Option ['o'] ["out-dir"] (ReqArg outDirOpt "DIR")
         "Generate data at DIR. (default: project root)"
       ]
@@ -131,7 +131,7 @@ recOpt, noJsonOpt, ignoreExistingJsonOpt, includeDefinitionsOpt
 recOpt                opts = return $ opts { recurse            = True }
 noJsonOpt             opts = return $ opts { noJson             = True }
 ignoreExistingJsonOpt opts = return $ opts { ignoreExistingJson = True }
-includeDefinitionsOpt opts = return $ opts { includeDefinitions = True }
+includeDefinitionsOpt opts = return $ opts { includeDefinitions = False }
 
 outDirOpt :: Monad m => FilePath -> Options -> m Options
 outDirOpt fp opts = return $ opts { outDir = Just fp }
