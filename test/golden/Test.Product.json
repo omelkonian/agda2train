@@ -2,7 +2,7 @@
   "name": "Test.Product",
   "scope-global": [
     {
-      "name": "Agda.Primitive.Set",
+      "name": "Agda.Primitive.Set<4>",
       "type": {
         "pretty": "Set₁",
         "tag": "Sort",
@@ -11,56 +11,56 @@
       "definition": {
         "pretty": "\"$primSet\"",
         "tag": "ScopeReference",
-        "name": "$primSet$primSet"
+        "name": "$primSet"
       }
     },
     {
-      "name": "Agda.Primitive._⊔_",
+      "name": "Agda.Primitive._⊔_<26>",
       "type": {
         "pretty": "Agda.Primitive.Level → Agda.Primitive.Level → Agda.Primitive.Level",
         "tag": "Pi",
         "name": "ℓ₁",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Primitive.Level"
+          "name": "Agda.Primitive.Level<14>"
         },
         "codomain": {
           "tag": "Pi",
           "name": "ℓ₂",
           "domain": {
             "tag": "ScopeReference",
-            "name": "Agda.Primitive.Level"
+            "name": "Agda.Primitive.Level<14>"
           },
           "codomain": {
             "tag": "ScopeReference",
-            "name": "Agda.Primitive.Level"
+            "name": "Agda.Primitive.Level<14>"
           }
         }
       },
       "definition": {
         "pretty": "\"$primLevelMax\"",
         "tag": "ScopeReference",
-        "name": "$primLevelMax$primLevelMax"
+        "name": "$primLevelMax"
       }
     }
   ],
   "scope-local": [
     {
-      "name": "Test.Product.Σ",
+      "name": "Test.Product.Σ<12>",
       "type": {
         "pretty": "{a b : Agda.Primitive.Level} (A : Set a) (B : A → Set b) →\nSet (a ⊔ b)",
         "tag": "Pi",
         "name": "a",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Primitive.Level"
+          "name": "Agda.Primitive.Level<14>"
         },
         "codomain": {
           "tag": "Pi",
           "name": "b",
           "domain": {
             "tag": "ScopeReference",
-            "name": "Agda.Primitive.Level"
+            "name": "Agda.Primitive.Level<14>"
           },
           "codomain": {
             "tag": "Pi",
@@ -101,14 +101,14 @@
             "name": "a",
             "domain": {
               "tag": "ScopeReference",
-              "name": "Agda.Primitive.Level"
+              "name": "Agda.Primitive.Level<14>"
             },
             "codomain": {
               "tag": "Pi",
               "name": "b",
               "domain": {
                 "tag": "ScopeReference",
-                "name": "Agda.Primitive.Level"
+                "name": "Agda.Primitive.Level<14>"
               },
               "codomain": {
                 "tag": "Pi",
@@ -139,7 +139,7 @@
                       "tag": "Application",
                       "head": {
                         "tag": "ScopeReference",
-                        "name": "Test.Product.Σ"
+                        "name": "Test.Product.Σ<12>"
                       },
                       "arguments": [
                         {
@@ -174,14 +174,14 @@
             "name": "a",
             "domain": {
               "tag": "ScopeReference",
-              "name": "Agda.Primitive.Level"
+              "name": "Agda.Primitive.Level<14>"
             },
             "codomain": {
               "tag": "Pi",
               "name": "b",
               "domain": {
                 "tag": "ScopeReference",
-                "name": "Agda.Primitive.Level"
+                "name": "Agda.Primitive.Level<14>"
               },
               "codomain": {
                 "tag": "Pi",
@@ -212,7 +212,7 @@
                       "tag": "Application",
                       "head": {
                         "tag": "ScopeReference",
-                        "name": "Test.Product.Σ"
+                        "name": "Test.Product.Σ<12>"
                       },
                       "arguments": [
                         {
@@ -249,7 +249,7 @@
                           "arguments": [
                             {
                               "tag": "ScopeReference",
-                              "name": "Test.Product.Σ.fst"
+                              "name": "Test.Product.Σ.fst<26>"
                             }
                           ]
                         }
@@ -265,21 +265,21 @@
       "holes": []
     },
     {
-      "name": "Test.Product.Σ.fst",
+      "name": "Test.Product.Σ.fst<26>",
       "type": {
         "pretty": "{a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b} →\nΣ A B → A",
         "tag": "Pi",
         "name": "a",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Primitive.Level"
+          "name": "Agda.Primitive.Level<14>"
         },
         "codomain": {
           "tag": "Pi",
           "name": "b",
           "domain": {
             "tag": "ScopeReference",
-            "name": "Agda.Primitive.Level"
+            "name": "Agda.Primitive.Level<14>"
           },
           "codomain": {
             "tag": "Pi",
@@ -310,7 +310,7 @@
                   "tag": "Application",
                   "head": {
                     "tag": "ScopeReference",
-                    "name": "Test.Product.Σ"
+                    "name": "Test.Product.Σ<12>"
                   },
                   "arguments": [
                     {
@@ -348,21 +348,21 @@
       "holes": []
     },
     {
-      "name": "Test.Product.Σ.snd",
+      "name": "Test.Product.Σ.snd<28>",
       "type": {
         "pretty": "{a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b}\n(r : Σ A B) →\nB (fst r)",
         "tag": "Pi",
         "name": "a",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Primitive.Level"
+          "name": "Agda.Primitive.Level<14>"
         },
         "codomain": {
           "tag": "Pi",
           "name": "b",
           "domain": {
             "tag": "ScopeReference",
-            "name": "Agda.Primitive.Level"
+            "name": "Agda.Primitive.Level<14>"
           },
           "codomain": {
             "tag": "Pi",
@@ -393,7 +393,7 @@
                   "tag": "Application",
                   "head": {
                     "tag": "ScopeReference",
-                    "name": "Test.Product.Σ"
+                    "name": "Test.Product.Σ<12>"
                   },
                   "arguments": [
                     {
@@ -430,7 +430,7 @@
                       "arguments": [
                         {
                           "tag": "ScopeReference",
-                          "name": "Test.Product.Σ.fst"
+                          "name": "Test.Product.Σ.fst<26>"
                         }
                       ]
                     }
@@ -449,21 +449,21 @@
       "holes": []
     },
     {
-      "name": "Test.Product._,_",
+      "name": "Test.Product._,_<30>",
       "type": {
         "pretty": "{a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b} (fst₁ : A)\n(snd₁ : B fst₁) →\nΣ A B",
         "tag": "Pi",
         "name": "a",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Primitive.Level"
+          "name": "Agda.Primitive.Level<14>"
         },
         "codomain": {
           "tag": "Pi",
           "name": "b",
           "domain": {
             "tag": "ScopeReference",
-            "name": "Agda.Primitive.Level"
+            "name": "Agda.Primitive.Level<14>"
           },
           "codomain": {
             "tag": "Pi",
@@ -514,7 +514,7 @@
                     "tag": "Application",
                     "head": {
                       "tag": "ScopeReference",
-                      "name": "Test.Product.Σ"
+                      "name": "Test.Product.Σ<12>"
                     },
                     "arguments": [
                       {
@@ -544,7 +544,7 @@
       "definition": {
         "pretty": "\"⊙\" Σ 0",
         "tag": "Constructor",
-        "reference": "Test.Product.Σ",
+        "reference": "Test.Product.Σ<12>",
         "variant": 0
       },
       "holes": []

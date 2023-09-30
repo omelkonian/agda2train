@@ -1,3 +1,4 @@
+{-# LANGUAGE TypeApplications #-}
 module Main where
 
 import GHC.Generics
@@ -77,17 +78,17 @@ mkBackend trainF = Backend'
             pty <- ppm ty
             rty <- mkReduced ty
             def <- getConstInfo qn
-            -- pdef <- ppm def
             tdef <- toTerm def
             pdef <- ppm tdef
             report 20 $ ppm (pp qn) <> " : " <> ppm (pp ty)
             report 20 $ ppm (pp qn) <> " = " <> ppm tdef
             report 30 $ "      *pretty: " <> ppm ty
             reportReduced rty
-            return $ Just $ pp qn :~ ScopeEntry
+            return $ Just $
+              ppName qn :~ ScopeEntry
               { _type      = render pty :> fmap convert rty
               , definition = boolToMaybe (includeDefinitions opts)
-                                         (render pdef :> convert tdef)
+                           $ render pdef :> convert tdef
               , holes = Nothing
               }
       in
@@ -101,7 +102,7 @@ mkBackend trainF = Backend'
           scopeEntries <- mapMaybeM processScopeEntry (S.toList ns)
           report 10 "******************************************************************"
           return $ Recompile scopeEntries
-  , compileDef = \ _ _ _ def -> (pp (defName def) ,) <$> runC (forEachHole trainF def)
+  , compileDef = \ _ _ _ def -> (ppName (defName def) ,) <$> runC (forEachHole trainF def)
   , postModule = \ opts scopeEntries isMain md samples -> let mn = pp md in
     unlessM (skip opts isMain md) $ do
       whenJust (outDir opts) (liftIO . createDirectoryIfMissing True)
@@ -110,7 +111,7 @@ mkBackend trainF = Backend'
           isGlobal = \(n :~ _) -> isNothing $ lookup n samples
           (globals, locals') = L.partition isGlobal scopeEntries
           locals = flip map locals' $ \(n :~ l) ->
-              n :~ l {holes = Just $ fromJust $ lookup n samples }
+              n :~ l { holes = Just $ fromJust $ lookup n samples }
 
           fileData = mn :~ TrainData {scopeGlobal = globals, scopeLocal = locals}
 

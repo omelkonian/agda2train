@@ -3,7 +3,7 @@
   "scope-global": [],
   "scope-local": [
     {
-      "name": "Test.Sum._⊎_",
+      "name": "Test.Sum._⊎_<8>",
       "type": {
         "pretty": "Set → Set → Set",
         "tag": "Pi",
@@ -54,7 +54,7 @@
                   "tag": "Application",
                   "head": {
                     "tag": "ScopeReference",
-                    "name": "Test.Sum._⊎_"
+                    "name": "Test.Sum._⊎_<8>"
                   },
                   "arguments": [
                     {
@@ -95,7 +95,7 @@
                   "tag": "Application",
                   "head": {
                     "tag": "ScopeReference",
-                    "name": "Test.Sum._⊎_"
+                    "name": "Test.Sum._⊎_<8>"
                   },
                   "arguments": [
                     {
@@ -116,7 +116,7 @@
       "holes": []
     },
     {
-      "name": "Test.Sum._⊎_.inj₁",
+      "name": "Test.Sum._⊎_.inj₁<14>",
       "type": {
         "pretty": "{A B : Set} → A → A ⊎ B",
         "tag": "Pi",
@@ -143,7 +143,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.Sum._⊎_"
+                "name": "Test.Sum._⊎_<8>"
               },
               "arguments": [
                 {
@@ -162,13 +162,13 @@
       "definition": {
         "pretty": "\"⊙\" _⊎_ 0",
         "tag": "Constructor",
-        "reference": "Test.Sum._⊎_",
+        "reference": "Test.Sum._⊎_<8>",
         "variant": 0
       },
       "holes": []
     },
     {
-      "name": "Test.Sum._⊎_.inj₂",
+      "name": "Test.Sum._⊎_.inj₂<16>",
       "type": {
         "pretty": "{A B : Set} → B → A ⊎ B",
         "tag": "Pi",
@@ -195,7 +195,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.Sum._⊎_"
+                "name": "Test.Sum._⊎_<8>"
               },
               "arguments": [
                 {
@@ -214,7 +214,7 @@
       "definition": {
         "pretty": "\"⊙\" _⊎_ 1",
         "tag": "Constructor",
-        "reference": "Test.Sum._⊎_",
+        "reference": "Test.Sum._⊎_<8>",
         "variant": 1
       },
       "holes": []

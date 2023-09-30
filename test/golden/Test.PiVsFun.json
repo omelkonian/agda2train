@@ -3,7 +3,7 @@
   "scope-global": [],
   "scope-local": [
     {
-      "name": "Test.PiVsFun._≡_",
+      "name": "Test.PiVsFun._≡_<4>",
       "type": {
         "pretty": "Set → Set → Set",
         "tag": "Pi",
@@ -28,12 +28,12 @@
       "definition": {
         "pretty": "\"⊤\"",
         "tag": "ScopeReference",
-        "name": "⊤⊤"
+        "name": "⊤"
       },
       "holes": []
     },
     {
-      "name": "Test.PiVsFun.refl",
+      "name": "Test.PiVsFun.refl<10>",
       "type": {
         "pretty": "{x y : Set} → x ≡ y",
         "tag": "Pi",
@@ -53,7 +53,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_"
+              "name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -71,12 +71,12 @@
       "definition": {
         "pretty": "\"⊤\"",
         "tag": "ScopeReference",
-        "name": "⊤⊤"
+        "name": "⊤"
       },
       "holes": []
     },
     {
-      "name": "Test.PiVsFun.f",
+      "name": "Test.PiVsFun.f<14>",
       "type": {
         "pretty": "(x : Set) → Set → x ≡ x",
         "tag": "Pi",
@@ -96,7 +96,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_"
+              "name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -119,7 +119,7 @@
           "tag": "Application",
           "head": {
             "tag": "ScopeReference",
-            "name": "Test.PiVsFun.refl"
+            "name": "Test.PiVsFun.refl<10>"
           },
           "arguments": [
             {
@@ -157,7 +157,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_"
+              "name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -175,7 +175,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun.refl"
+              "name": "Test.PiVsFun.refl<10>"
             },
             "arguments": [
               {
@@ -195,7 +195,7 @@
       ]
     },
     {
-      "name": "Test.PiVsFun.g",
+      "name": "Test.PiVsFun.g<22>",
       "type": {
         "pretty": "(x y : Set) → x ≡ y",
         "tag": "Pi",
@@ -215,7 +215,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_"
+              "name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -241,7 +241,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun.refl"
+              "name": "Test.PiVsFun.refl<10>"
             },
             "arguments": [
               {
@@ -280,7 +280,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_"
+              "name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -298,7 +298,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun.refl"
+              "name": "Test.PiVsFun.refl<10>"
             },
             "arguments": [
               {
@@ -318,7 +318,7 @@
       ]
     },
     {
-      "name": "Test.PiVsFun.fi",
+      "name": "Test.PiVsFun.fi<30>",
       "type": {
         "pretty": "{x _ : Set} → x ≡ x",
         "tag": "Pi",
@@ -338,7 +338,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_"
+              "name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -361,7 +361,7 @@
           "tag": "Application",
           "head": {
             "tag": "ScopeReference",
-            "name": "Test.PiVsFun.refl"
+            "name": "Test.PiVsFun.refl<10>"
           },
           "arguments": [
             {
@@ -399,7 +399,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_"
+              "name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -417,7 +417,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun.refl"
+              "name": "Test.PiVsFun.refl<10>"
             },
             "arguments": [
               {
@@ -437,7 +437,7 @@
       ]
     },
     {
-      "name": "Test.PiVsFun.gi",
+      "name": "Test.PiVsFun.gi<38>",
       "type": {
         "pretty": "{x y : Set} → x ≡ y",
         "tag": "Pi",
@@ -457,7 +457,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_"
+              "name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -483,7 +483,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun.refl"
+              "name": "Test.PiVsFun.refl<10>"
             },
             "arguments": [
               {
@@ -522,7 +522,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_"
+              "name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -540,7 +540,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun.refl"
+              "name": "Test.PiVsFun.refl<10>"
             },
             "arguments": [
               {
@@ -560,7 +560,7 @@
       ]
     },
     {
-      "name": "Test.PiVsFun.id",
+      "name": "Test.PiVsFun.id<66>",
       "type": {
         "pretty": "{x y : Set} → x ≡ y → x ≡ x",
         "tag": "Pi",
@@ -583,7 +583,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.PiVsFun._≡_"
+                "name": "Test.PiVsFun._≡_<4>"
               },
               "arguments": [
                 {
@@ -600,7 +600,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.PiVsFun._≡_"
+                "name": "Test.PiVsFun._≡_<4>"
               },
               "arguments": [
                 {
@@ -624,7 +624,7 @@
           "tag": "Application",
           "head": {
             "tag": "ScopeReference",
-            "name": "Test.PiVsFun.refl"
+            "name": "Test.PiVsFun.refl<10>"
           },
           "arguments": [
             {
@@ -661,7 +661,7 @@
                 "name": "eq",
                 "head": {
                   "tag": "ScopeReference",
-                  "name": "Test.PiVsFun._≡_"
+                  "name": "Test.PiVsFun._≡_<4>"
                 },
                 "arguments": [
                   {
@@ -681,7 +681,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_"
+              "name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -699,7 +699,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun.refl"
+              "name": "Test.PiVsFun.refl<10>"
             },
             "arguments": [
               {

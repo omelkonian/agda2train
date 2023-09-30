@@ -1,25 +1,25 @@
 
-.PHONY : default clean golden all compare force-recompile
+.PHONY: default clean golden all compare force-recompile
 
-default : clean all compare
+default: clean all compare
 
-clean :
+clean:
 	@rm -rf build/*
 
-cleanGolden :
+cleanGolden:
 	@rm -rf golden/*
 
-all : Test/*.agda
+all: Test/*.agda
 	@for f in $^; do \
 			echo == Compiling $${f} == ; \
 			./agda2train $${f} -o build ; \
 	done
 
-golden :
+golden:
 	@cp -r build/* golden
 
-compare : all
+compare: all
 	@echo == Comparing output ==
 	@diff -r build golden
 
-force-recompile :
+force-recompile:

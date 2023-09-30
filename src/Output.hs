@@ -6,13 +6,13 @@ module Output
   , convert
   , Pretty(..), Reduced(..), Named(..)
   , pattern (:~), pattern (:>)
-  , pp
+  , pp, ppName
   )
   where
 
 import Control.Arrow ( second )
 import Control.Applicative ( (<|>) )
-import GHC.Generics
+import GHC.Generics ( Generic, Generically(..) )
 import Data.List ( notElem )
 import Data.Aeson
 import qualified Data.Aeson as JSON
@@ -21,7 +21,8 @@ import qualified Data.Aeson.KeyMap as KM
 import Agda.Syntax.Common ( unArg )
 import qualified Agda.Syntax.Internal as A
 import qualified Agda.Syntax.Literal as A
-import Agda.Syntax.Internal ( absName, unAbs, unEl, unDom )
+import Agda.Syntax.Internal
+  ( QName, absName, unAbs, unEl, unDom, qnameName, nameId, conName )
 
 import qualified Agda.Utils.Pretty as P
 
@@ -215,8 +216,8 @@ instance From A.Term where
     (A.Lam _ ab) -> Lam (pp (absName ab) :~ go (unAbs ab))
     -- ** applications.
     (A.Var i   xs) -> App (Right i)     (go <$> xs)
-    (A.Def f   xs) -> App (Left $ pp f) (go <$> xs)
-    (A.Con c _ xs) -> App (Left $ pp c) (go <$> xs)
+    (A.Def f   xs) -> App (Left $ ppName f) (go <$> xs)
+    (A.Con c _ xs) -> App (Left $ ppName $ conName c) (go <$> xs)
     -- ** other constants
     (A.Lit   x) -> Lit   $ pp x
     (A.Level x) -> Level $ pp x
@@ -231,7 +232,7 @@ instance From A.Term where
                 -> Constructor n (read i)
                 | otherwise
                 -> error $ "[convert] malformed constructor: " <> show xs'
-      _ -> App (Left (s <> s)) xs'
+      _ -> App (Left s) xs'
     -- ** crash on the rest (should never be encountered)
     t@(A.MetaV _ _) -> panic "term" t
 
@@ -239,7 +240,7 @@ instance From A.Elim where
   type To A.Elim = Term
   go = \case
     (A.Apply x)      -> go (unArg x)
-    (A.Proj _ qn)    -> App (Left $ pp qn) []
+    (A.Proj _ qn)    -> App (Left $ ppName qn) []
     (A.IApply _ _ x) -> go x
 
 -- ** utilities
@@ -250,3 +251,6 @@ pp = P.prettyShow
 panic :: (P.Pretty a, Show a) => String -> a -> b
 panic s t = error $
   "[PANIC] unexpected " <> s <> ": " <> pp t <> "\n show: " <> pp (show t)
+
+ppName :: A.QName -> String
+ppName qn = pp qn <> "<" <> show (fromEnum $ nameId $ qnameName qn) <> ">"
