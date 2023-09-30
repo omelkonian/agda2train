@@ -15,108 +15,9 @@
       }
     },
     {
-      "name": "Agda.Primitive.Prop",
-      "type": {
-        "pretty": "Set₁",
-        "tag": "Sort",
-        "sort": "Set1"
-      },
-      "definition": {
-        "pretty": "\"$primProp\"",
-        "tag": "ScopeReference",
-        "name": "$primProp$primProp"
-      }
-    },
-    {
-      "name": "Agda.Primitive.Setω",
-      "type": {
-        "pretty": "Setω₁",
-        "tag": "Sort",
-        "sort": "Setω1"
-      },
-      "definition": {
-        "pretty": "\"$primSetOmega\"",
-        "tag": "ScopeReference",
-        "name": "$primSetOmega$primSetOmega"
-      }
-    },
-    {
-      "name": "Agda.Primitive.SSet",
-      "type": {
-        "pretty": "SSet (lsuc lzero)",
-        "tag": "Sort",
-        "sort": "SSet (lsuc lzero)"
-      },
-      "definition": {
-        "pretty": "\"$primStrictSet\"",
-        "tag": "ScopeReference",
-        "name": "$primStrictSet$primStrictSet"
-      }
-    },
-    {
-      "name": "Agda.Primitive.SSetω",
-      "type": {
-        "pretty": "SSetω₁",
-        "tag": "Sort",
-        "sort": "SSetω1"
-      },
-      "definition": {
-        "pretty": "\"$primStrictSetOmega\"",
-        "tag": "ScopeReference",
-        "name": "$primStrictSetOmega$primStrictSetOmega"
-      }
-    },
-    {
-      "name": "Agda.Primitive.Level",
-      "type": {
-        "pretty": "Set",
-        "tag": "Sort",
-        "sort": "Set"
-      },
-      "definition": {
-        "pretty": "\"⊤\"",
-        "tag": "ScopeReference",
-        "name": "⊤⊤"
-      }
-    },
-    {
-      "name": "Agda.Primitive.lzero",
-      "type": {
-        "pretty": "Level",
-        "tag": "ScopeReference",
-        "name": "Agda.Primitive.Level"
-      },
-      "definition": {
-        "pretty": "\"$primLevelZero\"",
-        "tag": "ScopeReference",
-        "name": "$primLevelZero$primLevelZero"
-      }
-    },
-    {
-      "name": "Agda.Primitive.lsuc",
-      "type": {
-        "pretty": "Level → Level",
-        "tag": "Pi",
-        "name": "ℓ",
-        "domain": {
-          "tag": "ScopeReference",
-          "name": "Agda.Primitive.Level"
-        },
-        "codomain": {
-          "tag": "ScopeReference",
-          "name": "Agda.Primitive.Level"
-        }
-      },
-      "definition": {
-        "pretty": "\"$primLevelSuc\"",
-        "tag": "ScopeReference",
-        "name": "$primLevelSuc$primLevelSuc"
-      }
-    },
-    {
       "name": "Agda.Primitive._⊔_",
       "type": {
-        "pretty": "Level → Level → Level",
+        "pretty": "Agda.Primitive.Level → Agda.Primitive.Level → Agda.Primitive.Level",
         "tag": "Pi",
         "name": "ℓ₁",
         "domain": {
@@ -147,7 +48,7 @@
     {
       "name": "Test.Product.Σ",
       "type": {
-        "pretty": "{a b : Level} (A : Set a) (B : A → Set b) → Set (a ⊔ b)",
+        "pretty": "{a b : Agda.Primitive.Level} (A : Set a) (B : A → Set b) →\nSet (a ⊔ b)",
         "tag": "Pi",
         "name": "a",
         "domain": {
@@ -192,7 +93,7 @@
         }
       },
       "definition": {
-        "pretty": "\"⊗\" ({a b : Level} {A : Set a} {B : A → Set b} → Σ A B → A)\n({a b : Level} {A : Set a} {B : A → Set b} (r : Σ A B) → B (fst r))",
+        "pretty": "\"⊗\"\n({a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b} →\n Σ A B → A)\n({a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b}\n (r : Σ A B) →\n B (fst r))",
         "tag": "Record",
         "fields": [
           {
@@ -366,7 +267,7 @@
     {
       "name": "Test.Product.Σ.fst",
       "type": {
-        "pretty": "{a b : Level} {A : Set a} {B : A → Set b} → Σ A B → A",
+        "pretty": "{a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b} →\nΣ A B → A",
         "tag": "Pi",
         "name": "a",
         "domain": {
@@ -449,7 +350,7 @@
     {
       "name": "Test.Product.Σ.snd",
       "type": {
-        "pretty": "{a b : Level} {A : Set a} {B : A → Set b} (r : Σ A B) → B (fst r)",
+        "pretty": "{a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b}\n(r : Σ A B) →\nB (fst r)",
         "tag": "Pi",
         "name": "a",
         "domain": {
@@ -550,7 +451,7 @@
     {
       "name": "Test.Product._,_",
       "type": {
-        "pretty": "{a b : Level} {A : Set a} {B : A → Set b} (fst₁ : A)\n(snd₁ : B fst₁) →\nΣ A B",
+        "pretty": "{a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b} (fst₁ : A)\n(snd₁ : B fst₁) →\nΣ A B",
         "tag": "Pi",
         "name": "a",
         "domain": {

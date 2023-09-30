@@ -1,0 +1,384 @@
+{
+  "name": "Test.OverloadedConstructors",
+  "scope-global": [],
+  "scope-local": [
+    {
+      "name": "Test.OverloadedConstructors.Nat",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "\"⊕\" Nat (Nat → Nat)",
+        "tag": "ADT",
+        "variants": [
+          {
+            "tag": "ScopeReference",
+            "name": "Test.OverloadedConstructors.Nat"
+          },
+          {
+            "tag": "Pi",
+            "name": "_",
+            "domain": {
+              "tag": "ScopeReference",
+              "name": "Test.OverloadedConstructors.Nat"
+            },
+            "codomain": {
+              "tag": "ScopeReference",
+              "name": "Test.OverloadedConstructors.Nat"
+            }
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.OverloadedConstructors.Nat.O",
+      "type": {
+        "pretty": "Nat",
+        "tag": "ScopeReference",
+        "name": "Test.OverloadedConstructors.Nat"
+      },
+      "definition": {
+        "pretty": "\"⊙\" Nat 0",
+        "tag": "Constructor",
+        "reference": "Test.OverloadedConstructors.Nat",
+        "variant": 0
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.OverloadedConstructors.Nat.S_",
+      "type": {
+        "pretty": "Nat → Nat",
+        "tag": "Pi",
+        "name": "_",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Test.OverloadedConstructors.Nat"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Test.OverloadedConstructors.Nat"
+        }
+      },
+      "definition": {
+        "pretty": "\"⊙\" Nat 1",
+        "tag": "Constructor",
+        "reference": "Test.OverloadedConstructors.Nat",
+        "variant": 1
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.OverloadedConstructors.n",
+      "type": {
+        "pretty": "Nat",
+        "tag": "ScopeReference",
+        "name": "Test.OverloadedConstructors.Nat"
+      },
+      "definition": {
+        "pretty": "S (S O)",
+        "tag": "Application",
+        "head": {
+          "tag": "ScopeReference",
+          "name": "Test.OverloadedConstructors.Nat.S_"
+        },
+        "arguments": [
+          {
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.OverloadedConstructors.Nat.S_"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "name": "Test.OverloadedConstructors.Nat.O"
+              }
+            ]
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "name": "Test.OverloadedConstructors.Nat"
+          },
+          "term": {
+            "pretty": "S (S O)",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.OverloadedConstructors.Nat.S_"
+            },
+            "arguments": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.OverloadedConstructors.Nat.S_"
+                },
+                "arguments": [
+                  {
+                    "tag": "ScopeReference",
+                    "name": "Test.OverloadedConstructors.Nat.O"
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Test.OverloadedConstructors.Nat.S_",
+            "Test.OverloadedConstructors.Nat.S_",
+            "Test.OverloadedConstructors.Nat.O"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "name": "Test.OverloadedConstructors.Nat"
+          },
+          "term": {
+            "pretty": "S O",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.OverloadedConstructors.Nat.S_"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "name": "Test.OverloadedConstructors.Nat.O"
+              }
+            ]
+          },
+          "premises": [
+            "Test.OverloadedConstructors.Nat.S_",
+            "Test.OverloadedConstructors.Nat.O"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "name": "Test.OverloadedConstructors.Nat"
+          },
+          "term": {
+            "pretty": "O",
+            "tag": "ScopeReference",
+            "name": "Test.OverloadedConstructors.Nat.O"
+          },
+          "premises": [
+            "Test.OverloadedConstructors.Nat.O"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Test.OverloadedConstructors.ℕ",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "\"⊕\" ℕ (ℕ → ℕ)",
+        "tag": "ADT",
+        "variants": [
+          {
+            "tag": "ScopeReference",
+            "name": "Test.OverloadedConstructors.ℕ"
+          },
+          {
+            "tag": "Pi",
+            "name": "_",
+            "domain": {
+              "tag": "ScopeReference",
+              "name": "Test.OverloadedConstructors.ℕ"
+            },
+            "codomain": {
+              "tag": "ScopeReference",
+              "name": "Test.OverloadedConstructors.ℕ"
+            }
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.OverloadedConstructors.ℕ.O",
+      "type": {
+        "pretty": "ℕ",
+        "tag": "ScopeReference",
+        "name": "Test.OverloadedConstructors.ℕ"
+      },
+      "definition": {
+        "pretty": "\"⊙\" ℕ 0",
+        "tag": "Constructor",
+        "reference": "Test.OverloadedConstructors.ℕ",
+        "variant": 0
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.OverloadedConstructors.ℕ.S_",
+      "type": {
+        "pretty": "ℕ → ℕ",
+        "tag": "Pi",
+        "name": "_",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Test.OverloadedConstructors.ℕ"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Test.OverloadedConstructors.ℕ"
+        }
+      },
+      "definition": {
+        "pretty": "\"⊙\" ℕ 1",
+        "tag": "Constructor",
+        "reference": "Test.OverloadedConstructors.ℕ",
+        "variant": 1
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.OverloadedConstructors.𝕟",
+      "type": {
+        "pretty": "ℕ",
+        "tag": "ScopeReference",
+        "name": "Test.OverloadedConstructors.ℕ"
+      },
+      "definition": {
+        "pretty": "S (S O)",
+        "tag": "Application",
+        "head": {
+          "tag": "ScopeReference",
+          "name": "Test.OverloadedConstructors.ℕ.S_"
+        },
+        "arguments": [
+          {
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.OverloadedConstructors.ℕ.S_"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "name": "Test.OverloadedConstructors.ℕ.O"
+              }
+            ]
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Test.OverloadedConstructors.ℕ"
+          },
+          "term": {
+            "pretty": "S (S O)",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.OverloadedConstructors.ℕ.S_"
+            },
+            "arguments": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.OverloadedConstructors.ℕ.S_"
+                },
+                "arguments": [
+                  {
+                    "tag": "ScopeReference",
+                    "name": "Test.OverloadedConstructors.ℕ.O"
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Test.OverloadedConstructors.ℕ.S_",
+            "Test.OverloadedConstructors.ℕ.S_",
+            "Test.OverloadedConstructors.ℕ.O"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Test.OverloadedConstructors.ℕ"
+          },
+          "term": {
+            "pretty": "S O",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.OverloadedConstructors.ℕ.S_"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "name": "Test.OverloadedConstructors.ℕ.O"
+              }
+            ]
+          },
+          "premises": [
+            "Test.OverloadedConstructors.ℕ.S_",
+            "Test.OverloadedConstructors.ℕ.O"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Test.OverloadedConstructors.ℕ"
+          },
+          "term": {
+            "pretty": "O",
+            "tag": "ScopeReference",
+            "name": "Test.OverloadedConstructors.ℕ.O"
+          },
+          "premises": [
+            "Test.OverloadedConstructors.ℕ.O"
+          ]
+        }
+      ]
+    }
+  ]
+}

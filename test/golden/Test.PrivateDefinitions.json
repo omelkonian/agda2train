@@ -1,0 +1,72 @@
+{
+  "name": "Test.PrivateDefinitions",
+  "scope-global": [
+    {
+      "name": "Agda.Builtin.Nat.Nat",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "\"⊕\" Nat (Nat → Nat)",
+        "tag": "ADT",
+        "variants": [
+          {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat"
+          },
+          {
+            "tag": "Pi",
+            "name": "n",
+            "domain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat"
+            },
+            "codomain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Agda.Builtin.Nat.Nat.zero",
+      "type": {
+        "pretty": "Nat",
+        "tag": "ScopeReference",
+        "name": "Agda.Builtin.Nat.Nat"
+      },
+      "definition": {
+        "pretty": "\"⊙\" Nat 0",
+        "tag": "Constructor",
+        "reference": "Agda.Builtin.Nat.Nat",
+        "variant": 0
+      }
+    },
+    {
+      "name": "Agda.Builtin.Nat.Nat.suc",
+      "type": {
+        "pretty": "Nat → Nat",
+        "tag": "Pi",
+        "name": "n",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat"
+        }
+      },
+      "definition": {
+        "pretty": "\"⊙\" Nat 1",
+        "tag": "Constructor",
+        "reference": "Agda.Builtin.Nat.Nat",
+        "variant": 1
+      }
+    }
+  ],
+  "scope-local": []
+}
