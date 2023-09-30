@@ -1,7 +1,7 @@
 module Test.Clauses where
 
-open import Data.Nat.Base using (ℕ; zero; suc)
+open import Agda.Builtin.Nat using (Nat; zero; suc)
 
-f : ℕ → ℕ
+f : Nat → Nat
 f zero = zero
 f (suc n) = suc (suc (f n))

@@ -9,7 +9,7 @@
         "sort": "Set"
       },
       "definition": {
-        "pretty": "\"⊕\" ℕ (ℕ → ℕ)",
+        "pretty": "\"⊕\" Nat (Nat → Nat)",
         "tag": "ADT",
         "variants": [
           {
@@ -34,12 +34,12 @@
     {
       "name": "Agda.Builtin.Nat.Nat.zero",
       "type": {
-        "pretty": "ℕ",
+        "pretty": "Nat",
         "tag": "ScopeReference",
         "name": "Agda.Builtin.Nat.Nat"
       },
       "definition": {
-        "pretty": "\"⊙\" ℕ 0",
+        "pretty": "\"⊙\" Nat 0",
         "tag": "Constructor",
         "reference": "Agda.Builtin.Nat.Nat",
         "variant": 0
@@ -48,7 +48,7 @@
     {
       "name": "Agda.Builtin.Nat.Nat.suc",
       "type": {
-        "pretty": "ℕ → ℕ",
+        "pretty": "Nat → Nat",
         "tag": "Pi",
         "name": "n",
         "domain": {
@@ -61,7 +61,7 @@
         }
       },
       "definition": {
-        "pretty": "\"⊙\" ℕ 1",
+        "pretty": "\"⊙\" Nat 1",
         "tag": "Constructor",
         "reference": "Agda.Builtin.Nat.Nat",
         "variant": 1
@@ -72,7 +72,7 @@
     {
       "name": "Test.Clauses.f",
       "type": {
-        "pretty": "ℕ → ℕ",
+        "pretty": "Nat → Nat",
         "tag": "Pi",
         "name": "_",
         "domain": {
@@ -136,7 +136,7 @@
             "telescope": []
           },
           "goal": {
-            "pretty": "ℕ",
+            "pretty": "Nat",
             "tag": "ScopeReference",
             "name": "Agda.Builtin.Nat.Nat"
           },
@@ -161,7 +161,7 @@
         },
         {
           "ctx": {
-            "pretty": "(n : ℕ)",
+            "pretty": "(n : Nat)",
             "telescope": [
               {
                 "pretty": "((n, Agda.Builtin.Nat.Nat))",
@@ -171,7 +171,7 @@
             ]
           },
           "goal": {
-            "pretty": "ℕ",
+            "pretty": "Nat",
             "tag": "ScopeReference",
             "name": "Agda.Builtin.Nat.Nat"
           },
@@ -215,7 +215,7 @@
         },
         {
           "ctx": {
-            "pretty": "(n₁ : ℕ)",
+            "pretty": "(n₁ : Nat)",
             "telescope": [
               {
                 "pretty": "((n, Agda.Builtin.Nat.Nat))",
@@ -225,7 +225,7 @@
             ]
           },
           "goal": {
-            "pretty": "ℕ",
+            "pretty": "Nat",
             "tag": "ScopeReference",
             "name": "Agda.Builtin.Nat.Nat"
           },
@@ -259,7 +259,7 @@
         },
         {
           "ctx": {
-            "pretty": "(n₁ : ℕ)",
+            "pretty": "(n₁ : Nat)",
             "telescope": [
               {
                 "pretty": "((n, Agda.Builtin.Nat.Nat))",
@@ -269,7 +269,7 @@
             ]
           },
           "goal": {
-            "pretty": "ℕ",
+            "pretty": "Nat",
             "tag": "ScopeReference",
             "name": "Agda.Builtin.Nat.Nat"
           },
