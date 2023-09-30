@@ -1,0 +1,3 @@
+name: agda2train-test
+include: .
+depend: standard-library

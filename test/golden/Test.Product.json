@@ -11,7 +11,7 @@
       "definition": {
         "pretty": "\"$primSet\"",
         "tag": "ScopeReference",
-        "name": "$primSet"
+        "name": "$primSet$primSet"
       }
     },
     {
@@ -24,7 +24,7 @@
       "definition": {
         "pretty": "\"$primProp\"",
         "tag": "ScopeReference",
-        "name": "$primProp"
+        "name": "$primProp$primProp"
       }
     },
     {
@@ -37,7 +37,7 @@
       "definition": {
         "pretty": "\"$primSetOmega\"",
         "tag": "ScopeReference",
-        "name": "$primSetOmega"
+        "name": "$primSetOmega$primSetOmega"
       }
     },
     {
@@ -50,7 +50,7 @@
       "definition": {
         "pretty": "\"$primStrictSet\"",
         "tag": "ScopeReference",
-        "name": "$primStrictSet"
+        "name": "$primStrictSet$primStrictSet"
       }
     },
     {
@@ -63,7 +63,7 @@
       "definition": {
         "pretty": "\"$primStrictSetOmega\"",
         "tag": "ScopeReference",
-        "name": "$primStrictSetOmega"
+        "name": "$primStrictSetOmega$primStrictSetOmega"
       }
     },
     {
@@ -76,7 +76,7 @@
       "definition": {
         "pretty": "\"⊤\"",
         "tag": "ScopeReference",
-        "name": "⊤"
+        "name": "⊤⊤"
       }
     },
     {
@@ -89,7 +89,7 @@
       "definition": {
         "pretty": "\"$primLevelZero\"",
         "tag": "ScopeReference",
-        "name": "$primLevelZero"
+        "name": "$primLevelZero$primLevelZero"
       }
     },
     {
@@ -110,7 +110,7 @@
       "definition": {
         "pretty": "\"$primLevelSuc\"",
         "tag": "ScopeReference",
-        "name": "$primLevelSuc"
+        "name": "$primLevelSuc$primLevelSuc"
       }
     },
     {
@@ -139,7 +139,7 @@
       "definition": {
         "pretty": "\"$primLevelMax\"",
         "tag": "ScopeReference",
-        "name": "$primLevelMax"
+        "name": "$primLevelMax$primLevelMax"
       }
     }
   ],
@@ -193,12 +193,8 @@
       },
       "definition": {
         "pretty": "\"⊗\" ({a b : Level} {A : Set a} {B : A → Set b} → Σ A B → A)\n({a b : Level} {A : Set a} {B : A → Set b} (r : Σ A B) → B (fst r))",
-        "tag": "Application",
-        "head": {
-          "tag": "ScopeReference",
-          "name": "⊗"
-        },
-        "arguments": [
+        "tag": "Record",
+        "fields": [
           {
             "tag": "Pi",
             "name": "a",
@@ -648,7 +644,7 @@
         "pretty": "\"⊙\" Σ 0",
         "tag": "Constructor",
         "reference": "Test.Product.Σ",
-        "variant": "0"
+        "variant": 0
       },
       "holes": []
     }

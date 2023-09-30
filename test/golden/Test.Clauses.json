@@ -1,0 +1,297 @@
+{
+  "name": "Test.Clauses",
+  "scope-global": [
+    {
+      "name": "Agda.Builtin.Nat.Nat",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "\"⊕\" ℕ (ℕ → ℕ)",
+        "tag": "ADT",
+        "variants": [
+          {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat"
+          },
+          {
+            "tag": "Pi",
+            "name": "n",
+            "domain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat"
+            },
+            "codomain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Agda.Builtin.Nat.Nat.zero",
+      "type": {
+        "pretty": "ℕ",
+        "tag": "ScopeReference",
+        "name": "Agda.Builtin.Nat.Nat"
+      },
+      "definition": {
+        "pretty": "\"⊙\" ℕ 0",
+        "tag": "Constructor",
+        "reference": "Agda.Builtin.Nat.Nat",
+        "variant": 0
+      }
+    },
+    {
+      "name": "Agda.Builtin.Nat.Nat.suc",
+      "type": {
+        "pretty": "ℕ → ℕ",
+        "tag": "Pi",
+        "name": "n",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat"
+        }
+      },
+      "definition": {
+        "pretty": "\"⊙\" ℕ 1",
+        "tag": "Constructor",
+        "reference": "Agda.Builtin.Nat.Nat",
+        "variant": 1
+      }
+    }
+  ],
+  "scope-local": [
+    {
+      "name": "Test.Clauses.f",
+      "type": {
+        "pretty": "ℕ → ℕ",
+        "tag": "Pi",
+        "name": "_",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat"
+        }
+      },
+      "definition": {
+        "pretty": "\"⊜\" zero (λ n → suc (suc (f n)))",
+        "tag": "Function",
+        "clauses": [
+          {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat.zero"
+          },
+          {
+            "tag": "Lambda",
+            "abstraction": "n",
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat.suc"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Agda.Builtin.Nat.Nat.suc"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "Application",
+                      "head": {
+                        "tag": "ScopeReference",
+                        "name": "Test.Clauses.f"
+                      },
+                      "arguments": [
+                        {
+                          "tag": "deBruijn",
+                          "index": 0
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat"
+          },
+          "term": {
+            "pretty": "zero",
+            "normalised": {
+              "tag": "Literal",
+              "literal": "0"
+            },
+            "original": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat.zero"
+            },
+            "reduced": {
+              "tag": "Literal",
+              "literal": "0"
+            }
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat.zero"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "(n : ℕ)",
+            "telescope": [
+              {
+                "pretty": "((n, Agda.Builtin.Nat.Nat))",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat"
+          },
+          "term": {
+            "pretty": "suc (suc (f n))",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat.suc"
+            },
+            "arguments": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Nat.Nat.suc"
+                },
+                "arguments": [
+                  {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "name": "Test.Clauses.f"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "deBruijn",
+                        "index": 0
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat.suc",
+            "Agda.Builtin.Nat.Nat.suc",
+            "Test.Clauses.f"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "(n₁ : ℕ)",
+            "telescope": [
+              {
+                "pretty": "((n, Agda.Builtin.Nat.Nat))",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat"
+          },
+          "term": {
+            "pretty": "suc (f n)",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat.suc"
+            },
+            "arguments": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.Clauses.f"
+                },
+                "arguments": [
+                  {
+                    "tag": "deBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat.suc",
+            "Test.Clauses.f"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "(n₁ : ℕ)",
+            "telescope": [
+              {
+                "pretty": "((n, Agda.Builtin.Nat.Nat))",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat"
+          },
+          "term": {
+            "pretty": "f n",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.Clauses.f"
+            },
+            "arguments": [
+              {
+                "tag": "deBruijn",
+                "index": 0
+              }
+            ]
+          },
+          "premises": [
+            "Test.Clauses.f"
+          ]
+        }
+      ]
+    }
+  ]
+}

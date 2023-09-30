@@ -1,6 +1,6 @@
 :def! . readFile
 :def! reset (\_ -> return ":. .ghci\n")
-:def! test (\x -> return $ ":r\n :set args --ignore-existing-json -ojson/ -v agda2train:20 -itest/ test/" <> x <> ".agda\n main")
+:def! test (\x -> return $ ":r\n :set args --ignore-existing-json --print-json -otest/build/ -v agda2train:20 -itest/ test/" <> x <> ".agda\n main")
 :def! testStdlib (\x -> return $ ":r\n :set args -ojson/ -v agda2train:20 -i $HOME/git/agda-stdlib/ $HOME/git/agda-stdlib/src/" <> x <> ".agda\n main")
 :def! testAll (\_ -> return ":r\n :set args -r -v agda2train:10 -ojson/ -itest/ test/All.agda\n main")
 :def! stdlib (\_ -> return ":r\n :set args -r -v agda2train:10 -ojson/ -i $HOME/agda-stdlib/src $HOME/agda-stdlib/src/Everything.agda\n main")

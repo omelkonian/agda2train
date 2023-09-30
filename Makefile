@@ -1,28 +1,40 @@
-.PHONY : repl build install stdlib unimath typetopology test
+.PHONY : repl build install test golden stdlib unimath typetopology
 
 default: repl
 
-repl :
+repl:
 	cabal repl # e.g. `:set args -r -o json -itest test/First.agda ... main ... :r ... main`
 
-build :
+build:
 	cabal build
 
-install :
+install:
 	cabal install --overwrite-policy=always
 
-stdlib :
-	cabal run agda2train -- -r -v agda2train:10 -ojson/ -i /home/omelkonian/git/agda-stdlib/ /home/omelkonian/git/agda-stdlib/Everything.agda
+# Testing
 
-unimath :
-	cabal run agda2train -- -r -v agda2train:10 -ojson/ -i /home/omelkonian/git/agda-unimath/src/ /home/omelkonian/git/agda-unimath/src/everything.lagda.md
-
-typetopology :
-	cabal run agda2train -- -r -v agda2train:10 -ojson/ -i /home/omelkonian/git/TypeTopology/source/ /home/omelkonian/git/TypeTopology/source/index.lagda
-
-test :
+test:
 	cabal install --overwrite-policy=always --installdir=test --install-method=copy
 	make -C test
 
-golden :
+golden:
 	make -C test golden
+
+# Extracting training data from whole libraries
+
+STDLIB?=$(HOME)/git/agda-stdlib
+UNIMATH?=$(HOME)/git/agda-unimath
+TYPETOP?=$(HOME)/git/TypeTopology
+
+stdlib:
+	cabal run agda2train -- -r -v agda2train:10 \
+		-ojson/stdlib/ -i $(STDLIB) $(STDLIB)/Everything.agda
+
+unimath:
+	cabal run agda2train -- -r -v agda2train:10 \
+		-ojson/unimath/ -i $(UNIMATH)/src/ $(UNIMATH)/src/everything.lagda.md
+
+typetopology:
+	cabal run agda2train -- -r -v agda2train:10 \
+		-ojson/typetopology -i $(TYPETOP)/source/ $(TYPETOP)/source/index.lagda
+

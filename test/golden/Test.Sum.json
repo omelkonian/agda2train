@@ -163,7 +163,7 @@
         "pretty": "\"⊙\" _⊎_ 0",
         "tag": "Constructor",
         "reference": "Test.Sum._⊎_",
-        "variant": "0"
+        "variant": 0
       },
       "holes": []
     },
@@ -215,7 +215,7 @@
         "pretty": "\"⊙\" _⊎_ 1",
         "tag": "Constructor",
         "reference": "Test.Sum._⊎_",
-        "variant": "1"
+        "variant": 1
       },
       "holes": []
     }

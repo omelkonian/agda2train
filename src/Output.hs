@@ -17,7 +17,6 @@ import Data.List ( notElem )
 import Data.Aeson
 import qualified Data.Aeson as JSON
 import qualified Data.Aeson.KeyMap as KM
-import qualified Data.Vector as V
 
 import Agda.Syntax.Common ( unArg )
 import qualified Agda.Syntax.Internal as A
@@ -54,8 +53,9 @@ deriving instance Show a => Show (Pretty a)
 instance ToJSON a => ToJSON (Pretty a) where
   toJSON (Pretty{..}) = let pretty' = toJSON pretty in
     case toJSON thing of
-      (Object fs) -> object ("pretty" .= pretty' : KM.toList fs)
-      x           -> object ["pretty" .= pretty', "thing" .= toJSON x]
+      (Object fs)  -> object ("pretty" .= pretty' : KM.toList fs)
+      t@(Array xs) -> object ["pretty" .= pretty', "telescope" .= t]
+      t            -> object ["pretty" .= pretty', "thing" .= toJSON t]
 instance FromJSON a => FromJSON (Pretty a) where
   parseJSON = withObject "Pretty" $ \v -> Pretty
     <$> v .: "pretty"
@@ -125,13 +125,17 @@ data Sample = Sample
   } deriving (Generic, Show)
     deriving (ToJSON, FromJSON) via Generically Sample
 
+type Telescope = [Named (Pretty Type)]
 type Type = Term
-type Telescope = [Named Type]
 
 data Term
   = Pi Bool (Named Term) Term -- ^ e.g. `∀ {A : Set}. A → A`
   | Lam (Named Term)          -- ^ e.g. `λ x. x`
   | App Head [Term]           -- ^ e.g. `f x (x + x)` or `@0 (λ x. x)`
+  | ADT [Type]                -- ^ e.g. `data ℕ : Set where zero : ℕ; suc : ...`
+  | Constructor Name Int      -- ^ e.g. `(ℕ, 0) ~ zero` or `(ℕ, 1) ~ suc`
+  | Record [Type]             -- ^ e.g. `record X where field x : ℕ; y : ℕ`
+  | Function [Term]           -- ^ e.g. `f [] = []; f (x ∷ xs) = ...`
   | Lit String | Sort String | Level String -- ^ e.g. Set/42/"sth",0ℓ,...
   deriving (Generic, Show)
   deriving (FromJSON) via Generically Term
@@ -149,22 +153,22 @@ instance ToJSON Term where
       , "body"        .= toJSON f
       , "abstraction" .= toJSON n
       ]
-    (App f xs)
-      | Left "⊕" <- f
-      -> object [tag "ADT", "variants" .= toJSON xs]
-
-      | Left "⊙" <- f
-      -> if | [App (Left n) [] , Lit i] <- xs
-            -> object [ tag "Constructor"
-                      , "reference" .= toJSON n
-                      , "variant"   .= toJSON i
-                      ]
-            | otherwise
-            -> error $ "[⊙] Malformed constructor arguments: " <> show xs
-      | null xs
-      -> refHead
-      | otherwise
-      -> object [tag "Application", "head" .= refHead, "arguments" .= toJSON xs]
+    (Function cls) -> object
+      [tag "Function", "clauses" .= toJSON cls]
+    (Record tys) -> object
+      [tag "Record", "fields" .= toJSON tys]
+    (ADT cs) -> object
+      [tag "ADT", "variants" .= toJSON cs]
+    (Constructor n i) -> object
+      [ tag "Constructor"
+      , "reference" .= toJSON n
+      , "variant"   .= toJSON i
+      ]
+    (App f xs) ->
+      if null xs then
+        refHead
+      else
+        object [tag "Application", "head" .= refHead, "arguments" .= toJSON xs]
       where
         refHead = object $ case f of
           (Left n)  -> [tag "ScopeReference", "name"  .= toJSON n]
@@ -195,7 +199,7 @@ class From a where
 
 instance From A.Telescope where
   type To A.Telescope = Telescope
-  go = map (uncurry (:~) . second go . unDom) . A.telToList
+  go = map (\dty -> let (n, ty) = unDom dty in n :~ pp dty :> go ty) . A.telToList
 
 instance From A.Type where
   type To A.Type = Type
@@ -208,7 +212,7 @@ instance From A.Term where
     (A.Pi ty ab) -> Pi (pp (A.domName ty) `notElem` ["_", "(nothing)"])
                        (absName ab :~ go (unEl $ unDom ty))
                        (go $ unEl $ unAbs ab)
-    (A.Lam _ ab) -> Lam (absName ab :~ go (unAbs ab))
+    (A.Lam _ ab) -> Lam (pp (absName ab) :~ go (unAbs ab))
     -- ** applications.
     (A.Var i   xs) -> App (Right i)     (go <$> xs)
     (A.Def f   xs) -> App (Left $ pp f) (go <$> xs)
@@ -219,7 +223,15 @@ instance From A.Term where
     (A.Sort  x) -> Sort  $ pp x
     -- ** there are some occurrences of `DontCare` in the standard library
     (A.DontCare t) -> go t
-    (A.Dummy s xs) -> App (Left s) (go <$> xs)
+    (A.Dummy s xs) -> let xs' = go <$> xs in case s of
+      "⊜" -> Function xs'
+      "⊕" -> ADT xs'
+      "⊗" -> Record xs'
+      "⊙" -> if | [App (Left n) [], Lit i] <- xs'
+                -> Constructor n (read i)
+                | otherwise
+                -> error $ "[convert] malformed constructor: " <> show xs'
+      _ -> App (Left (s <> s)) xs'
     -- ** crash on the rest (should never be encountered)
     t@(A.MetaV _ _) -> panic "term" t
 

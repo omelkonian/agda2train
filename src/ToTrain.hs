@@ -248,7 +248,7 @@ mkLam = go . concatMap varsIn
   where
     go :: [String] -> (Term -> Term)
     go []       = id
-    go (x : xs) = Lam defaultArgInfo . Abs (show x) . go xs
+    go (x : xs) = Lam defaultArgInfo . Abs x . go xs
 
     varsIn :: DeBruijnPattern -> [String]
     varsIn = \case
