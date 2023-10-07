@@ -9,6 +9,7 @@ module ToTrain
   , toTerm
   ) where
 
+import Data.Maybe ( isJust )
 import Data.List ( isPrefixOf, isInfixOf, find, elemIndex )
 import qualified Data.Set as S
 
@@ -200,7 +201,7 @@ names = foldTerm $ \case
   (Con c _ _) -> [conName c]
   _ -> []
 
--- | Embedding definitions into terms (over-approximation)
+-- | Embedding definitions into terms (under-approximation)
 
 class ToTerm a where
   toTerm :: a -> TCM Term
@@ -212,8 +213,15 @@ instance ToTerm Defn where
   toTerm = \case
     AbstractDefn defn -> toTerm defn
     Function{..} ->
-    -- NB: handle funWith and funExtLam
-      combineClauses <$> traverse toTerm funClauses
+      -- NB: handle funWith and funExtLam
+      combineClauses <$> traverse toTerm (takeWhile isNotCubical funClauses)
+      where
+        isNotCubical :: Clause -> Bool
+        isNotCubical Clause{..}
+          | Just (Def qn _) <- clauseBody
+          = pp (qnameModule qn) /= "Agda.Primitive.Cubical"
+          | otherwise
+          = True
     Datatype{..} -> do
     -- NB: what is a dataClause???
       tys <- traverse typeOfConst dataCons
@@ -243,6 +251,7 @@ instance ToTerm Clause where
     Just t  -> mkLam (namedArg <$> namedClausePats) t
     Nothing -> dummyBot
 
+-- T0D0: proper translation of non-variable patterns (C.f. Test/PropEq.agda)
 mkLam :: [DeBruijnPattern] -> (Term -> Term)
 mkLam = go . concatMap varsIn
   where
@@ -268,7 +277,7 @@ mkLam = go . concatMap varsIn
 
 combineTerms :: String -> [Term] -> Term
 combineTerms s []  = dummyBot
-combineTerms s [a] = a
+-- combineTerms s [a] = a
 combineTerms s as  = Dummy s (Apply . defaultArg <$> as)
 
 combineClauses      = combineTerms "⊜"
