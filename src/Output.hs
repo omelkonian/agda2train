@@ -126,20 +126,32 @@ data Sample = Sample
   } deriving (Generic, Show)
     deriving (ToJSON, FromJSON) via Generically Sample
 
+type Clause    = ([Telescope],[Pattern],Term)
 type Telescope = [Named (Pretty Type)]
-type Type = Term
+type Pattern   = Term
+type Type      = Term
 
 data Term
   = Pi Bool (Named Term) Term -- ^ e.g. `∀ {A : Set}. A → A`
   | Lam (Named Term)          -- ^ e.g. `λ x. x`
   | App Head [Term]           -- ^ e.g. `f x (x + x)` or `@0 (λ x. x)`
-  | ADT [Type]                -- ^ e.g. `data ℕ : Set where zero : ℕ; suc : ...`
+  | ADT [Type]                -- ^ e.g. data ℕ : Set where
+                              --          zero : ℕ
+                              --          suc  : ℕ → ℕ
   | Constructor Name Int      -- ^ e.g. `(ℕ, 0) ~ zero` or `(ℕ, 1) ~ suc`
   | Record [Type]             -- ^ e.g. `record X where field x : ℕ; y : ℕ`
-  | Function [Term]           -- ^ e.g. `f [] = []; f (x ∷ xs) = ...`
+  | Function [Clause]         -- ^ e.g. f []       = []
+                              --        f (x ∷ xs) = x ∷ x ∷ xs
   | Lit String | Sort String | Level String -- ^ e.g. Set/42/"sth",0ℓ,...
   deriving (Generic, Show)
-  deriving (FromJSON) via Generically Term
+  deriving FromJSON via Generically Term
+
+instance ToJSON Clause where
+  toJSON (tel, ps, t) = object
+    [ "telescope" .= toJSON tel
+    , "patterns"  .= toJSON ps
+    , "body"      .= toJSON t
+    ]
 
 instance ToJSON Term where
   toJSON = \case
@@ -215,8 +227,8 @@ instance From A.Term where
                        (go $ unEl $ unAbs ab)
     (A.Lam _ ab) -> Lam (pp (absName ab) :~ go (unAbs ab))
     -- ** applications.
-    (A.Var i   xs) -> App (Right i)     (go <$> xs)
-    (A.Def f   xs) -> App (Left $ ppName f) (go <$> xs)
+    (A.Var i   xs) -> App (Right i)                   (go <$> xs)
+    (A.Def f   xs) -> App (Left $ ppName f)           (go <$> xs)
     (A.Con c _ xs) -> App (Left $ ppName $ conName c) (go <$> xs)
     -- ** other constants
     (A.Lit   x) -> Lit   $ pp x
