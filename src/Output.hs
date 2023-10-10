@@ -241,9 +241,9 @@ instance A.Defn ~> Definition where
       tys <- fmap unEl <$> traverse typeOfConst dataCons
       ADT <$> traverse go tys
     A.Record{..} -> do
-    -- NB: what is a recClause???
+    -- NB: handle parameterized modules (c.f. recClause/recTel/recPars
     -- NB: maybe incorporate conHead/namedCon in the future for accuracy
-      tys <- fmap unEl <$>  traverse typeOfConst (unDom <$> recFields)
+      let tys = snd . unDom <$> drop recPars (A.telToList recTel)
       Record <$> traverse go tys
     A.Constructor{..} -> do
       let cn = conName conSrcCon
@@ -296,7 +296,7 @@ instance A.Type ~> Type where
   go = go . A.unEl
 
 instance A.Term ~> Term where
-  go = \case
+  go = flip (.) A.unSpine $ \case
     -- ** abstractions
     (A.Pi ty ab) -> do
       let nameUsed = pp (A.domName ty) `notElem` ["_", "(nothing)"]

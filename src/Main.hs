@@ -30,7 +30,7 @@ import Agda.Utils.Monad
 import Agda.Syntax.Scope.Base
 import Agda.Syntax.Scope.Monad
 import Agda.Syntax.TopLevelModuleName
-import Agda.Syntax.Internal ( unEl, unDom, conName )
+import Agda.Syntax.Internal ( unEl, unDom, conName, telToList )
 
 import Agda.TypeChecking.Reduce
 import qualified Agda.TypeChecking.Pretty as P
@@ -89,9 +89,11 @@ mkBackend trainF = Backend'
             def' <- convert def
 
             report 20 $ ppm (pp qn) <> " : " <> ppm ty
+            report 30 $ "      *pretty: " <> P.text (pp ty)
             report 20 $ ppm (pp qn) <> " = " <> ppm def
-            report 30 $ "      *pretty: " <> ppm ty
+            report 30 $ "      *pretty: " <> P.text (pp def)
             reportReduced rty
+            report 20 ""
 
             return $ Just $ ppName qn :~ ScopeEntry
               { _type      = prender pty :> rty'
@@ -148,8 +150,10 @@ instance P.PrettyTCM Definition where
         tys <- fmap unEl <$> traverse typeOfConst dataCons
         P.fsep $ P.punctuate " |" $ prettyTCM <$> tys
       Record{..} -> do
-        tys <- fmap unEl <$>  traverse typeOfConst (unDom <$> recFields)
-        P.fsep $ P.punctuate " ;" $ prettyTCM <$> tys
+        let tys = unDom <$> drop recPars (telToList recTel)
+        P.braces
+          $ P.fsep $ P.punctuate " ;"
+          $ map (\(n, ty) -> P.parens $ prettyTCM n <> " : " <> prettyTCM ty) tys
       Constructor{..} -> do
         let cn = conName conSrcCon
         d <- theDef <$> getConstInfo conData
