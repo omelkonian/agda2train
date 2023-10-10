@@ -1,31 +1,41 @@
-{-# LANGUAGE FlexibleInstances, MultiWayIf, StandaloneDeriving #-}
+{-# LANGUAGE FlexibleInstances #-}
 module Output
   ( Sample(..)
   , FileData, TrainData(..)
   , ScopeEntry, ScopeEntry'(..)
-  , convert
   , Pretty(..), Reduced(..), Named(..)
   , pattern (:~), pattern (:>)
-  , pp, ppName
+  , convert
+  , pp, ppName, ppm, prender, report
+  , unqualify
+  , (\/)
   )
   where
 
 import Control.Arrow ( second )
 import Control.Applicative ( (<|>) )
 import GHC.Generics ( Generic, Generically(..) )
-import Data.List ( notElem )
+import Data.List ( notElem, elemIndex )
 import Data.Aeson
 import qualified Data.Aeson as JSON
 import qualified Data.Aeson.KeyMap as KM
 
 import Agda.Syntax.Common ( unArg )
+import qualified Agda.Syntax.Common as A
 import qualified Agda.Syntax.Internal as A
 import qualified Agda.Syntax.Literal as A
 import Agda.Syntax.Internal
-  ( QName, absName, unAbs, unEl, unDom, qnameName, nameId, conName )
+  ( QName, absName, qnameName, qnameModule, unAbs, unEl, unDom
+  , nameId, conName, dbPatVarIndex, pDom )
+import qualified Agda.TypeChecking.Monad as A
+import Agda.TypeChecking.Monad
+  ( TCM, MonadTCM, liftTCM, typeOfConst, theDef, getConstInfo
+  , reportSDoc, VerboseLevel )
 
 import qualified Agda.Utils.Pretty as P
-
+  hiding (Doc)
+import qualified Agda.TypeChecking.Pretty as P
+  hiding (text)
 
 -- ** JSON options
 jsonOpts = defaultOptions
@@ -63,11 +73,11 @@ instance FromJSON a => FromJSON (Pretty a) where
     <*> (v .: "thing" <|> parseJSON (Object v))
 
 data Reduced a = Reduced
-  { simplified :: Maybe a
+  { original   :: a
+  , simplified :: Maybe a
   , reduced    :: Maybe a
   , normalised :: Maybe a
-  , original   :: a
-  } deriving (Generic, Functor)
+  } deriving (Generic, Functor, Foldable, Traversable)
 deriving instance Show a => Show (Reduced a)
 instance ToJSON a => ToJSON (Reduced a) where
   toJSON r@(Reduced{..})
@@ -77,10 +87,10 @@ instance ToJSON a => ToJSON (Reduced a) where
     = genericToJSON jsonOpts r
 instance FromJSON a => FromJSON (Reduced a) where
   parseJSON = withObject "Object" $ \v -> Reduced
-    <$> v .:? "simplified"
+    <$> (v .: "original" <|> parseJSON (Object v))
+    <*> v .:? "simplified"
     <*> v .:? "reduced"
     <*> v .:? "normalised"
-    <*> (v .: "original" <|> parseJSON (Object v))
 
 infixr 4 :~; pattern x :~ y = Named {name = x, item = y}
 data Named a = Named
@@ -104,15 +114,13 @@ data TrainData = TrainData
   { scopeGlobal :: [ScopeEntry] -- these will not contain any holes
   , scopeLocal  :: [ScopeEntry]
   } deriving Generic
-instance ToJSON TrainData where
-  toJSON = genericToJSON jsonOpts
-instance FromJSON TrainData where
-  parseJSON = genericParseJSON jsonOpts
+instance ToJSON   TrainData where toJSON    = genericToJSON jsonOpts
+instance FromJSON TrainData where parseJSON = genericParseJSON jsonOpts
 
 type ScopeEntry = Named ScopeEntry'
 data ScopeEntry' = ScopeEntry
   { _type      :: Pretty (Reduced Type)
-  , definition :: Maybe (Pretty Term)
+  , definition :: Maybe (Pretty Definition)
   , holes      :: Maybe [Sample]
   } deriving (Generic, Show)
 instance ToJSON   ScopeEntry' where toJSON    = genericToJSON    jsonOpts
@@ -126,7 +134,36 @@ data Sample = Sample
   } deriving (Generic, Show)
     deriving (ToJSON, FromJSON) via Generically Sample
 
-type Clause    = ([Telescope],[Pattern],Term)
+
+data Definition
+  = ADT {variants :: [Type]}
+  -- ^ e.g.
+  -- data ℕ : Set where
+  --   zero : ℕ
+  --   suc  : ℕ → ℕ
+  | Constructor {reference :: Name, variant :: Integer}
+  -- ^ e.g. `(ℕ, 0) ~ zero` or `(ℕ, 1) ~ suc`
+  | Record {fields :: [Type]}
+  -- ^ e.g.
+  -- record X : Set where
+  --   field x : ℕ
+  --         y : ℕ
+  | Function {clauses :: [Clause]}
+  -- ^ e.g.
+  -- f []       = []
+  -- f (x ∷ xs) = x ∷ x ∷ xs
+  | Postulate {}
+  | Primitive {primName :: String}
+  deriving (Generic, Show, ToJSON, FromJSON)
+
+data Clause = Clause
+  { telescope :: Telescope
+  , patterns  :: [Pattern]
+  , body      :: Maybe Term -- ^ `Nothing` for absurd clauses
+  } deriving (Generic, Show)
+instance ToJSON   Clause where toJSON    = genericToJSON jsonOpts
+instance FromJSON Clause where parseJSON = genericParseJSON jsonOpts
+
 type Telescope = [Named (Pretty Type)]
 type Pattern   = Term
 type Type      = Term
@@ -135,47 +172,22 @@ data Term
   = Pi Bool (Named Term) Term -- ^ e.g. `∀ {A : Set}. A → A`
   | Lam (Named Term)          -- ^ e.g. `λ x. x`
   | App Head [Term]           -- ^ e.g. `f x (x + x)` or `@0 (λ x. x)`
-  | ADT [Type]                -- ^ e.g. data ℕ : Set where
-                              --          zero : ℕ
-                              --          suc  : ℕ → ℕ
-  | Constructor Name Int      -- ^ e.g. `(ℕ, 0) ~ zero` or `(ℕ, 1) ~ suc`
-  | Record [Type]             -- ^ e.g. `record X where field x : ℕ; y : ℕ`
-  | Function [Clause]         -- ^ e.g. f []       = []
-                              --        f (x ∷ xs) = x ∷ x ∷ xs
   | Lit String | Sort String | Level String -- ^ e.g. Set/42/"sth",0ℓ,...
   deriving (Generic, Show)
   deriving FromJSON via Generically Term
-
-instance ToJSON Clause where
-  toJSON (tel, ps, t) = object
-    [ "telescope" .= toJSON tel
-    , "patterns"  .= toJSON ps
-    , "body"      .= toJSON t
-    ]
 
 instance ToJSON Term where
   toJSON = \case
     (Pi isDep (n :~ dom) codom) -> object
       [ tag "Pi"
-      , "name"     .= toJSON n
+      , "name"     .= toJSON n -- T0D0: remove if "(nothing) (or _)?"
       , "domain"   .= toJSON dom
       , "codomain" .= toJSON codom
       ]
     (Lam (n :~ f)) -> object
       [ tag "Lambda"
-      , "body"        .= toJSON f
       , "abstraction" .= toJSON n
-      ]
-    (Function cls) -> object
-      [tag "Function", "clauses" .= toJSON cls]
-    (Record tys) -> object
-      [tag "Record", "fields" .= toJSON tys]
-    (ADT cs) -> object
-      [tag "ADT", "variants" .= toJSON cs]
-    (Constructor n i) -> object
-      [ tag "Constructor"
-      , "reference" .= toJSON n
-      , "variant"   .= toJSON i
+      , "body"        .= toJSON f
       ]
     (App f xs) ->
       if null xs then
@@ -185,7 +197,7 @@ instance ToJSON Term where
       where
         refHead = object $ case f of
           (Left n)  -> [tag "ScopeReference", "name"  .= toJSON n]
-          (Right i) -> [tag "deBruijn",       "index" .= toJSON i]
+          (Right i) -> [tag "DeBruijn",       "index" .= toJSON i]
     (Lit s)   -> object [tag "Literal", "literal" .= toJSON s]
     (Sort s)  -> object [tag "Sort",    "sort"   .= toJSON s]
     (Level s) -> object [tag "Level",   "level"  .= toJSON s]
@@ -204,55 +216,114 @@ testJSON = do
   putStrLn $ "t: " <> show t
 
 -- ** conversion from Agda's internal syntax
+class (~>) a b | a -> b where
+  convert, go :: a -> TCM b
+  convert = go
 
-class From a where
- type To a
- convert, go :: a -> To a
- convert = go
+instance A.Definition ~> Definition where
+  go = go . theDef
 
-instance From A.Telescope where
-  type To A.Telescope = Telescope
-  go = map (\dty -> let (n, ty) = unDom dty in n :~ pp dty :> go ty) . A.telToList
+instance A.Defn ~> Definition where
+  go = \case
+    A.AbstractDefn defn -> go defn
+    A.Function{..} ->
+      -- NB: handle funWith and funExtLam
+      Function <$> traverse go (takeWhile isNotCubical funClauses)
+      where
+        isNotCubical :: A.Clause -> Bool
+        isNotCubical A.Clause{..}
+          | Just (A.Def qn _) <- clauseBody
+          = pp (qnameModule qn) /= "Agda.Primitive.Cubical"
+          | otherwise
+          = True
+    A.Datatype{..} -> do
+    -- NB: what is a dataClause???
+      tys <- fmap unEl <$> traverse typeOfConst dataCons
+      ADT <$> traverse go tys
+    A.Record{..} -> do
+    -- NB: what is a recClause???
+    -- NB: maybe incorporate conHead/namedCon in the future for accuracy
+      tys <- fmap unEl <$>  traverse typeOfConst (unDom <$> recFields)
+      Record <$> traverse go tys
+    A.Constructor{..} -> do
+      let cn = conName conSrcCon
+      d <- theDef <$> getConstInfo conData
+      return $ case d of
+        A.Datatype{..} ->
+          let Just ix = elemIndex (unqualify cn) (unqualify <$> dataCons)
+          in  Constructor (pp conData) (toInteger ix)
+        A.Record{..} -> Constructor (pp conData) 0
+    A.Primitive{..}      -> return $ Primitive primName
+    A.PrimitiveSort{..}  -> return $ Primitive primSortName
+    A.Axiom{..}          -> return $ Postulate
+    d@A.DataOrRecSig{..} -> panic "dataOrRecSig" d
+    d@A.GeneralizableVar -> panic "generalizable variable" d
 
-instance From A.Type where
-  type To A.Type = Type
+instance A.Clause ~> Clause where
+  go A.Clause{..} = do
+    tel <- go clauseTel
+    ps  <- traverse go (A.namedThing . unArg <$> namedClausePats)
+           -- ^ drop visibility and name information
+    t   <- traverse go clauseBody
+    return $ Clause
+      { telescope = tel
+      , patterns  = ps
+      , body      = t }
+
+instance A.DeBruijnPattern ~> Pattern where
+  go = \case
+    A.VarP _ v -> return $ App (Right $ dbPatVarIndex v) []
+    A.DotP _ t -> go t
+    A.ConP c _ ps -> do
+      App (Left $ pp c) <$> traverse go (A.namedThing . unArg <$> ps)
+    A.LitP _ lit -> return $ Lit (pp lit)
+    A.ProjP _ qn -> return $ App (Left $ pp qn) []
+    p@(A.IApplyP _ _ _ _) -> panic "pattern (cubical)" p
+    p@(A.DefP _ _ _)      -> panic "pattern (cubical)" p
+
+instance A.Telescope ~> Telescope where
+  go = traverse action . A.telToList
+    where
+      action :: A.Dom (Name, A.Type) -> TCM (Named (Pretty Type))
+      action dty = do
+        let (n, ty) = unDom dty
+        pty <- ppm ty
+        ty' <- go ty
+        let pdty = prender $ pDom dty $ P.text $ n <> " : " <> prender pty
+        return $ n :~ pdty :> ty'
+
+instance A.Type ~> Type where
   go = go . A.unEl
 
-instance From A.Term where
-  type To A.Term = Term
+instance A.Term ~> Term where
   go = \case
     -- ** abstractions
-    (A.Pi ty ab) -> Pi (pp (A.domName ty) `notElem` ["_", "(nothing)"])
-                       (absName ab :~ go (unEl $ unDom ty))
-                       (go $ unEl $ unAbs ab)
-    (A.Lam _ ab) -> Lam (pp (absName ab) :~ go (unAbs ab))
-    -- ** applications.
-    (A.Var i   xs) -> App (Right i)                   (go <$> xs)
-    (A.Def f   xs) -> App (Left $ ppName f)           (go <$> xs)
-    (A.Con c _ xs) -> App (Left $ ppName $ conName c) (go <$> xs)
+    (A.Pi ty ab) -> do
+      let nameUsed = pp (A.domName ty) `notElem` ["_", "(nothing)"]
+      ty' <- go (unEl $ unDom ty)
+      ab' <- go (unEl $ unAbs ab)
+      return $ Pi nameUsed (absName ab :~ ty') ab'
+    (A.Lam _ ab) -> do
+      ab' <- go (unAbs ab)
+      return $ Lam (pp (absName ab) :~ ab')
+    -- ** applications
+    (A.Var i   xs) -> App (Right i)                   <$> (traverse go xs)
+    (A.Def f   xs) -> App (Left $ ppName f)           <$> (traverse go xs)
+    (A.Con c _ xs) -> App (Left $ ppName $ conName c) <$> (traverse go xs)
     -- ** other constants
-    (A.Lit   x) -> Lit   $ pp x
-    (A.Level x) -> Level $ pp x
-    (A.Sort  x) -> Sort  $ pp x
+    (A.Lit   x) -> return $ Lit   $ pp x
+    (A.Level x) -> return $ Level $ pp x
+    (A.Sort  x) -> return $ Sort  $ pp x
     -- ** there are some occurrences of `DontCare` in the standard library
     (A.DontCare t) -> go t
-    (A.Dummy s xs) -> let xs' = go <$> xs in case s of
-      "⊜" -> Function xs'
-      "⊕" -> ADT xs'
-      "⊗" -> Record xs'
-      "⊙" -> if | [App (Left n) [], Lit i] <- xs'
-                -> Constructor n (read i)
-                | otherwise
-                -> error $ "[convert] malformed constructor: " <> show xs'
-      _ -> App (Left s) xs'
     -- ** crash on the rest (should never be encountered)
+    t@(A.Dummy _ _) -> panic "term" t
     t@(A.MetaV _ _) -> panic "term" t
 
-instance From A.Elim where
-  type To A.Elim = Term
+instance A.Elim ~> Term where
   go = \case
     (A.Apply x)      -> go (unArg x)
-    (A.Proj _ qn)    -> App (Left $ ppName qn) []
+    (A.Proj _ qn)    -> return $ App (Left $ ppName qn) []
     (A.IApply _ _ x) -> go x
 
 -- ** utilities
@@ -260,9 +331,24 @@ instance From A.Elim where
 pp :: P.Pretty a => a -> String
 pp = P.prettyShow
 
+ppm :: P.PrettyTCM a => a -> TCM P.Doc
+ppm = P.prettyTCM
+
+prender :: P.Doc -> String
+prender = P.renderStyle (P.Style P.OneLineMode 0 0.0)
+
+report :: MonadTCM m => VerboseLevel -> TCM P.Doc -> m ()
+report n x = liftTCM $ reportSDoc "agda2train" n x
+
 panic :: (P.Pretty a, Show a) => String -> a -> b
 panic s t = error $
   "[PANIC] unexpected " <> s <> ": " <> pp t <> "\n show: " <> pp (show t)
 
 ppName :: A.QName -> String
 ppName qn = pp qn <> "<" <> show (fromEnum $ nameId $ qnameName qn) <> ">"
+
+unqualify :: A.QName -> String
+unqualify = pp . qnameName
+
+(\/) :: (a -> Bool) -> (a -> Bool) -> (a -> Bool)
+(f \/ g) x = f x || g x

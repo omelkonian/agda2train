@@ -21,7 +21,7 @@ executable agda2train
     main-is:             Main.hs
     other-modules:       ToTrain, Output, AgdaInternals
     build-depends:       base
-                       , Agda
+                       , Agda >= 2.6.3 && < 2.6.4
                        , pretty
                        , containers
                        , aeson
@@ -42,7 +42,12 @@ executable agda2train
                        , DeriveGeneric
                        , DeriveAnyClass
                        , DeriveFunctor
+                       , DeriveFoldable
+                       , DeriveTraversable
                        , DerivingVia
+                       , StandaloneDeriving
                        , PatternSynonyms
                        , TypeFamilies
+                       , TypeOperators
+                       , FunctionalDependencies
     ghc-options: -threaded -rtsopts -with-rtsopts=-N

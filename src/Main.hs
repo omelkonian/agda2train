@@ -1,7 +1,7 @@
 {-# LANGUAGE TypeApplications #-}
 module Main where
 
-import GHC.Generics
+import GHC.Generics hiding (conName)
 
 import System.Environment ( getArgs, withArgs )
 import System.Directory ( createDirectoryIfMissing, doesFileExist )
@@ -10,10 +10,11 @@ import System.Console.GetOpt ( OptDescr(..), ArgDescr(..) )
 
 import qualified Data.List as L
 import qualified Data.Set as S
+import Data.String ( fromString )
+import qualified Data.ByteString.Lazy as BL
 import Data.Aeson ( ToJSON )
 import Data.Aeson.Encode.Pretty
   ( encodePretty', Config(..), defConfig, Indent(..), keyOrder )
-import qualified Data.ByteString.Lazy as BL
 
 import Control.Monad
 import Control.Monad.IO.Class ( liftIO )
@@ -29,8 +30,12 @@ import Agda.Utils.Monad
 import Agda.Syntax.Scope.Base
 import Agda.Syntax.Scope.Monad
 import Agda.Syntax.TopLevelModuleName
+import Agda.Syntax.Internal ( unEl, unDom, conName )
 
 import Agda.TypeChecking.Reduce
+import qualified Agda.TypeChecking.Pretty as P
+import Agda.TypeChecking.Pretty ( PrettyTCM(..) )
+import Agda.Syntax.Translation.InternalToAbstract ( NamedClause(..) )
 
 import Agda.Compiler.Common ( curIF )
 
@@ -75,20 +80,23 @@ mkBackend trainF = Backend'
         processScopeEntry qn = do
           -- TODO: clean up qualifiers of the form: CurrentModule.(_.)*
           caseMaybeM (tryMaybe $ typeOfConst qn) (pure Nothing) $ \ty -> do
-            pty <- ppm ty
-            rty <- mkReduced ty
-            def <- getConstInfo qn
-            tdef <- toTerm def
-            pdef <- ppm tdef
-            report 20 $ ppm (pp qn) <> " : " <> ppm (pp ty)
-            report 20 $ ppm (pp qn) <> " = " <> ppm tdef
+            rty  <- mkReduced ty
+            pty  <- ppm ty
+            rty' <- traverse convert rty
+
+            def  <- getConstInfo qn
+            pdef <- ppm def
+            def' <- convert def
+
+            report 20 $ ppm (pp qn) <> " : " <> ppm ty
+            report 20 $ ppm (pp qn) <> " = " <> ppm def
             report 30 $ "      *pretty: " <> ppm ty
             reportReduced rty
-            return $ Just $
-              ppName qn :~ ScopeEntry
-              { _type      = render pty :> fmap convert rty
+
+            return $ Just $ ppName qn :~ ScopeEntry
+              { _type      = prender pty :> rty'
               , definition = boolToMaybe (includeDefinitions opts)
-                           $ render pdef :> convert tdef
+                           $ prender pdef :> def'
               , holes = Nothing
               }
       in
@@ -127,6 +135,34 @@ mkBackend trainF = Backend'
       jsonExists <- liftIO $ doesFileExist (getOutFn opts $ pp md)
       return $ (not recurse && (isMain == NotMain))
             || (not noJson && jsonExists && not ignoreExistingJson)
+
+instance P.PrettyTCM Definition where
+  prettyTCM d = go (theDef d)
+   where
+    go = \case
+      AbstractDefn defn -> go defn
+      Function{..} ->
+        P.fsep $ P.punctuate " |"
+               $ prettyTCM . NamedClause (defName d) True <$> funClauses
+      Datatype{..} -> do
+        tys <- fmap unEl <$> traverse typeOfConst dataCons
+        P.fsep $ P.punctuate " |" $ prettyTCM <$> tys
+      Record{..} -> do
+        tys <- fmap unEl <$>  traverse typeOfConst (unDom <$> recFields)
+        P.fsep $ P.punctuate " ;" $ prettyTCM <$> tys
+      Constructor{..} -> do
+        let cn = conName conSrcCon
+        d <- theDef <$> getConstInfo conData
+        case d of
+          Datatype{..} ->
+            let Just ix = L.elemIndex (unqualify cn) (unqualify <$> dataCons)
+            in  prettyTCM conData <> "@" <> prettyTCM ix
+          Record{..} -> prettyTCM conData <> "@0"
+      Primitive{..}     -> "<Primitive> " <> fromString primName
+      PrimitiveSort{..} -> "<PrimitiveSort> " <> fromString primSortName
+      Axiom{..}         -> "<Axiom>"
+      DataOrRecSig{..}  -> "<DataOrRecSig>"
+      GeneralizableVar  -> "<GeneralizableVar>"
 
 -- ** command-line flags
 
@@ -172,6 +208,8 @@ encode = encodePretty' $ defConfig
       [ "pretty"
       , "tag"
       , "name"
+      , "original", "simplified", "reduced", "normalised"
+      , "telescope", "patterns"
       , "domain", "codomain"
       , "abstraction", "body"
       , "sort", "level", "literal"
@@ -183,11 +221,6 @@ encode = encodePretty' $ defConfig
       , "ctx", "goal", "term", "premises"
       ]
   }
-  where
-    -- named   = keyOrder . (["name", "item"] <>)
-    -- pretty  = keyOrder . (["pretty", "thing"] <>)
-    -- tagged  = keyOrder . ("tag" :)
-    -- reduced = ["original", "simplified", "reduced", "normalised"]
 
 encodeFile :: ToJSON a => FilePath -> a -> IO ()
 encodeFile = \fn -> BL.writeFile fn . encode
