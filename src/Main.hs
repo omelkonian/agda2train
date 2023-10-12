@@ -1,7 +1,7 @@
 {-# LANGUAGE TypeApplications #-}
 module Main where
 
-import GHC.Generics hiding (conName)
+import GHC.Generics
 
 import System.Environment ( getArgs, withArgs )
 import System.Directory ( createDirectoryIfMissing, doesFileExist )
@@ -10,7 +10,6 @@ import System.Console.GetOpt ( OptDescr(..), ArgDescr(..) )
 
 import qualified Data.List as L
 import qualified Data.Set as S
-import Data.String ( fromString )
 import qualified Data.ByteString.Lazy as BL
 import Data.Aeson ( ToJSON )
 import Data.Aeson.Encode.Pretty
@@ -30,12 +29,9 @@ import Agda.Utils.Monad
 import Agda.Syntax.Scope.Base
 import Agda.Syntax.Scope.Monad
 import Agda.Syntax.TopLevelModuleName
-import Agda.Syntax.Internal ( unEl, unDom, conName, telToList )
 
 import Agda.TypeChecking.Reduce
 import qualified Agda.TypeChecking.Pretty as P
-import Agda.TypeChecking.Pretty ( PrettyTCM(..) )
-import Agda.Syntax.Translation.InternalToAbstract ( NamedClause(..) )
 
 import Agda.Compiler.Common ( curIF )
 
@@ -137,36 +133,6 @@ mkBackend trainF = Backend'
       jsonExists <- liftIO $ doesFileExist (getOutFn opts $ pp md)
       return $ (not recurse && (isMain == NotMain))
             || (not noJson && jsonExists && not ignoreExistingJson)
-
-instance P.PrettyTCM Definition where
-  prettyTCM d = go (theDef d)
-   where
-    go = \case
-      AbstractDefn defn -> go defn
-      Function{..} ->
-        P.fsep $ P.punctuate " |"
-               $ prettyTCM . NamedClause (defName d) True <$> funClauses
-      Datatype{..} -> do
-        tys <- fmap unEl <$> traverse typeOfConst dataCons
-        P.fsep $ P.punctuate " |" $ prettyTCM <$> tys
-      Record{..} -> do
-        let tys = unDom <$> drop recPars (telToList recTel)
-        P.braces
-          $ P.fsep $ P.punctuate " ;"
-          $ map (\(n, ty) -> P.parens $ prettyTCM n <> " : " <> prettyTCM ty) tys
-      Constructor{..} -> do
-        let cn = conName conSrcCon
-        d <- theDef <$> getConstInfo conData
-        case d of
-          Datatype{..} ->
-            let Just ix = L.elemIndex (unqualify cn) (unqualify <$> dataCons)
-            in  prettyTCM conData <> "@" <> prettyTCM ix
-          Record{..} -> prettyTCM conData <> "@0"
-      Primitive{..}     -> "<Primitive> " <> fromString primName
-      PrimitiveSort{..} -> "<PrimitiveSort> " <> fromString primSortName
-      Axiom{..}         -> "<Axiom>"
-      DataOrRecSig{..}  -> "<DataOrRecSig>"
-      GeneralizableVar  -> "<GeneralizableVar>"
 
 -- ** command-line flags
 

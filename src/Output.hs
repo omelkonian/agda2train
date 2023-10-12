@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleInstances, FlexibleContexts #-}
 module Output
   ( Sample(..)
   , FileData, TrainData(..)
@@ -16,6 +16,7 @@ import Control.Arrow ( second )
 import Control.Applicative ( (<|>) )
 import GHC.Generics ( Generic, Generically(..) )
 import Data.List ( notElem, elemIndex )
+import Data.String ( fromString )
 import Data.Aeson
 import qualified Data.Aeson as JSON
 import qualified Data.Aeson.KeyMap as KM
@@ -26,14 +27,16 @@ import qualified Agda.Syntax.Internal as A
 import qualified Agda.Syntax.Literal as A
 import Agda.Syntax.Internal
   ( QName, absName, qnameName, qnameModule, unAbs, unEl, unDom
-  , nameId, conName, dbPatVarIndex, pDom )
+  , nameId, conName, dbPatVarIndex, pDom, telToList )
+import Agda.Syntax.Translation.InternalToAbstract ( NamedClause(..) )
 import qualified Agda.TypeChecking.Monad as A
 import Agda.TypeChecking.Monad
-  ( TCM, MonadTCM, liftTCM, typeOfConst, theDef, getConstInfo
+  ( TCM, MonadTCM, liftTCM, typeOfConst, theDef, defName, getConstInfo
   , reportSDoc, VerboseLevel )
 
 import qualified Agda.Utils.Pretty as P
-  hiding (Doc)
+import Agda.TypeChecking.Pretty
+  ( PrettyTCM(..), MonadPretty, fsep, punctuate, braces, parens, Doc )
 import qualified Agda.TypeChecking.Pretty as P
   hiding (text)
 
@@ -226,16 +229,9 @@ instance A.Definition ~> Definition where
 instance A.Defn ~> Definition where
   go = \case
     A.AbstractDefn defn -> go defn
-    A.Function{..} ->
+    A.Function{..} -> let cls = takeWhile isNotCubical funClauses in
       -- NB: handle funWith and funExtLam
-      Function <$> traverse go (takeWhile isNotCubical funClauses)
-      where
-        isNotCubical :: A.Clause -> Bool
-        isNotCubical A.Clause{..}
-          | Just (A.Def qn _) <- clauseBody
-          = pp (qnameModule qn) /= "Agda.Primitive.Cubical"
-          | otherwise
-          = True
+      Function <$> traverse go cls
     A.Datatype{..} -> do
     -- NB: what is a dataClause???
       tys <- fmap unEl <$> traverse typeOfConst dataCons
@@ -331,13 +327,16 @@ instance A.Elim ~> Term where
 pp :: P.Pretty a => a -> String
 pp = P.prettyShow
 
-ppm :: P.PrettyTCM a => a -> TCM P.Doc
+ppm :: (MonadPretty m, P.PrettyTCM a) => a -> m Doc
 ppm = P.prettyTCM
 
-prender :: P.Doc -> String
+prender :: Doc -> String
 prender = P.renderStyle (P.Style P.OneLineMode 0 0.0)
 
-report :: MonadTCM m => VerboseLevel -> TCM P.Doc -> m ()
+pinterleave :: (Applicative m, Semigroup (m Doc)) => m Doc -> [m Doc] -> m Doc
+pinterleave sep = fsep . punctuate sep
+
+report :: MonadTCM m => VerboseLevel -> TCM Doc -> m ()
 report n x = liftTCM $ reportSDoc "agda2train" n x
 
 panic :: (P.Pretty a, Show a) => String -> a -> b
@@ -352,3 +351,42 @@ unqualify = pp . qnameName
 
 (\/) :: (a -> Bool) -> (a -> Bool) -> (a -> Bool)
 (f \/ g) x = f x || g x
+
+isNotCubical :: A.Clause -> Bool
+isNotCubical A.Clause{..}
+  | Just (A.Def qn _) <- clauseBody
+  = pp (qnameModule qn) /= "Agda.Primitive.Cubical"
+  | otherwise
+  = True
+
+instance P.PrettyTCM A.Definition where
+  prettyTCM d = go (theDef d)
+   where
+    go = \case
+      A.AbstractDefn defn -> go defn
+      A.Function{..} -> let cls = takeWhile isNotCubical funClauses in
+        fsep $ punctuate " |"
+             $ ppm . NamedClause (defName d) True <$> cls
+      A.Datatype{..} -> do
+        tys <- fmap unEl <$> traverse typeOfConst dataCons
+        pinterleave " |" $ ppm <$> tys
+      A.Record{..} -> do
+        let tys = unDom <$> drop recPars (telToList recTel)
+        braces
+          $ pinterleave " ;"
+          $ map (\(n, ty) -> parens $ ppm n <> " : " <> ppm ty) tys
+      A.Constructor{..} -> do
+        let cn = conName conSrcCon
+        d <- theDef <$> getConstInfo conData
+        case d of
+          A.Datatype{..} ->
+            let Just ix = elemIndex (unqualify cn) (unqualify <$> dataCons)
+            in  ppm conData <> "@" <> ppm ix
+          A.Record{..} -> ppm conData <> "@0"
+      A.Primitive{..}     -> "<Primitive> " <> fromString primName
+      A.PrimitiveSort{..} -> "<PrimitiveSort> " <> fromString primSortName
+      A.Axiom{..}         -> "<Axiom>"
+      A.DataOrRecSig{..}  -> "<DataOrRecSig>"
+      A.GeneralizableVar  -> "<GeneralizableVar>"
+
+
