@@ -1,3 +1,4 @@
+{-# LANGUAGE TemplateHaskell #-}
 module ToTrain
   ( TrainF
   , train
@@ -10,6 +11,7 @@ module ToTrain
 import Data.Maybe ( isJust )
 import Data.List ( isPrefixOf, isInfixOf, find )
 import qualified Data.Set as S
+import Data.FileEmbed ( embedStringFile )
 
 import Control.Monad ( forM_, void, when, unless )
 import Control.Monad.Writer ( WriterT(runWriterT) )
@@ -59,7 +61,7 @@ type TrainF = Type -> Term -> C ()
 -- | An example training function that just prints the relevant (local) information.
 train :: TrainF
 train ty t = do
-  let ns = names t
+  let ns = namesIn t
   allNs <- nsInScope . allThingsInScope <$> liftTCM getCurrentScope
   unless (null ns) $
     -- TODO: we drop samples that use private definitions for now, but it would
@@ -125,8 +127,8 @@ forEachHole trainF def@Defn{..} = unless (ignoreDef def) $ do
       return (ignoreType ty || any ignoreCtxType ctx)
 
     ignoreType, ignoreCtxType :: Type -> Bool
-    ignoreType    = any cubicalRelated . map pp . names
-    ignoreCtxType = any cubicalRelated . map pp . names
+    ignoreType    = any cubicalRelated . map pp . namesIn . unEl
+    ignoreCtxType = any cubicalRelated . map pp . namesIn . unEl
 
     cubicalRelated, tooSlow :: String -> Bool
     cubicalRelated = ("Agda.Primitive.Cubical.I" `isInfixOf`)
@@ -134,55 +136,7 @@ forEachHole trainF def@Defn{..} = unless (ignoreDef def) $ do
        = ("Data.Rational.Properties" `isPrefixOf`)
       \/ ("Prelude.Solvers" `isPrefixOf`)
       \/ ("foundation.partitions" `isPrefixOf`)
-      \/ (== "Data.Relation.Binary.Subset.Propositional.Properties.filter⁺")
-      \/ (== "foundation.homotopies._.compute-ind-htpy")
-      \/ (== "foundation.equivalences.coh-unit-laws-equiv")
-      \/ (== "foundation.functoriality-propositional-truncation.id-map-trunc-Prop")
-      \/ (== "foundation.functoriality-coproduct-types._.equiv-mutually-exclusive-coprod")
-      \/ (== "trees.polynomial-endofunctors.coh-refl-htpy-polynomial-endofunctor")
-      \/ (== "foundation.uniqueness-image._.htpy-map-hom-equiv-slice-uniqueness-im")
-      \/ (== "foundation.uniqueness-image._.tetrahedron-hom-equiv-slice-uniqueness-im")
-      \/ (== "foundation.functoriality-set-truncation._.htpy-map-hom-slice-trunc-im-Set")
-      \/ (== "foundation.functoriality-set-truncation._.tetrahedron-map-hom-slice-trunc-im-Set")
-      \/ (== "univalent-combinatorics.2-element-types._.is-not-identity-swap-2-Element-Type")
-      \/ (== "foundation.unordered-pairs._.eq-Eq-refl-unordered-pair")
-      \/ (== "MGS.Equivalence-Induction.𝔾-≃-equation")
-      \/ (== "MGS.More-FunExt-Consequences.EM-is-subsingleton")
-      \/ (== "foundation.unordered-pairs.preserves-refl-htpy-unordered-pair")
-      \/ (== "MGS.Equivalence-Constructions.Eq-Eq-cong")
-      \/ (== "foundation.unordered-pairs.id-equiv-standard-unordered-pair")
-      \/ (== "MGS.Embeddings.Emb→fun")
-      \/ (== "trees.morphisms-algebras-polynomial-endofunctors._.refl-htpy-hom-algebra-polynomial-endofunctor")
-      \/ (== "MGS.Universe-Lifting._.q")
-      \/ (== "UF.Equiv-FunExt.prop-＝-≃-⇔")
-      \/ (== "trees.morphisms-algebras-polynomial-endofunctors._.is-contr-total-htpy-hom-algebra-polynomial-endofunctor")
-      \/ (== "trees.w-types.htpy-hom-𝕎-Alg")
-      \/ (== "UF.FunExt-Properties.naive-funext-gives-funext₀")
-      \/ (== "graph-theory.morphisms-undirected-graphs._.refl-htpy-hom-Undirected-Graph")
-      \/ (== "UF.UA-FunExt._._.h")
-      \/ (== "graph-theory.morphisms-undirected-graphs._.is-contr-total-htpy-hom-Undirected-Graph")
-      \/ (== "UF.PairFun.pair-fun-embedding")
-      \/ (== "graph-theory.equivalences-undirected-graphs._.edge-standard-unordered-pair-vertices-id-equiv-Undirected-Graph")
-      \/ (== "UF.UniverseEmbedding.hSet-embeddings-are-embeddings")
-      \/ (== "graph-theory.equivalences-undirected-graphs._.is-contr-total-htpy-equiv-Undirected-Graph")
-      \/ (== "UF.Size._.Set-Replacement")
-      \/ (== "Lifting.IdentityViaSIP.𝓛-Id")
-      \/ (== "foundation.partitions._.is-section-map-inv-compute-block-partition")
-      \/ (== "Lifting.IdentityViaSIP.𝓛-Id·")
-      \/ (== "foundation.partitions._.is-retraction-map-inv-compute-block-partition")
-      \/ (== "Lifting.Size._.e")
-      \/ (== "foundation.partitions._.is-emb-inhabited-subtype-block-partition")
-      \/ (== "InjectiveTypes.Blackboard.injective._.e")
-      \/ (== "foundation.partitions._.compute-is-in-block-partition")
-      \/ (== "foundation.partitions._.is-contr-block-containing-element-partition")
-      \/ (== "foundation.partitions._.is-in-block-class-partition")
-      \/ (== "foundation.partitions._.compute-total-block-partition")
-      \/ (== "TypeTopology.SquashedCantor._.fg")
-      \/ (== "foundation.partitions.partition-Set-Indexed-Σ-Decomposition")
-      \/ (== "foundation.set-quotients._.is-section-equivalence-class-set-quotient") -- really hungry
-      \/ (== "foundation.set-quotients._.is-retraction-equivalence-class-set-quotient")
-      -- \/ (== "")
-
+      \/ (`elem` defsToSkip)
 
     go :: Type -> Term -> C ()
     go ty t = whenM (not <$> ignore ty)
@@ -194,12 +148,8 @@ forEachHole trainF def@Defn{..} = unless (ignoreDef def) $ do
     pre :: Type -> Term -> C Term
     pre ty t = trainF ty t >> return t
 
--- | Gathering names from terms.
-names :: TermLike a => a -> [QName]
-names = foldTerm $ \case
-  (Def n _) -> [n]
-  (Con c _ _) -> [conName c]
-  _ -> []
+defsToSkip :: [String]
+defsToSkip = lines $ $(embedStringFile "data/defsToSkip.txt")
 
 -- ** reduction
 
