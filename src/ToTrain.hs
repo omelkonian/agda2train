@@ -9,7 +9,7 @@ module ToTrain
   ) where
 
 import Data.Maybe ( isJust )
-import Data.List ( isPrefixOf, isInfixOf, find )
+import Data.List ( isPrefixOf, isInfixOf, find, nub )
 import qualified Data.Set as S
 import Data.FileEmbed ( embedStringFile )
 
@@ -61,7 +61,7 @@ type TrainF = Type -> Term -> C ()
 -- | An example training function that just prints the relevant (local) information.
 train :: TrainF
 train ty t = do
-  let ns = namesIn t
+  let ns = names t
   allNs <- nsInScope . allThingsInScope <$> liftTCM getCurrentScope
   unless (null ns) $
     -- TODO: we drop samples that use private definitions for now, but it would
@@ -127,8 +127,8 @@ forEachHole trainF def@Defn{..} = unless (ignoreDef def) $ do
       return (ignoreType ty || any ignoreCtxType ctx)
 
     ignoreType, ignoreCtxType :: Type -> Bool
-    ignoreType    = any cubicalRelated . map pp . namesIn . unEl
-    ignoreCtxType = any cubicalRelated . map pp . namesIn . unEl
+    ignoreType    = any cubicalRelated . map pp . names . unEl
+    ignoreCtxType = any cubicalRelated . map pp . names . unEl
 
     cubicalRelated, tooSlow :: String -> Bool
     cubicalRelated = ("Agda.Primitive.Cubical.I" `isInfixOf`)
@@ -150,6 +150,10 @@ forEachHole trainF def@Defn{..} = unless (ignoreDef def) $ do
 
 defsToSkip :: [String]
 defsToSkip = lines $ $(embedStringFile "data/defsToSkip.txt")
+
+-- | Gathering names from terms.
+names :: Term -> [QName]
+names = nub . namesIn
 
 -- ** reduction
 
