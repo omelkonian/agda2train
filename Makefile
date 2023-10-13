@@ -1,4 +1,4 @@
-.PHONY: repl build install test golden cleanTest stdlib unimath typetopology
+.PHONY: repl build install installTest test golden cleanTest stdlib unimath typetopology
 
 default: repl
 
@@ -12,14 +12,14 @@ install:
 	cabal install --overwrite-policy=always
 
 # Testing
-test/agda2train:
+installTest:
 	cabal install --overwrite-policy=always --installdir=test --install-method=copy
 
-golden: test/agda2train
+golden: installTest
 	make -C test all
 	make -C test golden
 
-test: test/agda2train
+test: installTest
 	make -C test
 
 cleanTest:

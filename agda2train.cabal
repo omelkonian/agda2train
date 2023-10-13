@@ -15,7 +15,7 @@ maintainer:         melkon.or@gmail.com
 -- A copyright notice.
 -- copyright:
 -- category:
-extra-source-files:
+extra-source-files: data/defsToSkip.txt
 
 executable agda2train
     main-is:             Main.hs
