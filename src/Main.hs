@@ -179,7 +179,7 @@ encode = encodePretty' $ defConfig
       , "tag"
       , "name"
       , "original", "simplified", "reduced", "normalised"
-      , "telescope", "patterns"
+      , "telescope", "patterns", "fields"
       , "domain", "codomain"
       , "abstraction", "body"
       , "sort", "level", "literal"

@@ -27,7 +27,7 @@ import qualified Agda.Syntax.Internal as A
 import qualified Agda.Syntax.Literal as A
 import Agda.Syntax.Internal
   ( QName, absName, qnameName, qnameModule, unAbs, unEl, unDom
-  , nameId, conName, dbPatVarIndex, pDom, telToList )
+  , nameId, conName, dbPatVarIndex, pDom, telToList, telFromList )
 import Agda.Syntax.Translation.InternalToAbstract ( NamedClause(..) )
 import qualified Agda.TypeChecking.Monad as A
 import Agda.TypeChecking.Monad
@@ -44,9 +44,9 @@ import qualified Agda.TypeChecking.Pretty as P
 jsonOpts = defaultOptions
   { omitNothingFields = True
   , fieldLabelModifier = \case
+      ('_' : s) -> s
       "scopeGlobal" -> "scope-global"
       "scopeLocal" -> "scope-local"
-      "_type" -> "type"
       s -> s
   }
 
@@ -146,7 +146,7 @@ data Definition
   --   suc  : ℕ → ℕ
   | Constructor {reference :: Name, variant :: Integer}
   -- ^ e.g. `(ℕ, 0) ~ zero` or `(ℕ, 1) ~ suc`
-  | Record {fields :: [Type]}
+  | Record {telescope :: Telescope, fields :: [Type]}
   -- ^ e.g.
   -- record X : Set where
   --   field x : ℕ
@@ -160,7 +160,7 @@ data Definition
   deriving (Generic, Show, ToJSON, FromJSON)
 
 data Clause = Clause
-  { telescope :: Telescope
+  { _telescope :: Telescope
   , patterns  :: [Pattern]
   , body      :: Maybe Term -- ^ `Nothing` for absurd clauses
   } deriving (Generic, Show)
@@ -235,14 +235,14 @@ instance A.Defn ~> Definition where
       -- NB: handle funWith and funExtLam
       Function <$> traverse go cls
     A.Datatype{..} -> do
-    -- NB: what is a dataClause???
+      -- NB: what is a dataClause???
       tys <- fmap unEl <$> traverse typeOfConst dataCons
       ADT <$> traverse go tys
     A.Record{..} -> do
-    -- NB: handle parameterized modules (c.f. recClause/recTel/recPars
-    -- NB: maybe incorporate conHead/namedCon in the future for accuracy
-      let tys = snd . unDom <$> drop recPars (A.telToList recTel)
-      Record <$> traverse go tys
+      -- NB: incorporate conHead/namedCon in the future for accuracy
+      --     + to solve the issue with private (non-public) fields
+      (tel, fs) <- splitAt recPars <$> go recTel
+      return $ Record tel (thing . item <$> fs)
     A.Constructor{..} -> do
       let cn = conName conSrcCon
       d <- theDef <$> getConstInfo conData
@@ -258,15 +258,11 @@ instance A.Defn ~> Definition where
     d@A.GeneralizableVar -> panic "generalizable variable" d
 
 instance A.Clause ~> Clause where
-  go A.Clause{..} = do
-    tel <- go clauseTel
-    ps  <- traverse go (A.namedThing . unArg <$> namedClausePats)
+  go A.Clause{..} =
+    Clause <$> go clauseTel
+           <*> traverse go (A.namedThing . unArg <$> namedClausePats)
            -- ^ drop visibility and name information
-    t   <- traverse go clauseBody
-    return $ Clause
-      { telescope = tel
-      , patterns  = ps
-      , body      = t }
+           <*> traverse go clauseBody
 
 instance A.DeBruijnPattern ~> Pattern where
   go = \case
@@ -282,13 +278,13 @@ instance A.DeBruijnPattern ~> Pattern where
 instance A.Telescope ~> Telescope where
   go = traverse action . A.telToList
     where
-      action :: A.Dom (Name, A.Type) -> TCM (Named (Pretty Type))
-      action dty = do
-        let (n, ty) = unDom dty
-        pty <- ppm ty
-        ty' <- go ty
-        let pdty = prender $ pDom dty $ P.text $ n <> " : " <> prender pty
-        return $ n :~ pdty :> ty'
+    action :: A.Dom (Name, A.Type) -> TCM (Named (Pretty Type))
+    action dty = do
+      let (n, ty) = unDom dty
+      pty <- ppm ty
+      ty' <- go ty
+      let pdty = prender $ pDom dty $ P.text $ n <> " : " <> prender pty
+      return $ n :~ pdty :> ty'
 
 instance A.Type ~> Type where
   go = go . A.unEl
@@ -309,14 +305,14 @@ instance A.Term ~> Term where
     (A.Def f   xs) -> App (Left $ ppName f)           <$> (traverse go xs)
     (A.Con c _ xs) -> App (Left $ ppName $ conName c) <$> (traverse go xs)
     -- ** other constants
-    (A.Lit   x) -> return $ Lit   $ pp x
-    (A.Level x) -> return $ Level $ pp x
-    (A.Sort  x) -> return $ Sort  $ pp x
+    (A.Lit   x)   -> return $ Lit   $ pp x
+    (A.Level x)   -> return $ Level $ pp x
+    (A.Sort  x)   -> return $ Sort  $ pp x
+    (A.MetaV _ _) -> return UnsolvedMeta
     -- ** there are some occurrences of `DontCare` in the standard library
     (A.DontCare t) -> go t
     -- ** crash on the rest (should never be encountered)
     t@(A.Dummy _ _) -> panic "term" t
-    t@(A.MetaV _ _) -> return UnsolvedMeta
 
 instance A.Elim ~> Term where
   go = \case
@@ -337,6 +333,9 @@ prender = P.renderStyle (P.Style P.OneLineMode 0 0.0)
 
 pinterleave :: (Applicative m, Semigroup (m Doc)) => m Doc -> [m Doc] -> m Doc
 pinterleave sep = fsep . punctuate sep
+
+pbindings :: (MonadPretty m, PrettyTCM a) => [(String, a)] -> [m Doc]
+pbindings = map $ \(n, ty) -> parens $ ppm n <> " : " <> ppm ty
 
 report :: MonadTCM m => VerboseLevel -> TCM Doc -> m ()
 report n x = liftTCM $ reportSDoc "agda2train" n x
@@ -371,10 +370,11 @@ instance P.PrettyTCM A.Definition where
              $ ppm . NamedClause (defName d) True <$> cls
       A.Datatype{..} -> do
         tys <- fmap unEl <$> traverse typeOfConst dataCons
-        pinterleave " |" $ map showNamedTy (zip (unqualify <$> dataCons) tys)
-      A.Record{..} -> do
-        let tys = unDom <$> drop recPars (telToList recTel)
-        braces $ pinterleave " ;" $ map showNamedTy tys
+        pinterleave " |" $ pbindings $ zip (unqualify <$> dataCons) tys
+      A.Record{..} ->
+        let (tel, fs) = splitAt recPars $ telToList recTel in
+        (if null tel then "" else ppm (telFromList tel) <> " |- ")
+          <> (braces $ pinterleave " ;" $ pbindings $ unDom <$> fs)
       A.Constructor{..} -> do
         let cn = conName conSrcCon
         d <- theDef <$> getConstInfo conData
@@ -388,8 +388,3 @@ instance P.PrettyTCM A.Definition where
       A.Axiom{..}         -> "<Axiom>"
       A.DataOrRecSig{..}  -> "<DataOrRecSig>"
       A.GeneralizableVar  -> "<GeneralizableVar>"
-
-    showNamedTy :: (MonadPretty m, PrettyTCM a) => (String, a) -> m Doc
-    showNamedTy = \(n, ty) -> parens $ ppm n <> " : " <> ppm ty
-
-
