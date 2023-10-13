@@ -8,3 +8,6 @@ f : Nat → Nat
 f n with g n
 ... | zero  = zero
 ... | suc n = suc (suc (g n))
+-- ** the with statement above internally generates a helper function `with-10<12>`
+-- that performs the pattern matching and the body of `f` is substituted with a
+-- "with-application" calling said function with the arguments `n` and `g n`.
