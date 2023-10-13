@@ -81,7 +81,7 @@ train ty t = do
         { ctx      = prender pctx :> ctx'
         , goal     = prender pty  :> rty'
         , term     = prender pt   :> rt'
-        , premises = map pp ns
+        , premises = map ppName ns
         }
       report 20 "{"
       report 20 $ " ctx: " <> ppm (pp ctx)
@@ -92,7 +92,7 @@ train ty t = do
       report 20 $ " term: " <> ppm (pp t)
       report 30 $ "      *pretty: " <> pure pt
       reportReduced rt
-      report 20 $ " namesUsed: " <> ppm ns
+      report 20 $ " premises: " <> ppm ns
       report 20 "}"
 
 -- | Run the training function on each subterm of a definition.
