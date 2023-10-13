@@ -156,7 +156,7 @@ data Definition
   -- f []       = []
   -- f (x ∷ xs) = x ∷ x ∷ xs
   | Postulate {}
-  | Primitive {primName :: String}
+  | Primitive {}
   deriving (Generic, Show, ToJSON, FromJSON)
 
 data Clause = Clause
@@ -249,9 +249,9 @@ instance A.Defn ~> Definition where
           let Just ix = elemIndex (unqualify cn) (unqualify <$> dataCons)
           in  Constructor (pp conData) (toInteger ix)
         A.Record{..} -> Constructor (pp conData) 0
-    A.Primitive{..}      -> return $ Primitive primName
-    A.PrimitiveSort{..}  -> return $ Primitive primSortName
-    A.Axiom{..}          -> return $ Postulate
+    A.Primitive{..}      -> return Primitive
+    A.PrimitiveSort{..}  -> return Primitive
+    A.Axiom{..}          -> return Postulate
     d@A.DataOrRecSig{..} -> panic "dataOrRecSig" d
     d@A.GeneralizableVar -> panic "generalizable variable" d
 
@@ -381,8 +381,8 @@ instance P.PrettyTCM A.Definition where
             let Just ix = elemIndex (unqualify cn) (unqualify <$> dataCons)
             in  ppm conData <> "@" <> ppm ix
           A.Record{..} -> ppm conData <> "@0"
-      A.Primitive{..}     -> "<Primitive> " <> fromString primName
-      A.PrimitiveSort{..} -> "<PrimitiveSort> " <> fromString primSortName
+      A.Primitive{..}     -> "<Primitive>"
+      A.PrimitiveSort{..} -> "<PrimitiveSort>"
       A.Axiom{..}         -> "<Axiom>"
       A.DataOrRecSig{..}  -> "<DataOrRecSig>"
       A.GeneralizableVar  -> "<GeneralizableVar>"
