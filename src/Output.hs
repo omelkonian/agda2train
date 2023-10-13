@@ -176,6 +176,7 @@ data Term
   | Lam (Named Term)          -- ^ e.g. `λ x. x`
   | App Head [Term]           -- ^ e.g. `f x (x + x)` or `@0 (λ x. x)`
   | Lit String | Sort String | Level String -- ^ e.g. Set/42/"sth",0ℓ,...
+  | UnsolvedMeta
   deriving (Generic, Show)
   deriving FromJSON via Generically Term
 
@@ -204,6 +205,7 @@ instance ToJSON Term where
     (Lit s)   -> object [tag "Literal", "literal" .= toJSON s]
     (Sort s)  -> object [tag "Sort",    "sort"   .= toJSON s]
     (Level s) -> object [tag "Level",   "level"  .= toJSON s]
+    UnsolvedMeta -> object [tag "UnsolvedMetavariable"]
     where tag s = "tag" .= JSON.String s
 
 testJSON :: IO ()
@@ -314,7 +316,7 @@ instance A.Term ~> Term where
     (A.DontCare t) -> go t
     -- ** crash on the rest (should never be encountered)
     t@(A.Dummy _ _) -> panic "term" t
-    t@(A.MetaV _ _) -> panic "term" t
+    t@(A.MetaV _ _) -> return UnsolvedMeta
 
 instance A.Elim ~> Term where
   go = \case
