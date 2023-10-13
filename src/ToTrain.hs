@@ -173,12 +173,12 @@ mkReduced ::
   ) => a -> m (Reduced a)
 mkReduced t = do
   -- try different reductions (with timeout)
-  xs <- mapM (liftTCM . withTimeout) [simplify t, reduce t, normalise t]
-  -- compress Reduced representation (erase identical terms)
-  let (simplified : ys) = find (/= t)                   <$> xs
-      (reduced    : zs) = find ((/= simplified) . Just) <$> ys
-      [normalised]      = find ((/= reduced)    . Just) <$> zs
+  [_, simplified, reduced, normalised] <- compressList . (Just t :)
+    <$> mapM (liftTCM . withTimeout) [simplify t, reduce t, normalise t]
   return $ Reduced {original = t, ..}
+  where
+    compressList :: Eq a => [Maybe a] -> [Maybe a]
+    compressList xs = find ((`notElem` xs) . Just) <$> xs
 
 reportReduced :: (MonadTCM m, PrettyTCM a) => Reduced a -> m ()
 reportReduced Reduced{..} = do
