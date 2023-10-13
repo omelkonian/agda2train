@@ -10,7 +10,7 @@
         "sort": "Set"
       },
       "definition": {
-        "pretty": "\"⊕\" Nat (Nat → Nat)",
+        "pretty": "(O : Nat) | (S_ : Nat → Nat)",
         "tag": "ADT",
         "variants": [
           {
@@ -41,9 +41,9 @@
         "name": "Test.OverloadedConstructors.Nat<4>"
       },
       "definition": {
-        "pretty": "\"⊙\" Nat 0",
+        "pretty": "Nat@0",
         "tag": "Constructor",
-        "reference": "Test.OverloadedConstructors.Nat<4>",
+        "reference": "Test.OverloadedConstructors.Nat",
         "variant": 0
       },
       "holes": []
@@ -64,9 +64,9 @@
         }
       },
       "definition": {
-        "pretty": "\"⊙\" Nat 1",
+        "pretty": "Nat@1",
         "tag": "Constructor",
-        "reference": "Test.OverloadedConstructors.Nat<4>",
+        "reference": "Test.OverloadedConstructors.Nat",
         "variant": 1
       },
       "holes": []
@@ -79,25 +79,34 @@
         "name": "Test.OverloadedConstructors.Nat<4>"
       },
       "definition": {
-        "pretty": "S (S O)",
-        "tag": "Application",
-        "head": {
-          "tag": "ScopeReference",
-          "name": "Test.OverloadedConstructors.Nat.S_<8>"
-        },
-        "arguments": [
+        "pretty": "n = S (S O)",
+        "tag": "Function",
+        "clauses": [
           {
-            "tag": "Application",
-            "head": {
-              "tag": "ScopeReference",
-              "name": "Test.OverloadedConstructors.Nat.S_<8>"
-            },
-            "arguments": [
-              {
+            "telescope": [],
+            "patterns": [],
+            "body": {
+              "tag": "Application",
+              "head": {
                 "tag": "ScopeReference",
-                "name": "Test.OverloadedConstructors.Nat.O<6>"
-              }
-            ]
+                "name": "Test.OverloadedConstructors.Nat.S_<8>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.OverloadedConstructors.Nat.S_<8>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "ScopeReference",
+                      "name": "Test.OverloadedConstructors.Nat.O<6>"
+                    }
+                  ]
+                }
+              ]
+            }
           }
         ]
       },
@@ -136,9 +145,8 @@
             ]
           },
           "premises": [
-            "Test.OverloadedConstructors.Nat.S_",
-            "Test.OverloadedConstructors.Nat.S_",
-            "Test.OverloadedConstructors.Nat.O"
+            "Test.OverloadedConstructors.Nat.S_<8>",
+            "Test.OverloadedConstructors.Nat.O<6>"
           ]
         },
         {
@@ -166,8 +174,8 @@
             ]
           },
           "premises": [
-            "Test.OverloadedConstructors.Nat.S_",
-            "Test.OverloadedConstructors.Nat.O"
+            "Test.OverloadedConstructors.Nat.S_<8>",
+            "Test.OverloadedConstructors.Nat.O<6>"
           ]
         },
         {
@@ -186,7 +194,7 @@
             "name": "Test.OverloadedConstructors.Nat.O<6>"
           },
           "premises": [
-            "Test.OverloadedConstructors.Nat.O"
+            "Test.OverloadedConstructors.Nat.O<6>"
           ]
         }
       ]
@@ -199,7 +207,7 @@
         "sort": "Set"
       },
       "definition": {
-        "pretty": "\"⊕\" ℕ (ℕ → ℕ)",
+        "pretty": "(O : ℕ) | (S_ : ℕ → ℕ)",
         "tag": "ADT",
         "variants": [
           {
@@ -230,9 +238,9 @@
         "name": "Test.OverloadedConstructors.ℕ<12>"
       },
       "definition": {
-        "pretty": "\"⊙\" ℕ 0",
+        "pretty": "ℕ@0",
         "tag": "Constructor",
-        "reference": "Test.OverloadedConstructors.ℕ<12>",
+        "reference": "Test.OverloadedConstructors.ℕ",
         "variant": 0
       },
       "holes": []
@@ -253,9 +261,9 @@
         }
       },
       "definition": {
-        "pretty": "\"⊙\" ℕ 1",
+        "pretty": "ℕ@1",
         "tag": "Constructor",
-        "reference": "Test.OverloadedConstructors.ℕ<12>",
+        "reference": "Test.OverloadedConstructors.ℕ",
         "variant": 1
       },
       "holes": []
@@ -268,25 +276,34 @@
         "name": "Test.OverloadedConstructors.ℕ<12>"
       },
       "definition": {
-        "pretty": "S (S O)",
-        "tag": "Application",
-        "head": {
-          "tag": "ScopeReference",
-          "name": "Test.OverloadedConstructors.ℕ.S_<16>"
-        },
-        "arguments": [
+        "pretty": "𝕟 = S (S O)",
+        "tag": "Function",
+        "clauses": [
           {
-            "tag": "Application",
-            "head": {
-              "tag": "ScopeReference",
-              "name": "Test.OverloadedConstructors.ℕ.S_<16>"
-            },
-            "arguments": [
-              {
+            "telescope": [],
+            "patterns": [],
+            "body": {
+              "tag": "Application",
+              "head": {
                 "tag": "ScopeReference",
-                "name": "Test.OverloadedConstructors.ℕ.O<14>"
-              }
-            ]
+                "name": "Test.OverloadedConstructors.ℕ.S_<16>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.OverloadedConstructors.ℕ.S_<16>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "ScopeReference",
+                      "name": "Test.OverloadedConstructors.ℕ.O<14>"
+                    }
+                  ]
+                }
+              ]
+            }
           }
         ]
       },
@@ -325,9 +342,8 @@
             ]
           },
           "premises": [
-            "Test.OverloadedConstructors.ℕ.S_",
-            "Test.OverloadedConstructors.ℕ.S_",
-            "Test.OverloadedConstructors.ℕ.O"
+            "Test.OverloadedConstructors.ℕ.S_<16>",
+            "Test.OverloadedConstructors.ℕ.O<14>"
           ]
         },
         {
@@ -355,8 +371,8 @@
             ]
           },
           "premises": [
-            "Test.OverloadedConstructors.ℕ.S_",
-            "Test.OverloadedConstructors.ℕ.O"
+            "Test.OverloadedConstructors.ℕ.S_<16>",
+            "Test.OverloadedConstructors.ℕ.O<14>"
           ]
         },
         {
@@ -375,7 +391,7 @@
             "name": "Test.OverloadedConstructors.ℕ.O<14>"
           },
           "premises": [
-            "Test.OverloadedConstructors.ℕ.O"
+            "Test.OverloadedConstructors.ℕ.O<14>"
           ]
         }
       ]
@@ -388,24 +404,22 @@
         "sort": "Set"
       },
       "definition": {
-        "pretty": "X → Nat",
-        "tag": "Pi",
-        "name": "r",
-        "domain": {
-          "tag": "ScopeReference",
-          "name": "Test.OverloadedConstructors.X<20>"
-        },
-        "codomain": {
-          "tag": "ScopeReference",
-          "name": "Test.OverloadedConstructors.Nat<4>"
-        }
+        "pretty": "{(x : Nat)}",
+        "tag": "Record",
+        "telescope": [],
+        "fields": [
+          {
+            "tag": "ScopeReference",
+            "name": "Test.OverloadedConstructors.Nat<4>"
+          }
+        ]
       },
       "holes": []
     },
     {
       "name": "Test.OverloadedConstructors.mk<26>",
       "type": {
-        "pretty": "(x₁ : Nat) → X",
+        "pretty": "(x : Nat) → X",
         "tag": "Pi",
         "name": "x",
         "domain": {
@@ -418,31 +432,40 @@
         }
       },
       "definition": {
-        "pretty": "\"⊙\" X 0",
+        "pretty": "X@0",
         "tag": "Constructor",
-        "reference": "Test.OverloadedConstructors.X<20>",
+        "reference": "Test.OverloadedConstructors.X",
         "variant": 0
       },
       "holes": []
     },
     {
-      "name": "Test.OverloadedConstructors.x<28>",
+      "name": "Test.OverloadedConstructors.ex-x<28>",
       "type": {
         "pretty": "X",
         "tag": "ScopeReference",
         "name": "Test.OverloadedConstructors.X<20>"
       },
       "definition": {
-        "pretty": "mk n",
-        "tag": "Application",
-        "head": {
-          "tag": "ScopeReference",
-          "name": "Test.OverloadedConstructors.mk<26>"
-        },
-        "arguments": [
+        "pretty": "ex-x = mk n",
+        "tag": "Function",
+        "clauses": [
           {
-            "tag": "ScopeReference",
-            "name": "Test.OverloadedConstructors.n<10>"
+            "telescope": [],
+            "patterns": [],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.OverloadedConstructors.mk<26>"
+              },
+              "arguments": [
+                {
+                  "tag": "ScopeReference",
+                  "name": "Test.OverloadedConstructors.n<10>"
+                }
+              ]
+            }
           }
         ]
       },
@@ -459,54 +482,21 @@
           },
           "term": {
             "pretty": "mk n",
-            "normalised": {
-              "tag": "Application",
-              "head": {
-                "tag": "ScopeReference",
-                "name": "Test.OverloadedConstructors.mk<26>"
-              },
-              "arguments": [
-                {
-                  "tag": "Application",
-                  "head": {
-                    "tag": "ScopeReference",
-                    "name": "Test.OverloadedConstructors.Nat.S_<8>"
-                  },
-                  "arguments": [
-                    {
-                      "tag": "Application",
-                      "head": {
-                        "tag": "ScopeReference",
-                        "name": "Test.OverloadedConstructors.Nat.S_<8>"
-                      },
-                      "arguments": [
-                        {
-                          "tag": "ScopeReference",
-                          "name": "Test.OverloadedConstructors.Nat.O<6>"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.OverloadedConstructors.mk<26>"
             },
-            "original": {
-              "tag": "Application",
-              "head": {
+            "arguments": [
+              {
                 "tag": "ScopeReference",
-                "name": "Test.OverloadedConstructors.mk<26>"
-              },
-              "arguments": [
-                {
-                  "tag": "ScopeReference",
-                  "name": "Test.OverloadedConstructors.n<10>"
-                }
-              ]
-            }
+                "name": "Test.OverloadedConstructors.n<10>"
+              }
+            ]
           },
           "premises": [
-            "Test.OverloadedConstructors.mk",
-            "Test.OverloadedConstructors.n"
+            "Test.OverloadedConstructors.mk<26>",
+            "Test.OverloadedConstructors.n<10>"
           ]
         },
         {
@@ -521,57 +511,11 @@
           },
           "term": {
             "pretty": "n",
-            "normalised": {
-              "tag": "Application",
-              "head": {
-                "tag": "ScopeReference",
-                "name": "Test.OverloadedConstructors.Nat.S_<8>"
-              },
-              "arguments": [
-                {
-                  "tag": "Application",
-                  "head": {
-                    "tag": "ScopeReference",
-                    "name": "Test.OverloadedConstructors.Nat.S_<8>"
-                  },
-                  "arguments": [
-                    {
-                      "tag": "ScopeReference",
-                      "name": "Test.OverloadedConstructors.Nat.O<6>"
-                    }
-                  ]
-                }
-              ]
-            },
-            "original": {
-              "tag": "ScopeReference",
-              "name": "Test.OverloadedConstructors.n<10>"
-            },
-            "reduced": {
-              "tag": "Application",
-              "head": {
-                "tag": "ScopeReference",
-                "name": "Test.OverloadedConstructors.Nat.S_<8>"
-              },
-              "arguments": [
-                {
-                  "tag": "Application",
-                  "head": {
-                    "tag": "ScopeReference",
-                    "name": "Test.OverloadedConstructors.Nat.S_<8>"
-                  },
-                  "arguments": [
-                    {
-                      "tag": "ScopeReference",
-                      "name": "Test.OverloadedConstructors.Nat.O<6>"
-                    }
-                  ]
-                }
-              ]
-            }
+            "tag": "ScopeReference",
+            "name": "Test.OverloadedConstructors.n<10>"
           },
           "premises": [
-            "Test.OverloadedConstructors.n"
+            "Test.OverloadedConstructors.n<10>"
           ]
         }
       ]
@@ -584,24 +528,22 @@
         "sort": "Set"
       },
       "definition": {
-        "pretty": "𝕏 → ℕ",
-        "tag": "Pi",
-        "name": "r",
-        "domain": {
-          "tag": "ScopeReference",
-          "name": "Test.OverloadedConstructors.𝕏<30>"
-        },
-        "codomain": {
-          "tag": "ScopeReference",
-          "name": "Test.OverloadedConstructors.ℕ<12>"
-        }
+        "pretty": "{(𝕩 : ℕ)}",
+        "tag": "Record",
+        "telescope": [],
+        "fields": [
+          {
+            "tag": "ScopeReference",
+            "name": "Test.OverloadedConstructors.ℕ<12>"
+          }
+        ]
       },
       "holes": []
     },
     {
       "name": "Test.OverloadedConstructors.mk<36>",
       "type": {
-        "pretty": "(𝕩₁ : ℕ) → 𝕏",
+        "pretty": "(𝕩 : ℕ) → 𝕏",
         "tag": "Pi",
         "name": "𝕩",
         "domain": {
@@ -614,31 +556,40 @@
         }
       },
       "definition": {
-        "pretty": "\"⊙\" 𝕏 0",
+        "pretty": "𝕏@0",
         "tag": "Constructor",
-        "reference": "Test.OverloadedConstructors.𝕏<30>",
+        "reference": "Test.OverloadedConstructors.𝕏",
         "variant": 0
       },
       "holes": []
     },
     {
-      "name": "Test.OverloadedConstructors.𝕩<38>",
+      "name": "Test.OverloadedConstructors.ex-𝕩<38>",
       "type": {
         "pretty": "𝕏",
         "tag": "ScopeReference",
         "name": "Test.OverloadedConstructors.𝕏<30>"
       },
       "definition": {
-        "pretty": "mk 𝕟",
-        "tag": "Application",
-        "head": {
-          "tag": "ScopeReference",
-          "name": "Test.OverloadedConstructors.mk<36>"
-        },
-        "arguments": [
+        "pretty": "ex-𝕩 = mk 𝕟",
+        "tag": "Function",
+        "clauses": [
           {
-            "tag": "ScopeReference",
-            "name": "Test.OverloadedConstructors.𝕟<18>"
+            "telescope": [],
+            "patterns": [],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.OverloadedConstructors.mk<36>"
+              },
+              "arguments": [
+                {
+                  "tag": "ScopeReference",
+                  "name": "Test.OverloadedConstructors.𝕟<18>"
+                }
+              ]
+            }
           }
         ]
       },
@@ -655,54 +606,21 @@
           },
           "term": {
             "pretty": "mk 𝕟",
-            "normalised": {
-              "tag": "Application",
-              "head": {
-                "tag": "ScopeReference",
-                "name": "Test.OverloadedConstructors.mk<36>"
-              },
-              "arguments": [
-                {
-                  "tag": "Application",
-                  "head": {
-                    "tag": "ScopeReference",
-                    "name": "Test.OverloadedConstructors.ℕ.S_<16>"
-                  },
-                  "arguments": [
-                    {
-                      "tag": "Application",
-                      "head": {
-                        "tag": "ScopeReference",
-                        "name": "Test.OverloadedConstructors.ℕ.S_<16>"
-                      },
-                      "arguments": [
-                        {
-                          "tag": "ScopeReference",
-                          "name": "Test.OverloadedConstructors.ℕ.O<14>"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.OverloadedConstructors.mk<36>"
             },
-            "original": {
-              "tag": "Application",
-              "head": {
+            "arguments": [
+              {
                 "tag": "ScopeReference",
-                "name": "Test.OverloadedConstructors.mk<36>"
-              },
-              "arguments": [
-                {
-                  "tag": "ScopeReference",
-                  "name": "Test.OverloadedConstructors.𝕟<18>"
-                }
-              ]
-            }
+                "name": "Test.OverloadedConstructors.𝕟<18>"
+              }
+            ]
           },
           "premises": [
-            "Test.OverloadedConstructors.mk",
-            "Test.OverloadedConstructors.𝕟"
+            "Test.OverloadedConstructors.mk<36>",
+            "Test.OverloadedConstructors.𝕟<18>"
           ]
         },
         {
@@ -717,57 +635,11 @@
           },
           "term": {
             "pretty": "𝕟",
-            "normalised": {
-              "tag": "Application",
-              "head": {
-                "tag": "ScopeReference",
-                "name": "Test.OverloadedConstructors.ℕ.S_<16>"
-              },
-              "arguments": [
-                {
-                  "tag": "Application",
-                  "head": {
-                    "tag": "ScopeReference",
-                    "name": "Test.OverloadedConstructors.ℕ.S_<16>"
-                  },
-                  "arguments": [
-                    {
-                      "tag": "ScopeReference",
-                      "name": "Test.OverloadedConstructors.ℕ.O<14>"
-                    }
-                  ]
-                }
-              ]
-            },
-            "original": {
-              "tag": "ScopeReference",
-              "name": "Test.OverloadedConstructors.𝕟<18>"
-            },
-            "reduced": {
-              "tag": "Application",
-              "head": {
-                "tag": "ScopeReference",
-                "name": "Test.OverloadedConstructors.ℕ.S_<16>"
-              },
-              "arguments": [
-                {
-                  "tag": "Application",
-                  "head": {
-                    "tag": "ScopeReference",
-                    "name": "Test.OverloadedConstructors.ℕ.S_<16>"
-                  },
-                  "arguments": [
-                    {
-                      "tag": "ScopeReference",
-                      "name": "Test.OverloadedConstructors.ℕ.O<14>"
-                    }
-                  ]
-                }
-              ]
-            }
+            "tag": "ScopeReference",
+            "name": "Test.OverloadedConstructors.𝕟<18>"
           },
           "premises": [
-            "Test.OverloadedConstructors.𝕟"
+            "Test.OverloadedConstructors.𝕟<18>"
           ]
         }
       ]

@@ -1,0 +1,67 @@
+{
+  "name": "Test.Lambda",
+  "scope-global": [],
+  "scope-local": [
+    {
+      "name": "Test.Lambda.id<6>",
+      "type": {
+        "pretty": "{A : Set} → A → A",
+        "tag": "Pi",
+        "name": "A",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "_",
+          "domain": {
+            "tag": "DeBruijn",
+            "index": 0
+          },
+          "codomain": {
+            "tag": "DeBruijn",
+            "index": 0
+          }
+        }
+      },
+      "definition": {
+        "pretty": "id x = x",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "{A : Set}",
+                "tag": "Sort",
+                "name": "A",
+                "sort": "Set"
+              },
+              {
+                "pretty": "(x : @0)",
+                "tag": "DeBruijn",
+                "name": "x",
+                "index": 0
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "DeBruijn",
+                "index": 1
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ],
+            "body": {
+              "tag": "DeBruijn",
+              "index": 0
+            }
+          }
+        ]
+      },
+      "holes": []
+    }
+  ]
+}

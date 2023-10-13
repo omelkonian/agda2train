@@ -2,19 +2,6 @@
   "name": "Test.Product",
   "scope-global": [
     {
-      "name": "Agda.Primitive.Set<4>",
-      "type": {
-        "pretty": "Set₁",
-        "tag": "Sort",
-        "sort": "Set1"
-      },
-      "definition": {
-        "pretty": "\"$primSet\"",
-        "tag": "ScopeReference",
-        "name": "$primSet"
-      }
-    },
-    {
       "name": "Agda.Primitive._⊔_<26>",
       "type": {
         "pretty": "Agda.Primitive.Level → Agda.Primitive.Level → Agda.Primitive.Level",
@@ -38,9 +25,8 @@
         }
       },
       "definition": {
-        "pretty": "\"$primLevelMax\"",
-        "tag": "ScopeReference",
-        "name": "$primLevelMax"
+        "pretty": "<Primitive>",
+        "tag": "Primitive"
       }
     }
   ],
@@ -48,7 +34,7 @@
     {
       "name": "Test.Product.Σ<12>",
       "type": {
-        "pretty": "{a b : Agda.Primitive.Level} (A : Set a) (B : A → Set b) →\nSet (a ⊔ b)",
+        "pretty": "{a b : Agda.Primitive.Level} (A : Set a) (B : A → Set b) → Set (a ⊔ b)",
         "tag": "Pi",
         "name": "a",
         "domain": {
@@ -76,7 +62,7 @@
                 "tag": "Pi",
                 "name": "_",
                 "domain": {
-                  "tag": "deBruijn",
+                  "tag": "DeBruijn",
                   "index": 0
                 },
                 "codomain": {
@@ -93,172 +79,56 @@
         }
       },
       "definition": {
-        "pretty": "\"⊗\"\n({a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b} →\n Σ A B → A)\n({a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b}\n (r : Σ A B) →\n B (fst r))",
+        "pretty": "{a : Agda.Primitive.Level} {b : Agda.Primitive.Level} {A : Set a} {B : A → Set b} |- {(fst : @1) ; (snd : @1 @0)}",
         "tag": "Record",
-        "fields": [
+        "telescope": [
           {
-            "tag": "Pi",
-            "name": "a",
-            "domain": {
-              "tag": "ScopeReference",
-              "name": "Agda.Primitive.Level<14>"
-            },
-            "codomain": {
-              "tag": "Pi",
-              "name": "b",
-              "domain": {
-                "tag": "ScopeReference",
-                "name": "Agda.Primitive.Level<14>"
-              },
-              "codomain": {
-                "tag": "Pi",
-                "name": "A",
-                "domain": {
-                  "tag": "Sort",
-                  "sort": "Set @1"
-                },
-                "codomain": {
-                  "tag": "Pi",
-                  "name": "B",
-                  "domain": {
-                    "tag": "Pi",
-                    "name": "_",
-                    "domain": {
-                      "tag": "deBruijn",
-                      "index": 0
-                    },
-                    "codomain": {
-                      "tag": "Sort",
-                      "sort": "Set @1"
-                    }
-                  },
-                  "codomain": {
-                    "tag": "Pi",
-                    "name": "r",
-                    "domain": {
-                      "tag": "Application",
-                      "head": {
-                        "tag": "ScopeReference",
-                        "name": "Test.Product.Σ<12>"
-                      },
-                      "arguments": [
-                        {
-                          "tag": "deBruijn",
-                          "index": 3
-                        },
-                        {
-                          "tag": "deBruijn",
-                          "index": 2
-                        },
-                        {
-                          "tag": "deBruijn",
-                          "index": 1
-                        },
-                        {
-                          "tag": "deBruijn",
-                          "index": 0
-                        }
-                      ]
-                    },
-                    "codomain": {
-                      "tag": "deBruijn",
-                      "index": 1
-                    }
-                  }
-                }
-              }
-            }
+            "pretty": "{a : Agda.Primitive.Level}",
+            "tag": "ScopeReference",
+            "name": "Agda.Primitive.Level<14>"
           },
           {
+            "pretty": "{b : Agda.Primitive.Level}",
+            "tag": "ScopeReference",
+            "name": "Agda.Primitive.Level<14>"
+          },
+          {
+            "pretty": "{A : Set @1}",
+            "tag": "Sort",
+            "name": "A",
+            "sort": "Set @1"
+          },
+          {
+            "pretty": "{B : @0 → Set @1}",
             "tag": "Pi",
-            "name": "a",
+            "name": "_",
             "domain": {
-              "tag": "ScopeReference",
-              "name": "Agda.Primitive.Level<14>"
+              "tag": "DeBruijn",
+              "index": 0
             },
             "codomain": {
-              "tag": "Pi",
-              "name": "b",
-              "domain": {
-                "tag": "ScopeReference",
-                "name": "Agda.Primitive.Level<14>"
-              },
-              "codomain": {
-                "tag": "Pi",
-                "name": "A",
-                "domain": {
-                  "tag": "Sort",
-                  "sort": "Set @1"
-                },
-                "codomain": {
-                  "tag": "Pi",
-                  "name": "B",
-                  "domain": {
-                    "tag": "Pi",
-                    "name": "_",
-                    "domain": {
-                      "tag": "deBruijn",
-                      "index": 0
-                    },
-                    "codomain": {
-                      "tag": "Sort",
-                      "sort": "Set @1"
-                    }
-                  },
-                  "codomain": {
-                    "tag": "Pi",
-                    "name": "r",
-                    "domain": {
-                      "tag": "Application",
-                      "head": {
-                        "tag": "ScopeReference",
-                        "name": "Test.Product.Σ<12>"
-                      },
-                      "arguments": [
-                        {
-                          "tag": "deBruijn",
-                          "index": 3
-                        },
-                        {
-                          "tag": "deBruijn",
-                          "index": 2
-                        },
-                        {
-                          "tag": "deBruijn",
-                          "index": 1
-                        },
-                        {
-                          "tag": "deBruijn",
-                          "index": 0
-                        }
-                      ]
-                    },
-                    "codomain": {
-                      "tag": "Application",
-                      "head": {
-                        "tag": "deBruijn",
-                        "index": 1
-                      },
-                      "arguments": [
-                        {
-                          "tag": "Application",
-                          "head": {
-                            "tag": "deBruijn",
-                            "index": 0
-                          },
-                          "arguments": [
-                            {
-                              "tag": "ScopeReference",
-                              "name": "Test.Product.Σ.fst<26>"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
+              "tag": "Sort",
+              "sort": "Set @1"
             }
+          }
+        ],
+        "fields": [
+          {
+            "tag": "DeBruijn",
+            "index": 1
+          },
+          {
+            "tag": "Application",
+            "head": {
+              "tag": "DeBruijn",
+              "index": 1
+            },
+            "arguments": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ]
           }
         ]
       },
@@ -267,7 +137,7 @@
     {
       "name": "Test.Product.Σ.fst<26>",
       "type": {
-        "pretty": "{a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b} →\nΣ A B → A",
+        "pretty": "{a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b} → Σ A B → A",
         "tag": "Pi",
         "name": "a",
         "domain": {
@@ -295,7 +165,7 @@
                 "tag": "Pi",
                 "name": "_",
                 "domain": {
-                  "tag": "deBruijn",
+                  "tag": "DeBruijn",
                   "index": 0
                 },
                 "codomain": {
@@ -314,25 +184,25 @@
                   },
                   "arguments": [
                     {
-                      "tag": "deBruijn",
+                      "tag": "DeBruijn",
                       "index": 3
                     },
                     {
-                      "tag": "deBruijn",
+                      "tag": "DeBruijn",
                       "index": 2
                     },
                     {
-                      "tag": "deBruijn",
+                      "tag": "DeBruijn",
                       "index": 1
                     },
                     {
-                      "tag": "deBruijn",
+                      "tag": "DeBruijn",
                       "index": 0
                     }
                   ]
                 },
                 "codomain": {
-                  "tag": "deBruijn",
+                  "tag": "DeBruijn",
                   "index": 1
                 }
               }
@@ -341,16 +211,94 @@
         }
       },
       "definition": {
-        "pretty": "@1",
-        "tag": "deBruijn",
-        "index": 1
+        "pretty": "fst = fst₁",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "{a : Agda.Primitive.Level}",
+                "tag": "ScopeReference",
+                "name": "Agda.Primitive.Level<14>"
+              },
+              {
+                "pretty": "{b : Agda.Primitive.Level}",
+                "tag": "ScopeReference",
+                "name": "Agda.Primitive.Level<14>"
+              },
+              {
+                "pretty": "{A : Set @1}",
+                "tag": "Sort",
+                "name": "A",
+                "sort": "Set @1"
+              },
+              {
+                "pretty": "{B : @0 → Set @1}",
+                "tag": "Pi",
+                "name": "_",
+                "domain": {
+                  "tag": "DeBruijn",
+                  "index": 0
+                },
+                "codomain": {
+                  "tag": "Sort",
+                  "sort": "Set @1"
+                }
+              },
+              {
+                "pretty": "(fst : @1)",
+                "tag": "DeBruijn",
+                "name": "fst",
+                "index": 1
+              },
+              {
+                "pretty": "(snd : @1 @0)",
+                "tag": "Application",
+                "name": "snd",
+                "head": {
+                  "tag": "DeBruijn",
+                  "index": 1
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.Product._,_"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 1
+                  },
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "body": {
+              "tag": "DeBruijn",
+              "index": 1
+            }
+          }
+        ]
       },
       "holes": []
     },
     {
       "name": "Test.Product.Σ.snd<28>",
       "type": {
-        "pretty": "{a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b}\n(r : Σ A B) →\nB (fst r)",
+        "pretty": "{a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b} (r : Σ A B) → B (fst r)",
         "tag": "Pi",
         "name": "a",
         "domain": {
@@ -378,7 +326,7 @@
                 "tag": "Pi",
                 "name": "_",
                 "domain": {
-                  "tag": "deBruijn",
+                  "tag": "DeBruijn",
                   "index": 0
                 },
                 "codomain": {
@@ -397,19 +345,19 @@
                   },
                   "arguments": [
                     {
-                      "tag": "deBruijn",
+                      "tag": "DeBruijn",
                       "index": 3
                     },
                     {
-                      "tag": "deBruijn",
+                      "tag": "DeBruijn",
                       "index": 2
                     },
                     {
-                      "tag": "deBruijn",
+                      "tag": "DeBruijn",
                       "index": 1
                     },
                     {
-                      "tag": "deBruijn",
+                      "tag": "DeBruijn",
                       "index": 0
                     }
                   ]
@@ -417,20 +365,20 @@
                 "codomain": {
                   "tag": "Application",
                   "head": {
-                    "tag": "deBruijn",
+                    "tag": "DeBruijn",
                     "index": 1
                   },
                   "arguments": [
                     {
                       "tag": "Application",
                       "head": {
-                        "tag": "deBruijn",
-                        "index": 0
+                        "tag": "ScopeReference",
+                        "name": "Test.Product.Σ.fst<26>"
                       },
                       "arguments": [
                         {
-                          "tag": "ScopeReference",
-                          "name": "Test.Product.Σ.fst<26>"
+                          "tag": "DeBruijn",
+                          "index": 0
                         }
                       ]
                     }
@@ -442,16 +390,94 @@
         }
       },
       "definition": {
-        "pretty": "@0",
-        "tag": "deBruijn",
-        "index": 0
+        "pretty": "snd = snd₁",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "{a : Agda.Primitive.Level}",
+                "tag": "ScopeReference",
+                "name": "Agda.Primitive.Level<14>"
+              },
+              {
+                "pretty": "{b : Agda.Primitive.Level}",
+                "tag": "ScopeReference",
+                "name": "Agda.Primitive.Level<14>"
+              },
+              {
+                "pretty": "{A : Set @1}",
+                "tag": "Sort",
+                "name": "A",
+                "sort": "Set @1"
+              },
+              {
+                "pretty": "{B : @0 → Set @1}",
+                "tag": "Pi",
+                "name": "_",
+                "domain": {
+                  "tag": "DeBruijn",
+                  "index": 0
+                },
+                "codomain": {
+                  "tag": "Sort",
+                  "sort": "Set @1"
+                }
+              },
+              {
+                "pretty": "(fst : @1)",
+                "tag": "DeBruijn",
+                "name": "fst",
+                "index": 1
+              },
+              {
+                "pretty": "(snd : @1 @0)",
+                "tag": "Application",
+                "name": "snd",
+                "head": {
+                  "tag": "DeBruijn",
+                  "index": 1
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.Product._,_"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 1
+                  },
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "body": {
+              "tag": "DeBruijn",
+              "index": 0
+            }
+          }
+        ]
       },
       "holes": []
     },
     {
       "name": "Test.Product._,_<30>",
       "type": {
-        "pretty": "{a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b} (fst₁ : A)\n(snd₁ : B fst₁) →\nΣ A B",
+        "pretty": "{a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b} (fst₁ : A) (snd₁ : B fst₁) → Σ A B",
         "tag": "Pi",
         "name": "a",
         "domain": {
@@ -479,7 +505,7 @@
                 "tag": "Pi",
                 "name": "_",
                 "domain": {
-                  "tag": "deBruijn",
+                  "tag": "DeBruijn",
                   "index": 0
                 },
                 "codomain": {
@@ -491,7 +517,7 @@
                 "tag": "Pi",
                 "name": "fst",
                 "domain": {
-                  "tag": "deBruijn",
+                  "tag": "DeBruijn",
                   "index": 1
                 },
                 "codomain": {
@@ -500,12 +526,12 @@
                   "domain": {
                     "tag": "Application",
                     "head": {
-                      "tag": "deBruijn",
+                      "tag": "DeBruijn",
                       "index": 1
                     },
                     "arguments": [
                       {
-                        "tag": "deBruijn",
+                        "tag": "DeBruijn",
                         "index": 0
                       }
                     ]
@@ -518,19 +544,19 @@
                     },
                     "arguments": [
                       {
-                        "tag": "deBruijn",
+                        "tag": "DeBruijn",
                         "index": 5
                       },
                       {
-                        "tag": "deBruijn",
+                        "tag": "DeBruijn",
                         "index": 4
                       },
                       {
-                        "tag": "deBruijn",
+                        "tag": "DeBruijn",
                         "index": 3
                       },
                       {
-                        "tag": "deBruijn",
+                        "tag": "DeBruijn",
                         "index": 2
                       }
                     ]
@@ -542,9 +568,9 @@
         }
       },
       "definition": {
-        "pretty": "\"⊙\" Σ 0",
+        "pretty": "Σ@0",
         "tag": "Constructor",
-        "reference": "Test.Product.Σ<12>",
+        "reference": "Test.Product.Σ",
         "variant": 0
       },
       "holes": []

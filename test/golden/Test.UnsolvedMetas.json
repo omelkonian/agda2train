@@ -1,0 +1,59 @@
+{
+  "name": "Test.UnsolvedMetas",
+  "scope-global": [
+    {
+      "name": "Agda.Builtin.Nat.Nat<6>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "(zero : Nat) | (suc : Nat → Nat)",
+        "tag": "ADT",
+        "variants": [
+          {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          {
+            "tag": "Pi",
+            "name": "n",
+            "domain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            },
+            "codomain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "scope-local": [
+    {
+      "name": "Test.UnsolvedMetas.n<4>",
+      "type": {
+        "pretty": "Nat",
+        "tag": "ScopeReference",
+        "name": "Agda.Builtin.Nat.Nat<6>"
+      },
+      "definition": {
+        "pretty": "n = ?0",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [],
+            "patterns": [],
+            "body": {
+              "tag": "UnsolvedMetavariable"
+            }
+          }
+        ]
+      },
+      "holes": []
+    }
+  ]
+}

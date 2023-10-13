@@ -1,0 +1,421 @@
+{
+  "name": "Test.ParametrisedRecords",
+  "scope-global": [
+    {
+      "name": "Agda.Builtin.String.String<6>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      }
+    }
+  ],
+  "scope-local": [
+    {
+      "name": "Test.ParametrisedRecords.Name<6>",
+      "type": {
+        "pretty": "(NameId : Set) → Set",
+        "tag": "Pi",
+        "name": "NameId",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Sort",
+          "sort": "Set"
+        }
+      },
+      "definition": {
+        "pretty": "{NameId : Set} |- {(first : @0) ; (last : @1)}",
+        "tag": "Record",
+        "telescope": [
+          {
+            "pretty": "{NameId : Set}",
+            "tag": "Sort",
+            "name": "NameId",
+            "sort": "Set"
+          }
+        ],
+        "fields": [
+          {
+            "tag": "DeBruijn",
+            "index": 0
+          },
+          {
+            "tag": "DeBruijn",
+            "index": 1
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ParametrisedRecords.Name.first<14>",
+      "type": {
+        "pretty": "{NameId : Set} → Name NameId → NameId",
+        "tag": "Pi",
+        "name": "NameId",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "r",
+          "domain": {
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedRecords.Name<6>"
+            },
+            "arguments": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ]
+          },
+          "codomain": {
+            "tag": "DeBruijn",
+            "index": 0
+          }
+        }
+      },
+      "definition": {
+        "pretty": "first = first₁",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "{NameId : Set}",
+                "tag": "Sort",
+                "name": "NameId",
+                "sort": "Set"
+              },
+              {
+                "pretty": "(first : @0)",
+                "tag": "DeBruijn",
+                "name": "first",
+                "index": 0
+              },
+              {
+                "pretty": "(last : @1)",
+                "tag": "DeBruijn",
+                "name": "last",
+                "index": 1
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.ParametrisedRecords.Name.constructor"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 1
+                  },
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "body": {
+              "tag": "DeBruijn",
+              "index": 1
+            }
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ParametrisedRecords.Name.last<16>",
+      "type": {
+        "pretty": "{NameId : Set} → Name NameId → NameId",
+        "tag": "Pi",
+        "name": "NameId",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "r",
+          "domain": {
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedRecords.Name<6>"
+            },
+            "arguments": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ]
+          },
+          "codomain": {
+            "tag": "DeBruijn",
+            "index": 0
+          }
+        }
+      },
+      "definition": {
+        "pretty": "last = last₁",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "{NameId : Set}",
+                "tag": "Sort",
+                "name": "NameId",
+                "sort": "Set"
+              },
+              {
+                "pretty": "(first : @0)",
+                "tag": "DeBruijn",
+                "name": "first",
+                "index": 0
+              },
+              {
+                "pretty": "(last : @1)",
+                "tag": "DeBruijn",
+                "name": "last",
+                "index": 1
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.ParametrisedRecords.Name.constructor"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 1
+                  },
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "body": {
+              "tag": "DeBruijn",
+              "index": 0
+            }
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ParametrisedRecords.User<18>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "{(name : Name String)}",
+        "tag": "Record",
+        "telescope": [],
+        "fields": [
+          {
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedRecords.Name<6>"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.String.String<6>"
+              }
+            ]
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ParametrisedRecords.User.name<22>",
+      "type": {
+        "pretty": "User → Name String",
+        "tag": "Pi",
+        "name": "r",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Test.ParametrisedRecords.User<18>"
+        },
+        "codomain": {
+          "tag": "Application",
+          "head": {
+            "tag": "ScopeReference",
+            "name": "Test.ParametrisedRecords.Name<6>"
+          },
+          "arguments": [
+            {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.String.String<6>"
+            }
+          ]
+        }
+      },
+      "definition": {
+        "pretty": "name = name₁",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "(name : Name String)",
+                "tag": "Application",
+                "name": "name",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.ParametrisedRecords.Name<6>"
+                },
+                "arguments": [
+                  {
+                    "tag": "ScopeReference",
+                    "name": "Agda.Builtin.String.String<6>"
+                  }
+                ]
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.ParametrisedRecords.User.constructor"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "body": {
+              "tag": "DeBruijn",
+              "index": 0
+            }
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ParametrisedRecords.koks<24>",
+      "type": {
+        "pretty": "User",
+        "tag": "ScopeReference",
+        "name": "Test.ParametrisedRecords.User<18>"
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ParametrisedRecords.kokos<26>",
+      "type": {
+        "pretty": "String",
+        "tag": "ScopeReference",
+        "name": "Agda.Builtin.String.String<6>"
+      },
+      "definition": {
+        "pretty": "kokos = koks .name .first",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [],
+            "patterns": [],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.ParametrisedRecords.Name.first<14>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.ParametrisedRecords.User.name<22>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "ScopeReference",
+                      "name": "Test.ParametrisedRecords.koks<24>"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "String",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.String.String<6>"
+          },
+          "term": {
+            "pretty": "koks .name .first",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedRecords.Name.first<14>"
+            },
+            "arguments": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.ParametrisedRecords.User.name<22>"
+                },
+                "arguments": [
+                  {
+                    "tag": "ScopeReference",
+                    "name": "Test.ParametrisedRecords.koks<24>"
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Test.ParametrisedRecords.koks<24>",
+            "Test.ParametrisedRecords.User.name<22>",
+            "Test.ParametrisedRecords.Name.first<14>"
+          ]
+        }
+      ]
+    }
+  ]
+}

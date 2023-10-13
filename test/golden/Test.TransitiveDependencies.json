@@ -1,0 +1,98 @@
+{
+  "name": "Test.TransitiveDependencies",
+  "scope-global": [
+    {
+      "name": "Agda.Builtin.String.String<6>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      }
+    },
+    {
+      "name": "Agda.Builtin.String.primShowNat<24>",
+      "type": {
+        "pretty": "Agda.Builtin.Nat.Nat → String",
+        "tag": "Pi",
+        "name": "_",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.String.String<6>"
+        }
+      },
+      "definition": {
+        "pretty": "<Primitive>",
+        "tag": "Primitive"
+      }
+    }
+  ],
+  "scope-local": [
+    {
+      "name": "Test.TransitiveDependencies.showNat<4>",
+      "type": {
+        "pretty": "Agda.Builtin.Nat.Nat → String",
+        "tag": "Pi",
+        "name": "_",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.String.String<6>"
+        }
+      },
+      "definition": {
+        "pretty": "showNat = primShowNat",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [],
+            "patterns": [],
+            "body": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.String.primShowNat<24>"
+            }
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Agda.Builtin.Nat.Nat → String",
+            "tag": "Pi",
+            "name": "_",
+            "domain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            },
+            "codomain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.String.String<6>"
+            }
+          },
+          "term": {
+            "pretty": "primShowNat",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.String.primShowNat<24>"
+          },
+          "premises": [
+            "Agda.Builtin.String.primShowNat<24>"
+          ]
+        }
+      ]
+    }
+  ]
+}

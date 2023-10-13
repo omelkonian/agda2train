@@ -1,0 +1,1515 @@
+{
+  "name": "Test.ParametrisedDatatypes",
+  "scope-global": [
+    {
+      "name": "Agda.Builtin.Nat.Nat<6>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "(zero : ℕ) | (suc : ℕ → ℕ)",
+        "tag": "ADT",
+        "variants": [
+          {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          {
+            "tag": "Pi",
+            "name": "n",
+            "domain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            },
+            "codomain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Agda.Builtin.String.String<6>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      }
+    }
+  ],
+  "scope-local": [
+    {
+      "name": "Test.ParametrisedDatatypes._×_<4>",
+      "type": {
+        "pretty": "Set → Set → Set",
+        "tag": "Pi",
+        "name": "_",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "_",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Sort",
+            "sort": "Set"
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ParametrisedDatatypes._.Expr<18>",
+      "type": {
+        "pretty": "(𝕀 : Set) → Set → Set → Set₁",
+        "tag": "Pi",
+        "name": "𝕀",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "𝕂",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Pi",
+            "name": "_",
+            "domain": {
+              "tag": "Sort",
+              "sort": "Set"
+            },
+            "codomain": {
+              "tag": "Sort",
+              "sort": "Set1"
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "(var : {𝕀 𝕂 A : Set} → 𝕀 → Expr 𝕀 𝕂 A) | (con : {𝕀 𝕂 : Set} → ℕ → Expr 𝕀 𝕂 ℕ) | (_⊗_ : {𝕀 𝕂 A B : Set} → Expr 𝕀 𝕂 A → Expr 𝕀 𝕂 B → Expr 𝕀 𝕂 (A × B))",
+        "tag": "ADT",
+        "variants": [
+          {
+            "tag": "Pi",
+            "name": "𝕀",
+            "domain": {
+              "tag": "Sort",
+              "sort": "Set"
+            },
+            "codomain": {
+              "tag": "Pi",
+              "name": "𝕂",
+              "domain": {
+                "tag": "Sort",
+                "sort": "Set"
+              },
+              "codomain": {
+                "tag": "Pi",
+                "name": "A",
+                "domain": {
+                  "tag": "Sort",
+                  "sort": "Set"
+                },
+                "codomain": {
+                  "tag": "Pi",
+                  "name": "_",
+                  "domain": {
+                    "tag": "DeBruijn",
+                    "index": 2
+                  },
+                  "codomain": {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "name": "Test.ParametrisedDatatypes._.Expr<18>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "DeBruijn",
+                        "index": 2
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 1
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 0
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "tag": "Pi",
+            "name": "𝕀",
+            "domain": {
+              "tag": "Sort",
+              "sort": "Set"
+            },
+            "codomain": {
+              "tag": "Pi",
+              "name": "𝕂",
+              "domain": {
+                "tag": "Sort",
+                "sort": "Set"
+              },
+              "codomain": {
+                "tag": "Pi",
+                "name": "_",
+                "domain": {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Nat.Nat<6>"
+                },
+                "codomain": {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.ParametrisedDatatypes._.Expr<18>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "DeBruijn",
+                      "index": 1
+                    },
+                    {
+                      "tag": "DeBruijn",
+                      "index": 0
+                    },
+                    {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Nat.Nat<6>"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "tag": "Pi",
+            "name": "𝕀",
+            "domain": {
+              "tag": "Sort",
+              "sort": "Set"
+            },
+            "codomain": {
+              "tag": "Pi",
+              "name": "𝕂",
+              "domain": {
+                "tag": "Sort",
+                "sort": "Set"
+              },
+              "codomain": {
+                "tag": "Pi",
+                "name": "A",
+                "domain": {
+                  "tag": "Sort",
+                  "sort": "Set"
+                },
+                "codomain": {
+                  "tag": "Pi",
+                  "name": "B",
+                  "domain": {
+                    "tag": "Sort",
+                    "sort": "Set"
+                  },
+                  "codomain": {
+                    "tag": "Pi",
+                    "name": "_",
+                    "domain": {
+                      "tag": "Application",
+                      "head": {
+                        "tag": "ScopeReference",
+                        "name": "Test.ParametrisedDatatypes._.Expr<18>"
+                      },
+                      "arguments": [
+                        {
+                          "tag": "DeBruijn",
+                          "index": 3
+                        },
+                        {
+                          "tag": "DeBruijn",
+                          "index": 2
+                        },
+                        {
+                          "tag": "DeBruijn",
+                          "index": 1
+                        }
+                      ]
+                    },
+                    "codomain": {
+                      "tag": "Pi",
+                      "name": "_",
+                      "domain": {
+                        "tag": "Application",
+                        "head": {
+                          "tag": "ScopeReference",
+                          "name": "Test.ParametrisedDatatypes._.Expr<18>"
+                        },
+                        "arguments": [
+                          {
+                            "tag": "DeBruijn",
+                            "index": 3
+                          },
+                          {
+                            "tag": "DeBruijn",
+                            "index": 2
+                          },
+                          {
+                            "tag": "DeBruijn",
+                            "index": 0
+                          }
+                        ]
+                      },
+                      "codomain": {
+                        "tag": "Application",
+                        "head": {
+                          "tag": "ScopeReference",
+                          "name": "Test.ParametrisedDatatypes._.Expr<18>"
+                        },
+                        "arguments": [
+                          {
+                            "tag": "DeBruijn",
+                            "index": 3
+                          },
+                          {
+                            "tag": "DeBruijn",
+                            "index": 2
+                          },
+                          {
+                            "tag": "Application",
+                            "head": {
+                              "tag": "ScopeReference",
+                              "name": "Test.ParametrisedDatatypes._×_<4>"
+                            },
+                            "arguments": [
+                              {
+                                "tag": "DeBruijn",
+                                "index": 1
+                              },
+                              {
+                                "tag": "DeBruijn",
+                                "index": 0
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ParametrisedDatatypes._.Expr.var<22>",
+      "type": {
+        "pretty": "{𝕀 𝕂 A : Set} → 𝕀 → Expr 𝕀 𝕂 A",
+        "tag": "Pi",
+        "name": "𝕀",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "𝕂",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Pi",
+            "name": "A",
+            "domain": {
+              "tag": "Sort",
+              "sort": "Set"
+            },
+            "codomain": {
+              "tag": "Pi",
+              "name": "_",
+              "domain": {
+                "tag": "DeBruijn",
+                "index": 2
+              },
+              "codomain": {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.ParametrisedDatatypes._.Expr<18>"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 2
+                  },
+                  {
+                    "tag": "DeBruijn",
+                    "index": 1
+                  },
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "Expr@0",
+        "tag": "Constructor",
+        "reference": "Test.ParametrisedDatatypes._.Expr",
+        "variant": 0
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ParametrisedDatatypes._.Expr.con<24>",
+      "type": {
+        "pretty": "{𝕀 𝕂 : Set} → ℕ → Expr 𝕀 𝕂 ℕ",
+        "tag": "Pi",
+        "name": "𝕀",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "𝕂",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Pi",
+            "name": "_",
+            "domain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            },
+            "codomain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.ParametrisedDatatypes._.Expr<18>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 1
+                },
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                },
+                {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Nat.Nat<6>"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "Expr@1",
+        "tag": "Constructor",
+        "reference": "Test.ParametrisedDatatypes._.Expr",
+        "variant": 1
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ParametrisedDatatypes._.Expr._⊗_<26>",
+      "type": {
+        "pretty": "{𝕀 𝕂 A B : Set} → Expr 𝕀 𝕂 A → Expr 𝕀 𝕂 B → Expr 𝕀 𝕂 (A × B)",
+        "tag": "Pi",
+        "name": "𝕀",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "𝕂",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Pi",
+            "name": "A",
+            "domain": {
+              "tag": "Sort",
+              "sort": "Set"
+            },
+            "codomain": {
+              "tag": "Pi",
+              "name": "B",
+              "domain": {
+                "tag": "Sort",
+                "sort": "Set"
+              },
+              "codomain": {
+                "tag": "Pi",
+                "name": "_",
+                "domain": {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.ParametrisedDatatypes._.Expr<18>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "DeBruijn",
+                      "index": 3
+                    },
+                    {
+                      "tag": "DeBruijn",
+                      "index": 2
+                    },
+                    {
+                      "tag": "DeBruijn",
+                      "index": 1
+                    }
+                  ]
+                },
+                "codomain": {
+                  "tag": "Pi",
+                  "name": "_",
+                  "domain": {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "name": "Test.ParametrisedDatatypes._.Expr<18>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "DeBruijn",
+                        "index": 3
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 2
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 0
+                      }
+                    ]
+                  },
+                  "codomain": {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "name": "Test.ParametrisedDatatypes._.Expr<18>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "DeBruijn",
+                        "index": 3
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 2
+                      },
+                      {
+                        "tag": "Application",
+                        "head": {
+                          "tag": "ScopeReference",
+                          "name": "Test.ParametrisedDatatypes._×_<4>"
+                        },
+                        "arguments": [
+                          {
+                            "tag": "DeBruijn",
+                            "index": 1
+                          },
+                          {
+                            "tag": "DeBruijn",
+                            "index": 0
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "Expr@2",
+        "tag": "Constructor",
+        "reference": "Test.ParametrisedDatatypes._.Expr",
+        "variant": 2
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ParametrisedDatatypes.ex<28>",
+      "type": {
+        "pretty": "Expr String ℕ (ℕ × (ℕ → ℕ) × ℕ)",
+        "tag": "Application",
+        "head": {
+          "tag": "ScopeReference",
+          "name": "Test.ParametrisedDatatypes._.Expr<18>"
+        },
+        "arguments": [
+          {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.String.String<6>"
+          },
+          {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          {
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedDatatypes._×_<4>"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.ParametrisedDatatypes._×_<4>"
+                },
+                "arguments": [
+                  {
+                    "tag": "Pi",
+                    "name": "_",
+                    "domain": {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Nat.Nat<6>"
+                    },
+                    "codomain": {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Nat.Nat<6>"
+                    }
+                  },
+                  {
+                    "tag": "ScopeReference",
+                    "name": "Agda.Builtin.Nat.Nat<6>"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "definition": {
+        "pretty": "ex = con 0 ⊗ var \"increment\" ⊗ con 1",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [],
+            "patterns": [],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.ParametrisedDatatypes._.Expr._⊗_<26>"
+              },
+              "arguments": [
+                {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Nat.Nat<6>"
+                },
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.ParametrisedDatatypes._×_<4>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "Pi",
+                      "name": "_",
+                      "domain": {
+                        "tag": "ScopeReference",
+                        "name": "Agda.Builtin.Nat.Nat<6>"
+                      },
+                      "codomain": {
+                        "tag": "ScopeReference",
+                        "name": "Agda.Builtin.Nat.Nat<6>"
+                      }
+                    },
+                    {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Nat.Nat<6>"
+                    }
+                  ]
+                },
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.ParametrisedDatatypes._.Expr.con<24>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "Literal",
+                      "literal": "0"
+                    }
+                  ]
+                },
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.ParametrisedDatatypes._.Expr._⊗_<26>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "Pi",
+                      "name": "_",
+                      "domain": {
+                        "tag": "ScopeReference",
+                        "name": "Agda.Builtin.Nat.Nat<6>"
+                      },
+                      "codomain": {
+                        "tag": "ScopeReference",
+                        "name": "Agda.Builtin.Nat.Nat<6>"
+                      }
+                    },
+                    {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Nat.Nat<6>"
+                    },
+                    {
+                      "tag": "Application",
+                      "head": {
+                        "tag": "ScopeReference",
+                        "name": "Test.ParametrisedDatatypes._.Expr.var<22>"
+                      },
+                      "arguments": [
+                        {
+                          "tag": "Pi",
+                          "name": "_",
+                          "domain": {
+                            "tag": "ScopeReference",
+                            "name": "Agda.Builtin.Nat.Nat<6>"
+                          },
+                          "codomain": {
+                            "tag": "ScopeReference",
+                            "name": "Agda.Builtin.Nat.Nat<6>"
+                          }
+                        },
+                        {
+                          "tag": "Literal",
+                          "literal": "\"increment\""
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "Application",
+                      "head": {
+                        "tag": "ScopeReference",
+                        "name": "Test.ParametrisedDatatypes._.Expr.con<24>"
+                      },
+                      "arguments": [
+                        {
+                          "tag": "Literal",
+                          "literal": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Expr String ℕ (ℕ × (ℕ → ℕ) × ℕ)",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedDatatypes._.Expr<18>"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.String.String<6>"
+              },
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.ParametrisedDatatypes._×_<4>"
+                },
+                "arguments": [
+                  {
+                    "tag": "ScopeReference",
+                    "name": "Agda.Builtin.Nat.Nat<6>"
+                  },
+                  {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "name": "Test.ParametrisedDatatypes._×_<4>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "Pi",
+                        "name": "_",
+                        "domain": {
+                          "tag": "ScopeReference",
+                          "name": "Agda.Builtin.Nat.Nat<6>"
+                        },
+                        "codomain": {
+                          "tag": "ScopeReference",
+                          "name": "Agda.Builtin.Nat.Nat<6>"
+                        }
+                      },
+                      {
+                        "tag": "ScopeReference",
+                        "name": "Agda.Builtin.Nat.Nat<6>"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "term": {
+            "pretty": "con 0 ⊗ var \"increment\" ⊗ con 1",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedDatatypes._.Expr._⊗_<26>"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.ParametrisedDatatypes._×_<4>"
+                },
+                "arguments": [
+                  {
+                    "tag": "Pi",
+                    "name": "_",
+                    "domain": {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Nat.Nat<6>"
+                    },
+                    "codomain": {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Nat.Nat<6>"
+                    }
+                  },
+                  {
+                    "tag": "ScopeReference",
+                    "name": "Agda.Builtin.Nat.Nat<6>"
+                  }
+                ]
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.ParametrisedDatatypes._.Expr.con<24>"
+                },
+                "arguments": [
+                  {
+                    "tag": "Literal",
+                    "literal": "0"
+                  }
+                ]
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.ParametrisedDatatypes._.Expr._⊗_<26>"
+                },
+                "arguments": [
+                  {
+                    "tag": "Pi",
+                    "name": "_",
+                    "domain": {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Nat.Nat<6>"
+                    },
+                    "codomain": {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Nat.Nat<6>"
+                    }
+                  },
+                  {
+                    "tag": "ScopeReference",
+                    "name": "Agda.Builtin.Nat.Nat<6>"
+                  },
+                  {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "name": "Test.ParametrisedDatatypes._.Expr.var<22>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "Pi",
+                        "name": "_",
+                        "domain": {
+                          "tag": "ScopeReference",
+                          "name": "Agda.Builtin.Nat.Nat<6>"
+                        },
+                        "codomain": {
+                          "tag": "ScopeReference",
+                          "name": "Agda.Builtin.Nat.Nat<6>"
+                        }
+                      },
+                      {
+                        "tag": "Literal",
+                        "literal": "\"increment\""
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "name": "Test.ParametrisedDatatypes._.Expr.con<24>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "Literal",
+                        "literal": "1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Test.ParametrisedDatatypes._.Expr._⊗_<26>",
+            "Agda.Builtin.Nat.Nat<6>",
+            "Test.ParametrisedDatatypes._×_<4>",
+            "Test.ParametrisedDatatypes._.Expr.con<24>",
+            "Test.ParametrisedDatatypes._.Expr.var<22>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat<6>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "(ℕ → ℕ) × ℕ",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedDatatypes._×_<4>"
+            },
+            "arguments": [
+              {
+                "tag": "Pi",
+                "name": "_",
+                "domain": {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Nat.Nat<6>"
+                },
+                "codomain": {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Nat.Nat<6>"
+                }
+              },
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ]
+          },
+          "premises": [
+            "Test.ParametrisedDatatypes._×_<4>",
+            "Agda.Builtin.Nat.Nat<6>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "ℕ → ℕ",
+            "tag": "Pi",
+            "name": "_",
+            "domain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            },
+            "codomain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            }
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat<6>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat<6>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat<6>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat<6>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Expr String ℕ ℕ",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedDatatypes._.Expr<18>"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.String.String<6>"
+              },
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              },
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ]
+          },
+          "term": {
+            "pretty": "con 0",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedDatatypes._.Expr.con<24>"
+            },
+            "arguments": [
+              {
+                "tag": "Literal",
+                "literal": "0"
+              }
+            ]
+          },
+          "premises": [
+            "Test.ParametrisedDatatypes._.Expr.con<24>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Expr String ℕ ((ℕ → ℕ) × ℕ)",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedDatatypes._.Expr<18>"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.String.String<6>"
+              },
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.ParametrisedDatatypes._×_<4>"
+                },
+                "arguments": [
+                  {
+                    "tag": "Pi",
+                    "name": "_",
+                    "domain": {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Nat.Nat<6>"
+                    },
+                    "codomain": {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Nat.Nat<6>"
+                    }
+                  },
+                  {
+                    "tag": "ScopeReference",
+                    "name": "Agda.Builtin.Nat.Nat<6>"
+                  }
+                ]
+              }
+            ]
+          },
+          "term": {
+            "pretty": "var \"increment\" ⊗ con 1",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedDatatypes._.Expr._⊗_<26>"
+            },
+            "arguments": [
+              {
+                "tag": "Pi",
+                "name": "_",
+                "domain": {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Nat.Nat<6>"
+                },
+                "codomain": {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Nat.Nat<6>"
+                }
+              },
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.ParametrisedDatatypes._.Expr.var<22>"
+                },
+                "arguments": [
+                  {
+                    "tag": "Pi",
+                    "name": "_",
+                    "domain": {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Nat.Nat<6>"
+                    },
+                    "codomain": {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Nat.Nat<6>"
+                    }
+                  },
+                  {
+                    "tag": "Literal",
+                    "literal": "\"increment\""
+                  }
+                ]
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.ParametrisedDatatypes._.Expr.con<24>"
+                },
+                "arguments": [
+                  {
+                    "tag": "Literal",
+                    "literal": "1"
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Test.ParametrisedDatatypes._.Expr._⊗_<26>",
+            "Agda.Builtin.Nat.Nat<6>",
+            "Test.ParametrisedDatatypes._.Expr.var<22>",
+            "Test.ParametrisedDatatypes._.Expr.con<24>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "ℕ → ℕ",
+            "tag": "Pi",
+            "name": "_",
+            "domain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            },
+            "codomain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            }
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat<6>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat<6>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat<6>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat<6>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Expr String ℕ (ℕ → ℕ)",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedDatatypes._.Expr<18>"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.String.String<6>"
+              },
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              },
+              {
+                "tag": "Pi",
+                "name": "_",
+                "domain": {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Nat.Nat<6>"
+                },
+                "codomain": {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Nat.Nat<6>"
+                }
+              }
+            ]
+          },
+          "term": {
+            "pretty": "var \"increment\"",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedDatatypes._.Expr.var<22>"
+            },
+            "arguments": [
+              {
+                "tag": "Pi",
+                "name": "_",
+                "domain": {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Nat.Nat<6>"
+                },
+                "codomain": {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Nat.Nat<6>"
+                }
+              },
+              {
+                "tag": "Literal",
+                "literal": "\"increment\""
+              }
+            ]
+          },
+          "premises": [
+            "Test.ParametrisedDatatypes._.Expr.var<22>",
+            "Agda.Builtin.Nat.Nat<6>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "ℕ → ℕ",
+            "tag": "Pi",
+            "name": "_",
+            "domain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            },
+            "codomain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            }
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat<6>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat<6>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat<6>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Expr String ℕ ℕ",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedDatatypes._.Expr<18>"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.String.String<6>"
+              },
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              },
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ]
+          },
+          "term": {
+            "pretty": "con 1",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.ParametrisedDatatypes._.Expr.con<24>"
+            },
+            "arguments": [
+              {
+                "tag": "Literal",
+                "literal": "1"
+              }
+            ]
+          },
+          "premises": [
+            "Test.ParametrisedDatatypes._.Expr.con<24>"
+          ]
+        }
+      ]
+    }
+  ]
+}

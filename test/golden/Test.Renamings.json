@@ -1,0 +1,94 @@
+{
+  "name": "Test.Renamings",
+  "scope-global": [
+    {
+      "name": "Agda.Builtin.Nat.Nat<6>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "(zero : ℕ) | (suc : ℕ → ℕ)",
+        "tag": "ADT",
+        "variants": [
+          {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          {
+            "tag": "Pi",
+            "name": "n",
+            "domain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            },
+            "codomain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Agda.Builtin.Nat.Nat.zero<8>",
+      "type": {
+        "pretty": "ℕ",
+        "tag": "ScopeReference",
+        "name": "Agda.Builtin.Nat.Nat<6>"
+      },
+      "definition": {
+        "pretty": "ℕ@0",
+        "tag": "Constructor",
+        "reference": "Agda.Builtin.Nat.Nat",
+        "variant": 0
+      }
+    }
+  ],
+  "scope-local": [
+    {
+      "name": "Test.Renamings.n<4>",
+      "type": {
+        "pretty": "ℕ",
+        "tag": "ScopeReference",
+        "name": "Agda.Builtin.Nat.Nat<6>"
+      },
+      "definition": {
+        "pretty": "n = zero",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [],
+            "patterns": [],
+            "body": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat.zero<8>"
+            }
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "term": {
+            "pretty": "zero",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat.zero<8>"
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat.zero<8>"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -26,9 +26,8 @@
         }
       },
       "definition": {
-        "pretty": "\"⊤\"",
-        "tag": "ScopeReference",
-        "name": "⊤"
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
       },
       "holes": []
     },
@@ -57,11 +56,11 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 0
               }
             ]
@@ -69,9 +68,8 @@
         }
       },
       "definition": {
-        "pretty": "\"⊤\"",
-        "tag": "ScopeReference",
-        "name": "⊤"
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
       },
       "holes": []
     },
@@ -100,11 +98,11 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 0
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 0
               }
             ]
@@ -112,26 +110,53 @@
         }
       },
       "definition": {
-        "pretty": "λ x → refl",
-        "tag": "Lambda",
-        "abstraction": "x",
-        "body": {
-          "tag": "Application",
-          "head": {
-            "tag": "ScopeReference",
-            "name": "Test.PiVsFun.refl<10>"
-          },
-          "arguments": [
-            {
-              "tag": "deBruijn",
-              "index": 1
-            },
-            {
-              "tag": "deBruijn",
-              "index": 1
+        "pretty": "f x _ = refl",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "(x : Set)",
+                "tag": "Sort",
+                "name": "x",
+                "sort": "Set"
+              },
+              {
+                "pretty": "(x : Set)",
+                "tag": "Sort",
+                "name": "x",
+                "sort": "Set"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "DeBruijn",
+                "index": 1
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.PiVsFun.refl<10>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 1
+                },
+                {
+                  "tag": "DeBruijn",
+                  "index": 1
+                }
+              ]
             }
-          ]
-        }
+          }
+        ]
       },
       "holes": [
         {
@@ -139,13 +164,13 @@
             "pretty": "(x : Set) (x₁ : Set)",
             "telescope": [
               {
-                "pretty": "((x, Set))",
+                "pretty": "(x : Set)",
                 "tag": "Sort",
                 "name": "x",
                 "sort": "Set"
               },
               {
-                "pretty": "((x, Set))",
+                "pretty": "(x : Set)",
                 "tag": "Sort",
                 "name": "x",
                 "sort": "Set"
@@ -161,11 +186,11 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               }
             ]
@@ -179,17 +204,17 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               }
             ]
           },
           "premises": [
-            "Test.PiVsFun.refl"
+            "Test.PiVsFun.refl<10>"
           ]
         }
       ]
@@ -219,11 +244,11 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 0
               }
             ]
@@ -231,30 +256,53 @@
         }
       },
       "definition": {
-        "pretty": "λ x y → refl",
-        "tag": "Lambda",
-        "abstraction": "x",
-        "body": {
-          "tag": "Lambda",
-          "abstraction": "y",
-          "body": {
-            "tag": "Application",
-            "head": {
-              "tag": "ScopeReference",
-              "name": "Test.PiVsFun.refl<10>"
-            },
-            "arguments": [
+        "pretty": "g x y = refl",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
               {
-                "tag": "deBruijn",
+                "pretty": "(x : Set)",
+                "tag": "Sort",
+                "name": "x",
+                "sort": "Set"
+              },
+              {
+                "pretty": "(y : Set)",
+                "tag": "Sort",
+                "name": "y",
+                "sort": "Set"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "DeBruijn",
                 "index": 1
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 0
               }
-            ]
+            ],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.PiVsFun.refl<10>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 1
+                },
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                }
+              ]
+            }
           }
-        }
+        ]
       },
       "holes": [
         {
@@ -262,13 +310,13 @@
             "pretty": "(x : Set) (y : Set)",
             "telescope": [
               {
-                "pretty": "((x, Set))",
+                "pretty": "(x : Set)",
                 "tag": "Sort",
                 "name": "x",
                 "sort": "Set"
               },
               {
-                "pretty": "((y, Set))",
+                "pretty": "(y : Set)",
                 "tag": "Sort",
                 "name": "y",
                 "sort": "Set"
@@ -284,11 +332,11 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 0
               }
             ]
@@ -302,17 +350,17 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 0
               }
             ]
           },
           "premises": [
-            "Test.PiVsFun.refl"
+            "Test.PiVsFun.refl<10>"
           ]
         }
       ]
@@ -342,11 +390,11 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 0
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 0
               }
             ]
@@ -354,26 +402,53 @@
         }
       },
       "definition": {
-        "pretty": "λ x → refl",
-        "tag": "Lambda",
-        "abstraction": "x",
-        "body": {
-          "tag": "Application",
-          "head": {
-            "tag": "ScopeReference",
-            "name": "Test.PiVsFun.refl<10>"
-          },
-          "arguments": [
-            {
-              "tag": "deBruijn",
-              "index": 1
-            },
-            {
-              "tag": "deBruijn",
-              "index": 1
+        "pretty": "fi {x} = refl",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "{x : Set}",
+                "tag": "Sort",
+                "name": "x",
+                "sort": "Set"
+              },
+              {
+                "pretty": "{_ : Set}",
+                "tag": "Sort",
+                "name": "_",
+                "sort": "Set"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "DeBruijn",
+                "index": 1
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.PiVsFun.refl<10>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 1
+                },
+                {
+                  "tag": "DeBruijn",
+                  "index": 1
+                }
+              ]
             }
-          ]
-        }
+          }
+        ]
       },
       "holes": [
         {
@@ -381,13 +456,13 @@
             "pretty": "{x : Set} {x = x₁ : Set}",
             "telescope": [
               {
-                "pretty": "{(x, Set)}",
+                "pretty": "{x : Set}",
                 "tag": "Sort",
                 "name": "x",
                 "sort": "Set"
               },
               {
-                "pretty": "{(x, Set)}",
+                "pretty": "{x : Set}",
                 "tag": "Sort",
                 "name": "x",
                 "sort": "Set"
@@ -403,11 +478,11 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               }
             ]
@@ -421,17 +496,17 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               }
             ]
           },
           "premises": [
-            "Test.PiVsFun.refl"
+            "Test.PiVsFun.refl<10>"
           ]
         }
       ]
@@ -461,11 +536,11 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 0
               }
             ]
@@ -473,30 +548,53 @@
         }
       },
       "definition": {
-        "pretty": "λ x y → refl",
-        "tag": "Lambda",
-        "abstraction": "x",
-        "body": {
-          "tag": "Lambda",
-          "abstraction": "y",
-          "body": {
-            "tag": "Application",
-            "head": {
-              "tag": "ScopeReference",
-              "name": "Test.PiVsFun.refl<10>"
-            },
-            "arguments": [
+        "pretty": "gi {x} {y} = refl",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
               {
-                "tag": "deBruijn",
+                "pretty": "{x : Set}",
+                "tag": "Sort",
+                "name": "x",
+                "sort": "Set"
+              },
+              {
+                "pretty": "{y : Set}",
+                "tag": "Sort",
+                "name": "y",
+                "sort": "Set"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "DeBruijn",
                 "index": 1
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 0
               }
-            ]
+            ],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.PiVsFun.refl<10>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 1
+                },
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                }
+              ]
+            }
           }
-        }
+        ]
       },
       "holes": [
         {
@@ -504,13 +602,13 @@
             "pretty": "{x : Set} {y : Set}",
             "telescope": [
               {
-                "pretty": "{(x, Set)}",
+                "pretty": "{x : Set}",
                 "tag": "Sort",
                 "name": "x",
                 "sort": "Set"
               },
               {
-                "pretty": "{(y, Set)}",
+                "pretty": "{y : Set}",
                 "tag": "Sort",
                 "name": "y",
                 "sort": "Set"
@@ -526,11 +624,11 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 0
               }
             ]
@@ -544,17 +642,17 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 1
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 0
               }
             ]
           },
           "premises": [
-            "Test.PiVsFun.refl"
+            "Test.PiVsFun.refl<10>"
           ]
         }
       ]
@@ -587,11 +685,11 @@
               },
               "arguments": [
                 {
-                  "tag": "deBruijn",
+                  "tag": "DeBruijn",
                   "index": 1
                 },
                 {
-                  "tag": "deBruijn",
+                  "tag": "DeBruijn",
                   "index": 0
                 }
               ]
@@ -604,11 +702,11 @@
               },
               "arguments": [
                 {
-                  "tag": "deBruijn",
+                  "tag": "DeBruijn",
                   "index": 1
                 },
                 {
-                  "tag": "deBruijn",
+                  "tag": "DeBruijn",
                   "index": 1
                 }
               ]
@@ -617,46 +715,25 @@
         }
       },
       "definition": {
-        "pretty": "λ eq → refl",
-        "tag": "Lambda",
-        "abstraction": "eq",
-        "body": {
-          "tag": "Application",
-          "head": {
-            "tag": "ScopeReference",
-            "name": "Test.PiVsFun.refl<10>"
-          },
-          "arguments": [
-            {
-              "tag": "deBruijn",
-              "index": 2
-            },
-            {
-              "tag": "deBruijn",
-              "index": 2
-            }
-          ]
-        }
-      },
-      "holes": [
-        {
-          "ctx": {
-            "pretty": "{x : Set} {y : Set} (eq : x ≡ y)",
+        "pretty": "id eq = refl",
+        "tag": "Function",
+        "clauses": [
+          {
             "telescope": [
               {
-                "pretty": "{(x, Set)}",
+                "pretty": "{x : Set}",
                 "tag": "Sort",
                 "name": "x",
                 "sort": "Set"
               },
               {
-                "pretty": "{(y, Set)}",
+                "pretty": "{y : Set}",
                 "tag": "Sort",
                 "name": "y",
                 "sort": "Set"
               },
               {
-                "pretty": "((eq, Test.PiVsFun._≡_ @1 @0))",
+                "pretty": "(eq : @1 ≡ @0)",
                 "tag": "Application",
                 "name": "eq",
                 "head": {
@@ -665,11 +742,82 @@
                 },
                 "arguments": [
                   {
-                    "tag": "deBruijn",
+                    "tag": "DeBruijn",
                     "index": 1
                   },
                   {
-                    "tag": "deBruijn",
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "DeBruijn",
+                "index": 2
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 1
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.PiVsFun.refl<10>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 2
+                },
+                {
+                  "tag": "DeBruijn",
+                  "index": 2
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "{x : Set} {y : Set} (eq : x ≡ y)",
+            "telescope": [
+              {
+                "pretty": "{x : Set}",
+                "tag": "Sort",
+                "name": "x",
+                "sort": "Set"
+              },
+              {
+                "pretty": "{y : Set}",
+                "tag": "Sort",
+                "name": "y",
+                "sort": "Set"
+              },
+              {
+                "pretty": "(eq : y ≡ eq)",
+                "tag": "Application",
+                "name": "eq",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.PiVsFun._≡_<4>"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 1
+                  },
+                  {
+                    "tag": "DeBruijn",
                     "index": 0
                   }
                 ]
@@ -685,11 +833,11 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 2
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 2
               }
             ]
@@ -703,17 +851,17 @@
             },
             "arguments": [
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 2
               },
               {
-                "tag": "deBruijn",
+                "tag": "DeBruijn",
                 "index": 2
               }
             ]
           },
           "premises": [
-            "Test.PiVsFun.refl"
+            "Test.PiVsFun.refl<10>"
           ]
         }
       ]

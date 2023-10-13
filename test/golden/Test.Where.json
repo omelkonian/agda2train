@@ -1,0 +1,172 @@
+{
+  "name": "Test.Where",
+  "scope-global": [
+    {
+      "name": "Agda.Builtin.Nat.Nat<6>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "(zero : Nat) | (suc : Nat → Nat)",
+        "tag": "ADT",
+        "variants": [
+          {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          {
+            "tag": "Pi",
+            "name": "n",
+            "domain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            },
+            "codomain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat<6>"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Agda.Builtin.Nat.Nat.zero<8>",
+      "type": {
+        "pretty": "Nat",
+        "tag": "ScopeReference",
+        "name": "Agda.Builtin.Nat.Nat<6>"
+      },
+      "definition": {
+        "pretty": "Nat@0",
+        "tag": "Constructor",
+        "reference": "Agda.Builtin.Nat.Nat",
+        "variant": 0
+      }
+    },
+    {
+      "name": "Agda.Builtin.Nat.Nat.suc<12>",
+      "type": {
+        "pretty": "Nat → Nat",
+        "tag": "Pi",
+        "name": "n",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        }
+      },
+      "definition": {
+        "pretty": "Nat@1",
+        "tag": "Constructor",
+        "reference": "Agda.Builtin.Nat.Nat",
+        "variant": 1
+      }
+    }
+  ],
+  "scope-local": [
+    {
+      "name": "Test.Where.f<4>",
+      "type": {
+        "pretty": "Nat → Nat",
+        "tag": "Pi",
+        "name": "_",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        }
+      },
+      "definition": {
+        "pretty": "f n = Test.Where.g n (suc n)",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "(n : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.Where._.g<12>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                },
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Agda.Builtin.Nat.Nat.suc<12>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "DeBruijn",
+                      "index": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "(n : Nat)",
+            "telescope": [
+              {
+                "pretty": "(n : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "term": {
+            "pretty": "suc n",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat.suc<12>"
+            },
+            "arguments": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ]
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat.suc<12>"
+          ]
+        }
+      ]
+    }
+  ]
+}

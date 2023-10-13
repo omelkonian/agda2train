@@ -1,0 +1,328 @@
+{
+  "name": "Test.Fields",
+  "scope-global": [
+    {
+      "name": "Agda.Builtin.String.String<6>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      }
+    }
+  ],
+  "scope-local": [
+    {
+      "name": "Test.Fields.Name<4>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "{(first : String) ; (last : String)}",
+        "tag": "Record",
+        "telescope": [],
+        "fields": [
+          {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.String.String<6>"
+          },
+          {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.String.String<6>"
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Fields.Name.first<10>",
+      "type": {
+        "pretty": "Name → String",
+        "tag": "Pi",
+        "name": "r",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Test.Fields.Name<4>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.String.String<6>"
+        }
+      },
+      "definition": {
+        "pretty": "first = first₁",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "(first : String)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.String.String<6>"
+              },
+              {
+                "pretty": "(last : String)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.String.String<6>"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.Fields.Name.constructor"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 1
+                  },
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "body": {
+              "tag": "DeBruijn",
+              "index": 1
+            }
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Fields.Name.last<12>",
+      "type": {
+        "pretty": "Name → String",
+        "tag": "Pi",
+        "name": "r",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Test.Fields.Name<4>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.String.String<6>"
+        }
+      },
+      "definition": {
+        "pretty": "last = last₁",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "(first : String)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.String.String<6>"
+              },
+              {
+                "pretty": "(last : String)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.String.String<6>"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.Fields.Name.constructor"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 1
+                  },
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "body": {
+              "tag": "DeBruijn",
+              "index": 0
+            }
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Fields.User<14>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "{(name : Name)}",
+        "tag": "Record",
+        "telescope": [],
+        "fields": [
+          {
+            "tag": "ScopeReference",
+            "name": "Test.Fields.Name<4>"
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Fields.User.name<18>",
+      "type": {
+        "pretty": "User → Name",
+        "tag": "Pi",
+        "name": "r",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Test.Fields.User<14>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Test.Fields.Name<4>"
+        }
+      },
+      "definition": {
+        "pretty": "name = name₁",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "(name : Name)",
+                "tag": "ScopeReference",
+                "name": "Test.Fields.Name<4>"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.Fields.User.constructor"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "body": {
+              "tag": "DeBruijn",
+              "index": 0
+            }
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Fields.koks<20>",
+      "type": {
+        "pretty": "User",
+        "tag": "ScopeReference",
+        "name": "Test.Fields.User<14>"
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Fields.kokos<22>",
+      "type": {
+        "pretty": "String",
+        "tag": "ScopeReference",
+        "name": "Agda.Builtin.String.String<6>"
+      },
+      "definition": {
+        "pretty": "kokos = koks .name .first",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [],
+            "patterns": [],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.Fields.Name.first<10>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.Fields.User.name<18>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "ScopeReference",
+                      "name": "Test.Fields.koks<20>"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "String",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.String.String<6>"
+          },
+          "term": {
+            "pretty": "koks .name .first",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.Fields.Name.first<10>"
+            },
+            "arguments": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.Fields.User.name<18>"
+                },
+                "arguments": [
+                  {
+                    "tag": "ScopeReference",
+                    "name": "Test.Fields.koks<20>"
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Test.Fields.koks<20>",
+            "Test.Fields.User.name<18>",
+            "Test.Fields.Name.first<10>"
+          ]
+        }
+      ]
+    }
+  ]
+}

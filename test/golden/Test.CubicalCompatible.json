@@ -1,0 +1,592 @@
+{
+  "name": "Test.CubicalCompatible",
+  "scope-global": [
+    {
+      "name": "Agda.Builtin.Equality._≡_<12>",
+      "type": {
+        "pretty": "{a : Agda.Primitive.Level} {A : Set a} → A → A → Set a",
+        "tag": "Pi",
+        "name": "a",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Primitive.Level<14>"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "A",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set @0"
+          },
+          "codomain": {
+            "tag": "Pi",
+            "name": "x",
+            "domain": {
+              "tag": "DeBruijn",
+              "index": 0
+            },
+            "codomain": {
+              "tag": "Pi",
+              "name": "_",
+              "domain": {
+                "tag": "DeBruijn",
+                "index": 0
+              },
+              "codomain": {
+                "tag": "Sort",
+                "sort": "Set @1"
+              }
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "(refl : {a : Agda.Primitive.Level} {A : Set a} {x : A} → x ≡ x)",
+        "tag": "ADT",
+        "variants": [
+          {
+            "tag": "Pi",
+            "name": "a",
+            "domain": {
+              "tag": "ScopeReference",
+              "name": "Agda.Primitive.Level<14>"
+            },
+            "codomain": {
+              "tag": "Pi",
+              "name": "A",
+              "domain": {
+                "tag": "Sort",
+                "sort": "Set @0"
+              },
+              "codomain": {
+                "tag": "Pi",
+                "name": "x",
+                "domain": {
+                  "tag": "DeBruijn",
+                  "index": 0
+                },
+                "codomain": {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Agda.Builtin.Equality._≡_<12>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "DeBruijn",
+                      "index": 2
+                    },
+                    {
+                      "tag": "DeBruijn",
+                      "index": 1
+                    },
+                    {
+                      "tag": "DeBruijn",
+                      "index": 0
+                    },
+                    {
+                      "tag": "DeBruijn",
+                      "index": 0
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Agda.Builtin.Equality._≡_.refl<20>",
+      "type": {
+        "pretty": "{a : Agda.Primitive.Level} {A : Set a} {x : A} → x ≡ x",
+        "tag": "Pi",
+        "name": "a",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Primitive.Level<14>"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "A",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set @0"
+          },
+          "codomain": {
+            "tag": "Pi",
+            "name": "x",
+            "domain": {
+              "tag": "DeBruijn",
+              "index": 0
+            },
+            "codomain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Equality._≡_<12>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 2
+                },
+                {
+                  "tag": "DeBruijn",
+                  "index": 1
+                },
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                },
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "_≡_@0",
+        "tag": "Constructor",
+        "reference": "Agda.Builtin.Equality._≡_",
+        "variant": 0
+      }
+    }
+  ],
+  "scope-local": [
+    {
+      "name": "Test.CubicalCompatible.trans<12>",
+      "type": {
+        "pretty": "{A : Set} {x y z : A} → x ≡ y → y ≡ z → x ≡ z",
+        "tag": "Pi",
+        "name": "A",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "x",
+          "domain": {
+            "tag": "DeBruijn",
+            "index": 0
+          },
+          "codomain": {
+            "tag": "Pi",
+            "name": "y",
+            "domain": {
+              "tag": "DeBruijn",
+              "index": 1
+            },
+            "codomain": {
+              "tag": "Pi",
+              "name": "z",
+              "domain": {
+                "tag": "DeBruijn",
+                "index": 2
+              },
+              "codomain": {
+                "tag": "Pi",
+                "name": "_",
+                "domain": {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Agda.Builtin.Equality._≡_<12>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "Level",
+                      "level": "lzero"
+                    },
+                    {
+                      "tag": "DeBruijn",
+                      "index": 3
+                    },
+                    {
+                      "tag": "DeBruijn",
+                      "index": 2
+                    },
+                    {
+                      "tag": "DeBruijn",
+                      "index": 1
+                    }
+                  ]
+                },
+                "codomain": {
+                  "tag": "Pi",
+                  "name": "_",
+                  "domain": {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Equality._≡_<12>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "Level",
+                        "level": "lzero"
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 3
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 1
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 0
+                      }
+                    ]
+                  },
+                  "codomain": {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Equality._≡_<12>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "Level",
+                        "level": "lzero"
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 3
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 2
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 0
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "trans refl eq = eq",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "{A : Set}",
+                "tag": "Sort",
+                "name": "A",
+                "sort": "Set"
+              },
+              {
+                "pretty": "{x : @0}",
+                "tag": "DeBruijn",
+                "name": "x",
+                "index": 0
+              },
+              {
+                "pretty": "{z : @1}",
+                "tag": "DeBruijn",
+                "name": "z",
+                "index": 1
+              },
+              {
+                "pretty": "(eq : @1 ≡ @0)",
+                "tag": "Application",
+                "name": "eq",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Equality._≡_<12>"
+                },
+                "arguments": [
+                  {
+                    "tag": "Level",
+                    "level": "lzero"
+                  },
+                  {
+                    "tag": "DeBruijn",
+                    "index": 2
+                  },
+                  {
+                    "tag": "DeBruijn",
+                    "index": 1
+                  },
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "DeBruijn",
+                "index": 3
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 2
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 2
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 1
+              },
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Equality._≡_.refl"
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ],
+            "body": {
+              "tag": "DeBruijn",
+              "index": 0
+            }
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.CubicalCompatible.trans′<22>",
+      "type": {
+        "pretty": "{A : Set} {x y z : A} → x ≡ y → y ≡ z → x ≡ z",
+        "tag": "Pi",
+        "name": "A",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "x",
+          "domain": {
+            "tag": "DeBruijn",
+            "index": 0
+          },
+          "codomain": {
+            "tag": "Pi",
+            "name": "y",
+            "domain": {
+              "tag": "DeBruijn",
+              "index": 1
+            },
+            "codomain": {
+              "tag": "Pi",
+              "name": "z",
+              "domain": {
+                "tag": "DeBruijn",
+                "index": 2
+              },
+              "codomain": {
+                "tag": "Pi",
+                "name": "_",
+                "domain": {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Agda.Builtin.Equality._≡_<12>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "Level",
+                      "level": "lzero"
+                    },
+                    {
+                      "tag": "DeBruijn",
+                      "index": 3
+                    },
+                    {
+                      "tag": "DeBruijn",
+                      "index": 2
+                    },
+                    {
+                      "tag": "DeBruijn",
+                      "index": 1
+                    }
+                  ]
+                },
+                "codomain": {
+                  "tag": "Pi",
+                  "name": "_",
+                  "domain": {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Equality._≡_<12>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "Level",
+                        "level": "lzero"
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 3
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 1
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 0
+                      }
+                    ]
+                  },
+                  "codomain": {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "name": "Agda.Builtin.Equality._≡_<12>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "Level",
+                        "level": "lzero"
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 3
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 2
+                      },
+                      {
+                        "tag": "DeBruijn",
+                        "index": 0
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "trans′ refl refl = refl",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "{A : Set}",
+                "tag": "Sort",
+                "name": "A",
+                "sort": "Set"
+              },
+              {
+                "pretty": "{x : @0}",
+                "tag": "DeBruijn",
+                "name": "x",
+                "index": 0
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "DeBruijn",
+                "index": 1
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              },
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Equality._≡_.refl"
+              },
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Equality._≡_.refl"
+              }
+            ],
+            "body": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Equality._≡_.refl<20>"
+            }
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "{A : Set} {x : A}",
+            "telescope": [
+              {
+                "pretty": "{A : Set}",
+                "tag": "Sort",
+                "name": "A",
+                "sort": "Set"
+              },
+              {
+                "pretty": "{x : x}",
+                "tag": "DeBruijn",
+                "name": "x",
+                "index": 0
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "x ≡ x",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Equality._≡_<12>"
+            },
+            "arguments": [
+              {
+                "tag": "Level",
+                "level": "lzero"
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 1
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ]
+          },
+          "term": {
+            "pretty": "refl",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Equality._≡_.refl<20>"
+          },
+          "premises": [
+            "Agda.Builtin.Equality._≡_.refl<20>"
+          ]
+        }
+      ]
+    }
+  ]
+}

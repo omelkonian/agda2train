@@ -9,7 +9,7 @@
         "sort": "Set"
       },
       "definition": {
-        "pretty": "\"⊕\" Nat (Nat → Nat)",
+        "pretty": "(zero : Nat) | (suc : Nat → Nat)",
         "tag": "ADT",
         "variants": [
           {
@@ -39,9 +39,9 @@
         "name": "Agda.Builtin.Nat.Nat<6>"
       },
       "definition": {
-        "pretty": "\"⊙\" Nat 0",
+        "pretty": "Nat@0",
         "tag": "Constructor",
-        "reference": "Agda.Builtin.Nat.Nat<6>",
+        "reference": "Agda.Builtin.Nat.Nat",
         "variant": 0
       }
     },
@@ -61,12 +61,77 @@
         }
       },
       "definition": {
-        "pretty": "\"⊙\" Nat 1",
+        "pretty": "Nat@1",
         "tag": "Constructor",
-        "reference": "Agda.Builtin.Nat.Nat<6>",
+        "reference": "Agda.Builtin.Nat.Nat",
         "variant": 1
       }
     }
   ],
-  "scope-local": []
+  "scope-local": [
+    {
+      "name": "Test.PrivateDefinitions.X<6>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "{(x : Nat)}",
+        "tag": "Record",
+        "telescope": [],
+        "fields": [
+          {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.PrivateDefinitions.proj<12>",
+      "type": {
+        "pretty": "X → Nat",
+        "tag": "Pi",
+        "name": "_",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Test.PrivateDefinitions.X<6>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        }
+      },
+      "definition": {
+        "pretty": "proj = λ r → X.x r",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [],
+            "patterns": [],
+            "body": {
+              "tag": "Lambda",
+              "abstraction": "r",
+              "body": {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.PrivateDefinitions.X.x<10>"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "holes": []
+    }
+  ]
 }
