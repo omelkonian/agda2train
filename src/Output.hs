@@ -369,12 +369,10 @@ instance P.PrettyTCM A.Definition where
              $ ppm . NamedClause (defName d) True <$> cls
       A.Datatype{..} -> do
         tys <- fmap unEl <$> traverse typeOfConst dataCons
-        pinterleave " |" $ ppm <$> tys
+        pinterleave " |" $ map showNamedTy (zip (unqualify <$> dataCons) tys)
       A.Record{..} -> do
         let tys = unDom <$> drop recPars (telToList recTel)
-        braces
-          $ pinterleave " ;"
-          $ map (\(n, ty) -> parens $ ppm n <> " : " <> ppm ty) tys
+        braces $ pinterleave " ;" $ map showNamedTy tys
       A.Constructor{..} -> do
         let cn = conName conSrcCon
         d <- theDef <$> getConstInfo conData
@@ -388,5 +386,8 @@ instance P.PrettyTCM A.Definition where
       A.Axiom{..}         -> "<Axiom>"
       A.DataOrRecSig{..}  -> "<DataOrRecSig>"
       A.GeneralizableVar  -> "<GeneralizableVar>"
+
+    showNamedTy :: (MonadPretty m, PrettyTCM a) => (String, a) -> m Doc
+    showNamedTy = \(n, ty) -> parens $ ppm n <> " : " <> ppm ty
 
 
