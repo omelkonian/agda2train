@@ -14,7 +14,7 @@ module Output
 
 import Control.Arrow ( second )
 import Control.Applicative ( (<|>) )
-import GHC.Generics ( Generic, Generically(..) )
+import GHC.Generics ( Generic )
 import Data.List ( notElem, elemIndex )
 import Data.String ( fromString )
 import Data.Aeson
@@ -134,8 +134,7 @@ data Sample = Sample
   , goal     :: Pretty (Reduced Type)
   , term     :: Pretty (Reduced Term)
   , premises :: [Name]
-  } deriving (Generic, Show)
-    deriving (ToJSON, FromJSON) via Generically Sample
+  } deriving (Generic, Show, ToJSON, FromJSON)
 
 
 data Definition
@@ -177,8 +176,7 @@ data Term
   | App Head [Term]           -- ^ e.g. `f x (x + x)` or `@0 (λ x. x)`
   | Lit String | Sort String | Level String -- ^ e.g. Set/42/"sth",0ℓ,...
   | UnsolvedMeta
-  deriving (Generic, Show)
-  deriving FromJSON via Generically Term
+  deriving (Generic, Show, FromJSON)
 
 instance ToJSON Term where
   toJSON = \case
