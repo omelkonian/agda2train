@@ -2,6 +2,7 @@ name: CI
 
 # Trigger the workflow on push or pull request, but only for the master branch
 on:
+  schedule: [{cron: '0 0 * * *'}]
   pull_request:
   push:
     branches: [master]
@@ -13,13 +14,16 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]   # macOS-latest, windows-latest
-        cabal: ["3.8"]
+        cabal: [3.8]
         ghc:
-          - "8.8.4"
-          - "8.10.7"
-          - "9.0.2"
-          - "9.2.5"
-          - "9.4.3"
+          - 8.8.4
+          - 8.10.7
+          - 9.0.2
+          - 9.2.5
+          - 9.4.3
+        include:
+          - ghc: 9.4.3
+            stdlib: 1.7.2 # only extract stdlib data on the latest GHC version
 
     steps:
     - uses: actions/checkout@v3
@@ -50,7 +54,34 @@ jobs:
         key:          ${{ runner.os }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}
         restore-keys: ${{ runner.os }}-${{ matrix.ghc }}-
 
-    # The actual job.
     - name: Test
       run: make test
 
+    - name: Free disk space
+      if: ${{ matrix.stdlib }}
+      uses: jlumbroso/free-disk-space@main
+      with:
+        android: true
+        dotnet: true
+        haskell: false
+        large-packages: false
+        docker-images: true
+        swap-storage: true
+
+    - name: Extract data from the standard library
+      if: ${{ matrix.stdlib }}
+      env:
+        STDLIB: ${{ matrix.stdlib }}
+      run: |
+        wget https://github.com/agda/agda-stdlib/archive/refs/tags/v$STDLIB.zip
+        unzip v$STDLIB
+        cd agda-stdlib-$STDLIB && cabal run GenerateEverything && cd ..
+        STDLIB=./agda-stdlib-$STDLIB make stdlib
+        zip stdlib-json.zip agda-stdlib-$STDLIB/json/*.json
+
+    - name: Publish artifacts
+      if: ${{ matrix.stdlib }}
+      uses: actions/upload-artifact@v3
+      with:
+          name: stdlib-json
+          path: stdlib-json.zip

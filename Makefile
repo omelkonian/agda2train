@@ -35,13 +35,14 @@ TYPETOP?=$(HOME)/git/TypeTopology
 
 stdlib:
 	cabal run agda2train -- -r -v agda2train:10 \
-		-ojson/stdlib/ -i $(STDLIB) $(STDLIB)/Everything.agda
+	  +RTS -H1G -M1G -RTS \
+		-o$(STDLIB)/json/ -i $(STDLIB) -i $(STDLIB)/src/ $(STDLIB)/Everything.agda
 
 unimath:
 	cabal run agda2train -- -r -v agda2train:10 \
-		-ojson/unimath/ -i $(UNIMATH)/src/ $(UNIMATH)/src/everything.lagda.md
+		-o$(UNIMATH)/json/ -i $(UNIMATH)/src/ $(UNIMATH)/src/everything.lagda.md
 
 typetopology:
 	cabal run agda2train -- -r -v agda2train:10 \
-		-ojson/typetopology -i $(TYPETOP)/source/ $(TYPETOP)/source/index.lagda
+		-o$(TYPETOP)/json/ -i $(TYPETOP)/source/ $(TYPETOP)/source/index.lagda
 
