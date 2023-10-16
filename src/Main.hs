@@ -76,9 +76,13 @@ mkBackend trainF = Backend'
   , preModule   = \ opts isMain md _ ->
       let
         processScopeEntry :: QName -> TCM (Maybe ScopeEntry)
-        processScopeEntry qn = do
-          -- TODO: clean up qualifiers of the form: CurrentModule.(_.)*
-          caseMaybeM (tryMaybe $ typeOfConst qn) (pure Nothing) $ \ty -> do
+        processScopeEntry qn =
+          caseMaybeM (tryMaybe $ do
+            def <- getConstInfo qn
+            case theDef def of
+              GeneralizableVar -> fail "not handling `variable` definitions"
+              DataOrRecSig _   -> fail "not handling `DataOrRecSig` definitions"
+              _ -> typeOfConst qn) (pure Nothing) $ \ty -> do
             rty  <- mkReduced ty
             pty  <- ppm ty
             rty' <- traverse convert rty

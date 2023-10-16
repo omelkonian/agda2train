@@ -1,4 +1,4 @@
-.PHONY: repl build install installTest test golden cleanTest stdlib unimath typetopology
+.PHONY: repl build install installTest test golden cleanTest allTests stdlib unimath typetopology
 
 default: repl
 
@@ -33,16 +33,24 @@ STDLIB?=$(HOME)/git/agda-stdlib
 UNIMATH?=$(HOME)/git/agda-unimath
 TYPETOP?=$(HOME)/git/TypeTopology
 
+allTests:
+	cabal run agda2train -- -r -v agda2train:10 \
+	  -ojson/ -itest/ test/All.agda
+	zip -j data/allTests.zip json/*.json
+
 stdlib:
 	cabal run agda2train -- -r -v agda2train:10 \
-	  +RTS -H1G -M1G -RTS \
+	  +RTS -H3G -M3G -RTS \
 		-o$(STDLIB)/json/ -i $(STDLIB) -i $(STDLIB)/src/ $(STDLIB)/Everything.agda
+	zip -j data/stdlib.zip $(STDLIB)/*.json
 
 unimath:
 	cabal run agda2train -- -r -v agda2train:10 \
 		-o$(UNIMATH)/json/ -i $(UNIMATH)/src/ $(UNIMATH)/src/everything.lagda.md
+	zip -j data/unimath.zip $(UNIMATH)/*.json
 
 typetopology:
 	cabal run agda2train -- -r -v agda2train:10 \
 		-o$(TYPETOP)/json/ -i $(TYPETOP)/source/ $(TYPETOP)/source/index.lagda
+	zip -j data/typetopology.zip $(TYPETOP)/*.json
 
