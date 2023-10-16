@@ -417,5 +417,87 @@
         }
       ]
     }
+  ],
+  "scope-private": [
+    {
+      "name": "Test.ParametrisedRecords.Name.constructor<7>",
+      "type": {
+        "pretty": "{NameId : Set} (first₁ last₁ : NameId) → Name NameId",
+        "tag": "Pi",
+        "name": "NameId",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "first",
+          "domain": {
+            "tag": "DeBruijn",
+            "index": 0
+          },
+          "codomain": {
+            "tag": "Pi",
+            "name": "last",
+            "domain": {
+              "tag": "DeBruijn",
+              "index": 1
+            },
+            "codomain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.ParametrisedRecords.Name<6>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 2
+                }
+              ]
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "Name@0",
+        "tag": "Constructor",
+        "reference": "Test.ParametrisedRecords.Name",
+        "variant": 0
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ParametrisedRecords.User.constructor<71>",
+      "type": {
+        "pretty": "(name₁ : Name String) → User",
+        "tag": "Pi",
+        "name": "name",
+        "domain": {
+          "tag": "Application",
+          "head": {
+            "tag": "ScopeReference",
+            "name": "Test.ParametrisedRecords.Name<6>"
+          },
+          "arguments": [
+            {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.String.String<6>"
+            }
+          ]
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Test.ParametrisedRecords.User<18>"
+        }
+      },
+      "definition": {
+        "pretty": "User@0",
+        "tag": "Constructor",
+        "reference": "Test.ParametrisedRecords.User",
+        "variant": 0
+      },
+      "holes": []
+    }
   ]
 }

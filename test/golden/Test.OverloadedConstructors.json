@@ -644,5 +644,109 @@
         }
       ]
     }
+  ],
+  "scope-private": [
+    {
+      "name": "Test.OverloadedConstructors.X.x<24>",
+      "type": {
+        "pretty": "X → Nat",
+        "tag": "Pi",
+        "name": "r",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Test.OverloadedConstructors.X<20>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Test.OverloadedConstructors.Nat<4>"
+        }
+      },
+      "definition": {
+        "pretty": "X.x = x",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "(x : Nat)",
+                "tag": "ScopeReference",
+                "name": "Test.OverloadedConstructors.Nat<4>"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.OverloadedConstructors.mk"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "body": {
+              "tag": "DeBruijn",
+              "index": 0
+            }
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.OverloadedConstructors.𝕏.𝕩<34>",
+      "type": {
+        "pretty": "𝕏 → ℕ",
+        "tag": "Pi",
+        "name": "r",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Test.OverloadedConstructors.𝕏<30>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Test.OverloadedConstructors.ℕ<12>"
+        }
+      },
+      "definition": {
+        "pretty": "𝕏.𝕩 = 𝕩",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "(𝕩 : ℕ)",
+                "tag": "ScopeReference",
+                "name": "Test.OverloadedConstructors.ℕ<12>"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.OverloadedConstructors.mk"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "body": {
+              "tag": "DeBruijn",
+              "index": 0
+            }
+          }
+        ]
+      },
+      "holes": []
+    }
   ]
 }

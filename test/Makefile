@@ -10,6 +10,7 @@ cleanGolden:
 	@rm -rf golden/*
 
 all: Test/*.agda
+	$(MAKE) clean
 	@for f in $^; do \
 			echo == Compiling $${f} == ; \
 			./agda2train $${f} -o build ; \

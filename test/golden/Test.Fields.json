@@ -324,5 +324,61 @@
         }
       ]
     }
+  ],
+  "scope-private": [
+    {
+      "name": "Test.Fields.User.constructor<43>",
+      "type": {
+        "pretty": "(name₁ : Name) → User",
+        "tag": "Pi",
+        "name": "name",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Test.Fields.Name<4>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Test.Fields.User<14>"
+        }
+      },
+      "definition": {
+        "pretty": "User@0",
+        "tag": "Constructor",
+        "reference": "Test.Fields.User",
+        "variant": 0
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Fields.Name.constructor<3>",
+      "type": {
+        "pretty": "(first₁ last₁ : String) → Name",
+        "tag": "Pi",
+        "name": "first",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.String.String<6>"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "last",
+          "domain": {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.String.String<6>"
+          },
+          "codomain": {
+            "tag": "ScopeReference",
+            "name": "Test.Fields.Name<4>"
+          }
+        }
+      },
+      "definition": {
+        "pretty": "Name@0",
+        "tag": "Constructor",
+        "reference": "Test.Fields.Name",
+        "variant": 0
+      },
+      "holes": []
+    }
   ]
 }

@@ -32,20 +32,6 @@
       }
     },
     {
-      "name": "Agda.Builtin.Nat.Nat.zero<8>",
-      "type": {
-        "pretty": "Nat",
-        "tag": "ScopeReference",
-        "name": "Agda.Builtin.Nat.Nat<6>"
-      },
-      "definition": {
-        "pretty": "Nat@0",
-        "tag": "Constructor",
-        "reference": "Agda.Builtin.Nat.Nat",
-        "variant": 0
-      }
-    },
-    {
       "name": "Agda.Builtin.Nat.Nat.suc<12>",
       "type": {
         "pretty": "Nat → Nat",
@@ -106,7 +92,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.Where._.g<12>"
+                "name": "Test.Where._.g<14>"
               },
               "arguments": [
                 {
@@ -169,7 +155,7 @@
       ]
     },
     {
-      "name": "Test.Where.f²<14>",
+      "name": "Test.Where.f²<6>",
       "type": {
         "pretty": "Nat → Nat",
         "tag": "Pi",
@@ -270,7 +256,7 @@
   ],
   "scope-private": [
     {
-      "name": "Test.Where._.g<22>",
+      "name": "Test.Where._.g<14>",
       "type": {
         "pretty": "(n : Nat) → Nat → Nat",
         "tag": "Pi",
@@ -299,7 +285,7 @@
       "holes": []
     },
     {
-      "name": "Test.Where._.g<12>",
+      "name": "Test.Where._.g<22>",
       "type": {
         "pretty": "(n : Nat) → Nat → Nat",
         "tag": "Pi",
