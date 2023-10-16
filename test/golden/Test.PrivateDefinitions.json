@@ -132,6 +132,74 @@
         ]
       },
       "holes": []
+    },
+    {
+      "name": "Test.PrivateDefinitions.g<16>",
+      "type": {
+        "pretty": "Nat → Nat",
+        "tag": "Pi",
+        "name": "_",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        }
+      },
+      "definition": {
+        "pretty": "g x = Test.PrivateDefinitions.f x (Test.PrivateDefinitions.f x 0)",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "(x : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.PrivateDefinitions.f<14>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                },
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.PrivateDefinitions.f<14>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "DeBruijn",
+                      "index": 0
+                    },
+                    {
+                      "tag": "Literal",
+                      "literal": "0"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "holes": []
     }
   ]
 }

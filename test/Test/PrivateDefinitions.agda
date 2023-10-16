@@ -16,3 +16,11 @@ open X
 
 proj : X → Nat
 proj = x
+
+-- ** non-record example
+private
+  f : Nat → Nat → Nat
+  f = Agda.Builtin.Nat._+_
+
+g : Nat → Nat
+g x = f x (f x 0)

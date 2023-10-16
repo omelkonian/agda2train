@@ -57,31 +57,31 @@ jobs:
     - name: Test
       run: make test
 
-    - name: Free disk space
-      if: ${{ matrix.stdlib }}
-      uses: jlumbroso/free-disk-space@main
-      with:
-        android: true
-        dotnet: true
-        haskell: false
-        large-packages: false
-        docker-images: true
-        swap-storage: true
+    # - name: Free disk space
+    #   if: ${{ matrix.stdlib }}
+    #   uses: jlumbroso/free-disk-space@main
+    #   with:
+    #     android: true
+    #     dotnet: true
+    #     haskell: false
+    #     large-packages: false
+    #     docker-images: true
+    #     swap-storage: true
 
-    - name: Extract data from the standard library
-      if: ${{ matrix.stdlib }}
-      env:
-        STDLIB: ${{ matrix.stdlib }}
-      run: |
-        wget https://github.com/agda/agda-stdlib/archive/refs/tags/v$STDLIB.zip
-        unzip v$STDLIB
-        cd agda-stdlib-$STDLIB && cabal run GenerateEverything && cd ..
-        STDLIB=./agda-stdlib-$STDLIB make stdlib
-        zip stdlib-json.zip agda-stdlib-$STDLIB/json/*.json
+    # - name: Extract data from the standard library
+    #   if: ${{ matrix.stdlib }}
+    #   env:
+    #     STDLIB: ${{ matrix.stdlib }}
+    #   run: |
+    #     wget https://github.com/agda/agda-stdlib/archive/refs/tags/v$STDLIB.zip
+    #     unzip v$STDLIB
+    #     cd agda-stdlib-$STDLIB && cabal run GenerateEverything && cd ..
+    #     STDLIB=./agda-stdlib-$STDLIB make stdlib
+    #     zip stdlib-json.zip agda-stdlib-$STDLIB/json/*.json
 
-    - name: Publish artifacts
-      if: ${{ matrix.stdlib }}
-      uses: actions/upload-artifact@v3
-      with:
-          name: stdlib-json
-          path: stdlib-json.zip
+    # - name: Publish artifacts
+    #   if: ${{ matrix.stdlib }}
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #       name: stdlib-json
+    #       path: stdlib-json.zip
