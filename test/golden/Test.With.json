@@ -189,5 +189,297 @@
         }
       ]
     }
+  ],
+  "scope-private": [
+    {
+      "name": "Test.With.with-10<12>",
+      "type": {
+        "pretty": "(n : Nat) → Nat → Nat",
+        "tag": "Pi",
+        "name": "n",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "w",
+          "domain": {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "codomain": {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          }
+        }
+      },
+      "definition": {
+        "pretty": "... | zero = zero | ... | suc n = suc (suc (g n))",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "(n : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              },
+              {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat.zero"
+              }
+            ],
+            "body": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat.zero<8>"
+            }
+          },
+          {
+            "telescope": [
+              {
+                "pretty": "(n : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              },
+              {
+                "pretty": "(n : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "DeBruijn",
+                "index": 1
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Nat.Nat.suc"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat.suc<12>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Agda.Builtin.Nat.Nat.suc<12>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "Application",
+                      "head": {
+                        "tag": "ScopeReference",
+                        "name": "Test.With.g<4>"
+                      },
+                      "arguments": [
+                        {
+                          "tag": "DeBruijn",
+                          "index": 0
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "(n : Nat)",
+            "telescope": [
+              {
+                "pretty": "(n : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "term": {
+            "pretty": "zero",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat.zero<8>"
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat.zero<8>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "(n : Nat) (n₁ : Nat)",
+            "telescope": [
+              {
+                "pretty": "(n : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              },
+              {
+                "pretty": "(n : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "term": {
+            "pretty": "suc (suc (g n))",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat.suc<12>"
+            },
+            "arguments": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Agda.Builtin.Nat.Nat.suc<12>"
+                },
+                "arguments": [
+                  {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "name": "Test.With.g<4>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "DeBruijn",
+                        "index": 0
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat.suc<12>",
+            "Test.With.g<4>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "(n₁ : Nat) (n₂ : Nat)",
+            "telescope": [
+              {
+                "pretty": "(n : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              },
+              {
+                "pretty": "(n : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "term": {
+            "pretty": "suc (g n)",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat.suc<12>"
+            },
+            "arguments": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.With.g<4>"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat.suc<12>",
+            "Test.With.g<4>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "(n₁ : Nat) (n₂ : Nat)",
+            "telescope": [
+              {
+                "pretty": "(n : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              },
+              {
+                "pretty": "(n : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "term": {
+            "pretty": "g n",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.With.g<4>"
+            },
+            "arguments": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ]
+          },
+          "premises": [
+            "Test.With.g<4>"
+          ]
+        }
+      ]
+    }
   ]
 }

@@ -45,8 +45,9 @@ jsonOpts = defaultOptions
   { omitNothingFields = True
   , fieldLabelModifier = \case
       ('_' : s) -> s
-      "scopeGlobal" -> "scope-global"
-      "scopeLocal" -> "scope-local"
+      "scopeGlobal"  -> "scope-global"
+      "scopeLocal"   -> "scope-local"
+      "scopePrivate" -> "scope-private"
       s -> s
   }
 
@@ -114,8 +115,9 @@ instance FromJSON a => FromJSON (Named a) where
 
 type FileData = Named TrainData
 data TrainData = TrainData
-  { scopeGlobal :: [ScopeEntry] -- these will not contain any holes
-  , scopeLocal  :: [ScopeEntry]
+  { scopeGlobal  :: [ScopeEntry] -- these will not contain any holes
+  , scopeLocal   :: [ScopeEntry]
+  , scopePrivate :: [ScopeEntry]
   } deriving Generic
 instance ToJSON   TrainData where toJSON    = genericToJSON jsonOpts
 instance FromJSON TrainData where parseJSON = genericParseJSON jsonOpts

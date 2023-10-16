@@ -167,6 +167,165 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Test.Where.f²<14>",
+      "type": {
+        "pretty": "Nat → Nat",
+        "tag": "Pi",
+        "name": "_",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        }
+      },
+      "definition": {
+        "pretty": "f² n = Test.Where.g n (suc n)",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "(n : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.Where._.g<22>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                },
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Agda.Builtin.Nat.Nat.suc<12>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "DeBruijn",
+                      "index": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "(n : Nat)",
+            "telescope": [
+              {
+                "pretty": "(n : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "term": {
+            "pretty": "suc n",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat.suc<12>"
+            },
+            "arguments": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ]
+          },
+          "premises": [
+            "Agda.Builtin.Nat.Nat.suc<12>"
+          ]
+        }
+      ]
+    }
+  ],
+  "scope-private": [
+    {
+      "name": "Test.Where._.g<22>",
+      "type": {
+        "pretty": "(n : Nat) → Nat → Nat",
+        "tag": "Pi",
+        "name": "n",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "_",
+          "domain": {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "codomain": {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Where._.g<12>",
+      "type": {
+        "pretty": "(n : Nat) → Nat → Nat",
+        "tag": "Pi",
+        "name": "n",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "_",
+          "domain": {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "codomain": {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
     }
   ]
 }

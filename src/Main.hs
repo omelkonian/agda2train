@@ -10,6 +10,7 @@ import System.Console.GetOpt ( OptDescr(..), ArgDescr(..) )
 
 import qualified Data.List as L
 import qualified Data.Set as S
+import qualified Data.HashMap.Strict as HM
 import qualified Data.ByteString.Lazy as BL
 import Data.Aeson ( ToJSON )
 import Data.Aeson.Encode.Pretty
@@ -21,6 +22,7 @@ import Control.DeepSeq ( NFData )
 
 import Agda.Main ( runAgda )
 import Agda.Compiler.Backend hiding (Reduced)
+import Agda.Compiler.Common ( curDefs )
 
 import Agda.Utils.Pretty
 import Agda.Utils.Maybe
@@ -46,7 +48,8 @@ main = do
   withArgs (extraFlags ++ as) $
     runAgda [Backend $ mkBackend train]
 
-mkBackend :: TrainF -> Backend' Options Options [ScopeEntry] () (String, [Sample])
+mkBackend :: TrainF ->
+  Backend' Options Options ([ScopeEntry], [ScopeEntry]) () (String, [Sample])
 mkBackend trainF = Backend'
   { backendName      = "agda2train"
   , backendVersion   = Nothing
@@ -104,12 +107,17 @@ mkBackend trainF = Backend'
                    <> ") ***********************************"
           -- printScope "" 1 ""
           setScope . iInsideScope =<< curIF
+          -- ** public
           NameSpace _ _ ns <- allThingsInScope <$> getCurrentScope
           scopeEntries <- mapMaybeM processScopeEntry (S.toList ns)
+          -- ** private
+          privs <- HM.filterWithKey (\k _ -> k `S.notMember` ns) <$> liftTCM curDefs
+          privScopeEntries <- mapMaybeM processScopeEntry (HM.keys privs)
           report 10 "******************************************************************"
-          return $ Recompile scopeEntries
+          return $ Recompile (scopeEntries, privScopeEntries)
   , compileDef = \ _ _ _ def -> (ppName (defName def) ,) <$> runC (forEachHole trainF def)
-  , postModule = \ opts scopeEntries isMain md samples -> let mn = pp md in
+  , postModule = \ opts (scopeEntries, privScopeEntries) isMain md samples ->
+    let mn = pp md in
     unlessM (skip opts isMain md) $ do
       whenJust (outDir opts) (liftIO . createDirectoryIfMissing True)
       unless (noJson opts) $ liftIO $ do
@@ -118,8 +126,13 @@ mkBackend trainF = Backend'
           (globals, locals') = L.partition isGlobal scopeEntries
           locals = flip map locals' $ \(n :~ l) ->
               n :~ l { holes = Just $ fromJust $ lookup n samples }
-
-          fileData = mn :~ TrainData {scopeGlobal = globals, scopeLocal = locals}
+          plocals = flip map privScopeEntries $ \(n :~ l) ->
+              n :~ l { holes = Just $ fromJust $ lookup n samples }
+          fileData = mn :~ TrainData
+            { scopeGlobal  = globals
+            , scopeLocal   = locals
+            , scopePrivate = plocals
+            }
 
         encodeFile (getOutFn opts mn) fileData
         when (printJson opts) $ do

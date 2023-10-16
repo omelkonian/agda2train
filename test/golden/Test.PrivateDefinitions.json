@@ -201,5 +201,120 @@
       },
       "holes": []
     }
+  ],
+  "scope-private": [
+    {
+      "name": "Test.PrivateDefinitions.X.x<10>",
+      "type": {
+        "pretty": "X → Nat",
+        "tag": "Pi",
+        "name": "r",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Test.PrivateDefinitions.X<6>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        }
+      },
+      "definition": {
+        "pretty": "X.x = x",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "(x : Nat)",
+                "tag": "ScopeReference",
+                "name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "name": "Test.PrivateDefinitions.X.constructor"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "body": {
+              "tag": "DeBruijn",
+              "index": 0
+            }
+          }
+        ]
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.PrivateDefinitions.X.constructor<5>",
+      "type": {
+        "pretty": "(x : Nat) → X",
+        "tag": "Pi",
+        "name": "x",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        },
+        "codomain": {
+          "tag": "ScopeReference",
+          "name": "Test.PrivateDefinitions.X<6>"
+        }
+      },
+      "definition": {
+        "pretty": "X@0",
+        "tag": "Constructor",
+        "reference": "Test.PrivateDefinitions.X",
+        "variant": 0
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.PrivateDefinitions.f<14>",
+      "type": {
+        "pretty": "Nat → Nat → Nat",
+        "tag": "Pi",
+        "name": "_",
+        "domain": {
+          "tag": "ScopeReference",
+          "name": "Agda.Builtin.Nat.Nat<6>"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "_",
+          "domain": {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "codomain": {
+            "tag": "ScopeReference",
+            "name": "Agda.Builtin.Nat.Nat<6>"
+          }
+        }
+      },
+      "definition": {
+        "pretty": "Test.PrivateDefinitions.f = Agda.Builtin.Nat._+_",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [],
+            "patterns": [],
+            "body": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat._+_<14>"
+            }
+          }
+        ]
+      },
+      "holes": []
+    }
   ]
 }
