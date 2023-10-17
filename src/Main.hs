@@ -61,12 +61,14 @@ mkBackend trainF = Backend'
         "Recurse into imports/dependencies."
       , Option ['x'] ["no-json"] (NoArg noJsonOpt)
         "Skip generation of JSON files. (just debug print)"
-      , Option [] ["ignore-existing-json"] (NoArg ignoreExistingJsonOpt)
+      , Option [] ["ignore-existing-json"] (NoArg ignoreJsonOpt)
         "Ignore existing JSON files. (i.e. always overwrite)"
       , Option [] ["print-json"] (NoArg printJsonOpt)
         "Print JSON output. (for debugging)"
-      , Option [] ["no-terms"] (NoArg includeDefinitionsOpt)
+      , Option [] ["no-terms"] (NoArg includeDefsOpt)
         "Do not include definitions of things in scope"
+      , Option [] ["no-privates"] (NoArg includePrivsOpt)
+        "Do not include private definitions"
       , Option ['o'] ["out-dir"] (ReqArg outDirOpt "DIR")
         "Generate data at DIR. (default: project root)"
       ]
@@ -102,7 +104,7 @@ mkBackend trainF = Backend'
 
             return $ Just $ ppName qn :~ ScopeEntry
               { _type      = prender pty :> rty'
-              , definition = boolToMaybe (includeDefinitions opts)
+              , definition = boolToMaybe (includeDefs opts)
                            $ prender pdef :> def'
               , holes = Nothing
               }
@@ -137,7 +139,7 @@ mkBackend trainF = Backend'
           fileData = mn :~ TrainData
             { scopeGlobal  = globals
             , scopeLocal   = locals
-            , scopePrivate = plocals
+            , scopePrivate = boolToMaybe (includePrivs opts) plocals
             }
 
         encodeFile (getOutFn opts mn) fileData
@@ -151,7 +153,7 @@ mkBackend trainF = Backend'
     skip opts@Options{..} isMain md = do
       jsonExists <- liftIO $ doesFileExist (getOutFn opts $ pp md)
       return $ (not recurse && (isMain == NotMain))
-            || (not noJson && jsonExists && not ignoreExistingJson)
+            || (not noJson && jsonExists && not ignoreJson)
 
 -- * Command-line flags
 
@@ -161,33 +163,37 @@ mkBackend trainF = Backend'
 --
 -- ['noJson'] mock run without generating any actual JSON files
 --
--- ['ignoreExistingJson'] compile everything from scratch
+-- ['ignoreJson'] compile everything from scratch
 --
--- ['includeDefinitions'] whether to include definitions in scope, or just their type
+-- ['includeDefs'] whether to include definitions in scope, or just their type
+--
+-- ['includePrivs'] whether to include private definitions as well
 --
 -- (run @agda2train -h/--help@ for a human-readable description of all options)
 data Options = Options
-  { recurse, noJson, ignoreExistingJson, printJson, includeDefinitions :: Bool
+  { recurse, noJson, ignoreJson, printJson, includeDefs, includePrivs :: Bool
   , outDir  :: Maybe FilePath
   } deriving (Generic, NFData)
 
 -- | The default options.
 defaultOptions = Options
-  { recurse            = False
-  , noJson             = False
-  , ignoreExistingJson = False
-  , printJson          = False
-  , includeDefinitions = True
-  , outDir             = Nothing
+  { recurse      = False
+  , noJson       = False
+  , ignoreJson   = False
+  , printJson    = False
+  , includeDefs  = True
+  , includePrivs = True
+  , outDir       = Nothing
   }
 
-recOpt, noJsonOpt, ignoreExistingJsonOpt, printJsonOpt, includeDefinitionsOpt
+recOpt, noJsonOpt, ignoreJsonOpt, printJsonOpt, includeDefsOpt, includePrivsOpt
   :: Monad m => Options -> m Options
-recOpt                opts = return $ opts { recurse            = True }
-noJsonOpt             opts = return $ opts { noJson             = True }
-printJsonOpt          opts = return $ opts { printJson          = True }
-ignoreExistingJsonOpt opts = return $ opts { ignoreExistingJson = True }
-includeDefinitionsOpt opts = return $ opts { includeDefinitions = False }
+recOpt          opts = return $ opts { recurse      = True }
+noJsonOpt       opts = return $ opts { noJson       = True }
+printJsonOpt    opts = return $ opts { printJson    = True }
+ignoreJsonOpt   opts = return $ opts { ignoreJson   = True }
+includeDefsOpt  opts = return $ opts { includeDefs  = False }
+includePrivsOpt opts = return $ opts { includePrivs = False }
 
 outDirOpt :: Monad m => FilePath -> Options -> m Options
 outDirOpt fp opts = return $ opts { outDir = Just fp }

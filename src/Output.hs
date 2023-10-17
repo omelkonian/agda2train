@@ -123,7 +123,7 @@ data TrainData = TrainData
   , scopeLocal   :: [ScopeEntry]
   -- ^ The /local/ scope, containing the types, definitions, and training data
   -- for each of this module's definitions.
-  , scopePrivate :: [ScopeEntry]
+  , scopePrivate :: Maybe [ScopeEntry]
   -- ^ The /private/ scope, containing private definitions not exported to the public,
   -- as well as system-generated definitions stemming from @where@ or @with@.
   } deriving Generic
