@@ -1,12 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
-module ToTrain
-  ( TrainF
-  , train
-  , forEachHole
-  , runC
-  , mkReduced
-  , reportReduced
-  ) where
+-- | This module contains everything related to the generation of the training data.
+module ToTrain where
 
 import Data.Maybe ( isJust )
 import Data.List ( isPrefixOf, isInfixOf, find, nub )
@@ -40,9 +34,11 @@ import Agda.TypeChecking.Pretty ( PrettyTCM )
 
 
 import AgdaInternals ()
-import Output
+import Output hiding ( Definition(..), Clause(..), Term(..), Type(..) )
 
--- ** Extending the typechecking monad to also record/output training samples.
+-- * Wrapper around Agda's typechecking monad 'TCM'
+
+-- | Additionally records/outputs training samples.
 type C = WriterT [Sample] TCM
 
 runC :: C () -> TCM [Sample]
@@ -54,11 +50,14 @@ noop = return ()
 silently :: C a -> C ()
 silently k = void k `catchError` \ _ -> noop
 
+-- * Training data generation
+
 -- | A training function generates training data for each typed sub-term,
 -- with access to the local context via the typechecking monad.
 type TrainF = Type -> Term -> C ()
 
--- | An example training function that just prints the relevant (local) information.
+-- | An example training function that records a 'Output.Sample'
+-- (i.e. context, type, and term) for a given subterm.
 train :: TrainF
 train ty t = do
   let ns = names t
@@ -146,6 +145,7 @@ forEachHole trainF def@Defn{..} = unless (ignoreDef def) $ do
     pre :: Type -> Term -> C Term
     pre ty t = trainF ty t >> return t
 
+-- | Read a list of definitions to skip from @data/defsToSkip.txt@.
 defsToSkip :: [String]
 defsToSkip = lines $ $(embedStringFile "data/defsToSkip.txt")
 
@@ -153,8 +153,9 @@ defsToSkip = lines $ $(embedStringFile "data/defsToSkip.txt")
 names :: Term -> [QName]
 names = nub . namesIn
 
--- ** reduction
+-- * Reduction
 
+-- | The hard limit on how much time can be spent on normalising a single term.
 maxDuration = 2 -- seconds
 
 withTimeout :: TCM a -> TCM (Maybe a)

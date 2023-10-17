@@ -1,4 +1,7 @@
 {-# LANGUAGE FlexibleInstances, MultiParamTypeClasses #-}
+-- | Missing instances for WriterT in Agda's internals.
+--
+-- NB: we are not exporting any definitions, just typeclass instances.
 module AgdaInternals () where
 
 import Data.String

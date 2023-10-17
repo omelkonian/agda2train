@@ -1,16 +1,7 @@
 {-# LANGUAGE FlexibleInstances, FlexibleContexts #-}
-module Output
-  ( Sample(..)
-  , FileData, TrainData(..)
-  , ScopeEntry, ScopeEntry'(..)
-  , Pretty(..), Reduced(..), Named(..)
-  , pattern (:~), pattern (:>)
-  , convert
-  , pp, ppName, ppm, prender, report
-  , unqualify
-  , (\/)
-  )
-  where
+-- | Defines the structure of the training data, as well as how to translate
+-- internal Agda definition to this format.
+module Output where
 
 import Control.Arrow ( second )
 import Control.Applicative ( (<|>) )
@@ -40,26 +31,23 @@ import Agda.TypeChecking.Pretty
 import qualified Agda.TypeChecking.Pretty as P
   hiding (text)
 
--- ** JSON options
-jsonOpts = defaultOptions
-  { omitNothingFields = True
-  , fieldLabelModifier = \case
-      ('_' : s) -> s
-      "scopeGlobal"  -> "scope-global"
-      "scopeLocal"   -> "scope-local"
-      "scopePrivate" -> "scope-private"
-      s -> s
-  }
+-- * Types
 
--- ** types
-
+-- | Name identifiers.
 type Name = String
+-- | DeBruijn indices.
 type DB   = Int
+-- | A head of a λ-application can either be a defined name in the global scope,
+-- or a DeBruijn index into the local context.
 type Head = Either Name DB
 
--- generic constructions
+-- * Generic constructions
 
 infixr 4 :>; pattern x :> y = Pretty {pretty = x, thing = y}
+-- | Bundle a thing with its "pretty" version.
+--
+-- NB: In JSON format, we follow a /shallow/ encoding with "pretty" being
+-- an additional field and "thing" just inlined in the top-level record.
 data Pretty a = Pretty
   { pretty :: String
   , thing  :: a
@@ -76,6 +64,13 @@ instance FromJSON a => FromJSON (Pretty a) where
     <$> v .: "pretty"
     <*> (v .: "thing" <|> parseJSON (Object v))
 
+-- | Bundle a term with (several of) its normalised forms.
+--
+-- We do not repeat identical elements in subsequent evaluations
+-- (in the order simp/red/norm) and some fields may not be populated due to
+-- the evaluation taking to long and leading to a timeout (currently 2 seconds).
+--
+-- NB: Like 'Named', encoded in a /shallow/ JSON.
 data Reduced a = Reduced
   { original   :: a
   , simplified :: Maybe a
@@ -97,6 +92,10 @@ instance FromJSON a => FromJSON (Reduced a) where
     <*> v .:? "normalised"
 
 infixr 4 :~; pattern x :~ y = Named {name = x, item = y}
+
+-- | Bundle a thing with its name.
+--
+-- NB: Like 'Named' and 'Reduced', encoded in a /shallow/ JSON.
 data Named a = Named
   { name :: Name
   , item :: a
@@ -111,34 +110,56 @@ instance FromJSON a => FromJSON (Named a) where
     <$> v .: "name"
     <*> (v .: "item" <|> parseJSON (Object v))
 
--- concrete types (very close to JSON format)
+-- * Concrete types (~ JSON schema)
 
+-- | Data for a file include the filename and its training data.
 type FileData = Named TrainData
+-- | The training data for a module, divided into three parts.
 data TrainData = TrainData
-  { scopeGlobal  :: [ScopeEntry] -- these will not contain any holes
+  { scopeGlobal  :: [ScopeEntry]
+  -- ^ The /global/ scope, giving the types and definitions of all @import@ statements.
+  --
+  -- NB: does not contain any /holes/ for subterms.
   , scopeLocal   :: [ScopeEntry]
+  -- ^ The /local/ scope, containing the types, definitions, and training data
+  -- for each of this module's definitions.
   , scopePrivate :: [ScopeEntry]
+  -- ^ The /private/ scope, containing private definitions not exported to the public,
+  -- as well as system-generated definitions stemming from @where@ or @with@.
   } deriving Generic
 instance ToJSON   TrainData where toJSON    = genericToJSON jsonOpts
 instance FromJSON TrainData where parseJSON = genericParseJSON jsonOpts
 
+-- | Every 'ScopeEntry'' is /named/.
 type ScopeEntry = Named ScopeEntry'
+-- | An entry in the scope: type, definitions, and holes.
 data ScopeEntry' = ScopeEntry
   { _type      :: Pretty (Reduced Type)
+  -- ^ The entry's type.
   , definition :: Maybe (Pretty Definition)
+  -- ^ The actual body of this entry's definition.
   , holes      :: Maybe [Sample]
+  -- ^ Training data for each of the subterms in this entry's 'definition'.
   } deriving (Generic, Show)
 instance ToJSON   ScopeEntry' where toJSON    = genericToJSON    jsonOpts
 instance FromJSON ScopeEntry' where parseJSON = genericParseJSON jsonOpts
 
+-- | The training sample for each sub-hole.
 data Sample = Sample
   { ctx      :: Pretty Telescope
+  -- ^ The current context, as a /binding telescope/.
   , goal     :: Pretty (Reduced Type)
+  -- ^ The current goal, i.e. type of the sub-term.
+  --
+  -- NB: DeBruijn indices here refer to the 'ctx'.
   , term     :: Pretty (Reduced Term)
+  -- ^ The term that successfully fills the current 'goal'.
   , premises :: [Name]
+  -- ^ Definitions used in this "proof", intended to be used for /premise selection/.
   } deriving (Generic, Show, ToJSON, FromJSON)
 
 
+-- | Agda definitions: datatypes, records, functions, postulates and primitives.
 data Definition
   = ADT {variants :: [Type]}
   -- ^ e.g.
@@ -157,27 +178,40 @@ data Definition
   -- f []       = []
   -- f (x ∷ xs) = x ∷ x ∷ xs
   | Postulate {}
+  -- ^ e.g. `postulate pred : ℕ → ℕ`
   | Primitive {}
+  -- ^ e.g. `primitive primShowNat : ℕ → String`
   deriving (Generic, Show, ToJSON, FromJSON)
 
+-- | Function clauses.
 data Clause = Clause
   { _telescope :: Telescope
+  -- ^ the telescope induced by the clause's context and patterns
   , patterns  :: [Pattern]
-  , body      :: Maybe Term -- ^ `Nothing` for absurd clauses
+  -- ^ the actual patterns of this function clause
+  , body      :: Maybe Term
+  -- ^ the right hand side of the clause (@Nothing@ for absurd clauses)
   } deriving (Generic, Show)
 instance ToJSON   Clause where toJSON    = genericToJSON jsonOpts
 instance FromJSON Clause where parseJSON = genericParseJSON jsonOpts
 
+-- | A telescope is a sequence of (named) types, a.k.a. bindings.
 type Telescope = [Named (Pretty Type)]
+-- | We under-approximate patterns as terms,
+-- e.g. losing information about forced patterns.
 type Pattern   = Term
+-- | Types are the same as terms.
 type Type      = Term
 
+-- | The AST of Agda terms.
 data Term
-  = Pi Bool (Named Term) Term -- ^ e.g. `∀ {A : Set}. A → A`
-  | Lam (Named Term)          -- ^ e.g. `λ x. x`
-  | App Head [Term]           -- ^ e.g. `f x (x + x)` or `@0 (λ x. x)`
-  | Lit String | Sort String | Level String -- ^ e.g. Set/42/"sth",0ℓ,...
-  | UnsolvedMeta
+  = Pi Bool (Named Term) Term -- ^ e.g. @∀ {A : Set}. A → A@
+  | Lam (Named Term)          -- ^ e.g. @λ x. x@
+  | App Head [Term]           -- ^ e.g. @f x (x + x)@ or @@0 (λ x. x)@
+  | Lit String   -- ^ e.g. @42@ or @"something"@
+  | Sort String  -- ^ e.g. @Set@
+  | Level String -- ^ e.g. @0ℓ@
+  | UnsolvedMeta -- ^ i.e. @{!!}@
   deriving (Generic, Show, FromJSON)
 
 instance ToJSON Term where
@@ -208,19 +242,11 @@ instance ToJSON Term where
     UnsolvedMeta -> object [tag "UnsolvedMetavariable"]
     where tag s = "tag" .= JSON.String s
 
-testJSON :: IO ()
-testJSON = do
-  let ty = Pi True ("A" :~ Sort "Set")
-         $ Pi False ("_" :~ App (Left "A") [])
-         $ App (Left "A") []
-      t  = Lam ("a" :~ App (Right 0) [])
-  encodeFile "type.json" ty >> encodeFile "term.json" t
-  Just ty <- decodeFileStrict "type.json" :: IO (Maybe Term)
-  putStrLn $ "ty: " <> show ty
-  Just t <- decodeFileStrict "term.json" :: IO (Maybe Term)
-  putStrLn $ "t: " <> show t
+-- * Conversion from Agda's internal syntax
 
--- ** conversion from Agda's internal syntax
+-- | Converting between two types @a@ and @b@ under Agda's typechecking monad.
+--
+-- NB: 'go' is only used internally to de-clutter the recursive calls.
 class (~>) a b | a -> b where
   convert, go :: a -> TCM b
   convert = go
@@ -320,7 +346,7 @@ instance A.Elim ~> Term where
     (A.Proj _ qn)    -> return $ App (Left $ ppName qn) []
     (A.IApply _ _ x) -> go x
 
--- ** utilities
+-- * Utilities
 
 pp :: P.Pretty a => a -> String
 pp = P.prettyShow
@@ -359,6 +385,19 @@ isNotCubical A.Clause{..}
   = pp (qnameModule qn) /= "Agda.Primitive.Cubical"
   | otherwise
   = True
+
+-- | Configure JSON to omit empty (optional) fields and switch
+-- from camelCase to kebab-case.
+jsonOpts :: JSON.Options
+jsonOpts = defaultOptions
+  { omitNothingFields = True
+  , fieldLabelModifier = \case
+      ('_' : s) -> s
+      "scopeGlobal"  -> "scope-global"
+      "scopeLocal"   -> "scope-local"
+      "scopePrivate" -> "scope-private"
+      s -> s
+  }
 
 instance P.PrettyTCM A.Definition where
   prettyTCM d = go (theDef d)

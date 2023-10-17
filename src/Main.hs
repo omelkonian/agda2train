@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeApplications #-}
+-- | Main driver for the @agda2train@ executable.
 module Main where
 
 import GHC.Generics
@@ -40,14 +41,15 @@ import Agda.Compiler.Common ( curIF )
 import ToTrain
 import Output
 
+-- | The main entrypoint for the @agda2train@ executable.
 main :: IO ()
 main = do
   as <- getArgs
-  let extraFlags = []
-  -- let extraFlags = ["--no-projection-like"]
+  let extraFlags = [] -- ["--no-projection-like"]
   withArgs (extraFlags ++ as) $
     runAgda [Backend $ mkBackend train]
 
+-- | Make an Agda backend from a given training function (c.f. 'ToTrain.TrainF').
 mkBackend :: TrainF ->
   Backend' Options Options ([ScopeEntry], [ScopeEntry]) () (String, [Sample])
 mkBackend trainF = Backend'
@@ -151,13 +153,25 @@ mkBackend trainF = Backend'
       return $ (not recurse && (isMain == NotMain))
             || (not noJson && jsonExists && not ignoreExistingJson)
 
--- ** command-line flags
+-- * Command-line flags
 
+-- | Available options to configure how @agda2train@ generates training data:
+--
+-- ['recurse'] whether to recursively generate data from all transitive dependencies
+--
+-- ['noJson'] mock run without generating any actual JSON files
+--
+-- ['ignoreExistingJson'] compile everything from scratch
+--
+-- ['includeDefinitions'] whether to include definitions in scope, or just their type
+--
+-- (run @agda2train -h/--help@ for a human-readable description of all options)
 data Options = Options
   { recurse, noJson, ignoreExistingJson, printJson, includeDefinitions :: Bool
   , outDir  :: Maybe FilePath
   } deriving (Generic, NFData)
 
+-- | The default options.
 defaultOptions = Options
   { recurse            = False
   , noJson             = False
@@ -186,8 +200,9 @@ getOutDir opts = case outDir opts of
 getOutFn :: Options -> String -> FilePath
 getOutFn opts mn = getOutDir opts </> mn <> ".json"
 
--- ** JSON encoding
+-- * JSON encoding
 
+-- | Uses "Aeson.Pretty" to order the JSON fields.
 encode :: ToJSON a => a -> BL.ByteString
 encode = encodePretty' $ defConfig
   { confIndent = Spaces 2
