@@ -2,7 +2,7 @@ name: CI
 
 # Trigger the workflow on push or pull request, but only for the master branch
 on:
-  schedule: [{cron: '0 0 * * *'}]
+  # schedule: [{cron: '0 0 * * *'}]
   pull_request:
   push:
     branches: [master]
