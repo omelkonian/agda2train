@@ -1,21 +1,32 @@
 cabal-version:      2.4
 name:               agda2train
-version:            0.1.0.0
-synopsis:           Agda backend to generate training data for machine learning.
-description:        -
+version:            0.0.2.0
+synopsis:           Agda backend to generate training data for machine learning purposes.
+description:
+  Compiles Agda modules to JSON files, containing information about
+  the imported scope of each module, its definitions and information about each
+  sub-term appearing in the code (i.e. context, goal type, term).
 
--- A URL where users can report bugs.
--- bug-reports:
-
--- The license under which the package is released.
--- license:
+category:           Agda, machine learning
 author:             Orestis Melkonian
 maintainer:         melkon.or@gmail.com
+stability:          experimental
+homepage:           https://github.com/omelkonian/agda2train/
+bug-reports:        https://github.com/omelkonian/agda2train/issues
+license:            BSD-3-Clause
+license-file:       LICENSE
+copyright:          (c) 2023 Orestis Melkonian
 
--- A copyright notice.
--- copyright:
--- category:
-extra-source-files: data/defsToSkip.txt
+extra-source-files:
+    data/defsToSkip.txt
+    README.md
+    LICENSE
+
+source-repository head
+    type: git
+    location: git://github.com/omelkonian/agda2train.git
+
+
 
 executable agda2train
     main-is:             Main.hs
