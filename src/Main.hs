@@ -169,7 +169,7 @@ mkBackend trainF = Backend'
 --
 -- ['includePrivs'] whether to include private definitions as well
 --
--- (run @agda2train -h/--help@ for a human-readable description of all options)
+-- (run @agda2train --help@ for a human-readable description of all options)
 data Options = Options
   { recurse, noJson, ignoreJson, printJson, includeDefs, includePrivs :: Bool
   , outDir  :: Maybe FilePath

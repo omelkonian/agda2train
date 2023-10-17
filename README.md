@@ -13,6 +13,20 @@ $ cabal install agda2train
 $ agda2train SomeFile.agda
 ```
 
+Run `agda2train --help` to see the available flags; apart from the standard flags
+inherited by the `agda` executable we get the following backend-specific options:
+```bash
+$ agda2train --help
+...
+agda2train backend options
+  -r      --recurse               Recurse into imports/dependencies.
+  -x      --no-json               Skip generation of JSON files. (just debug print)
+          --ignore-existing-json  Ignore existing JSON files. (i.e. always overwrite)
+          --print-json            Print JSON output. (for debugging)
+          --no-terms              Do not include definitions of things in scope
+  -o DIR  --out-dir=DIR           Generate data at DIR. (default: project root)
+```
+
 Alternatively, assuming a working Haskell installation (`cabal` available),
 one can clone this repo and use the provided Makefile to build the package locally,
 as well as run our test suite:
