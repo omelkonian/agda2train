@@ -8,8 +8,9 @@ let
    myNix = import nixpkgs_source {inherit overlays; inherit config;};
 in
 with myNix.pkgs; 
-let hp92 = haskell.packages.ghc943;
-    hp = hp92;
+let hp94 = haskell.packages.ghc943;
+    hp92 = haskell.packages.ghc925;
+    hp = hp94;
     ghc = hp.ghcWithPackages (ps: with ps; ([
       cabal-install
       Agda
@@ -17,6 +18,8 @@ let hp92 = haskell.packages.ghc943;
       pretty
       containers
       aeson
+      aeson-pretty
+      file-embed
       bytestring
       mtl
       directory
