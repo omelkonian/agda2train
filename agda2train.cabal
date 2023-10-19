@@ -63,4 +63,4 @@ executable agda2train
       , directory >=1.2.6.2 && <1.4
       , filepath >=1.4.1.0 && <1.5
       , unordered-containers >=0.2.9.0 && <0.3
-      , aeson-pretty == 0.8.10
+      , aeson-pretty >= 0.8.9 && < 0.9
