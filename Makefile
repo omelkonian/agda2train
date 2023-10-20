@@ -40,7 +40,6 @@ allTests:
 
 stdlib:
 	cabal run agda2train -- -r -v agda2train:10 \
-	  +RTS -H3G -M3G -RTS \
 		-o$(STDLIB)/json/ -i $(STDLIB) -i $(STDLIB)/src/ $(STDLIB)/Everything.agda
 	zip -j data/stdlib.zip $(STDLIB)/*.json
 
