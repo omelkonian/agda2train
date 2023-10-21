@@ -4,7 +4,7 @@
 module Output where
 
 import Control.Arrow ( second )
-import Control.Applicative ( (<|>) )
+import Control.Applicative ( (<|>), liftA2 )
 import GHC.Generics ( Generic )
 import Data.List ( notElem, elemIndex )
 import Data.String ( fromString )
@@ -126,7 +126,7 @@ data TrainData = TrainData
   , scopePrivate :: Maybe [ScopeEntry]
   -- ^ The /private/ scope, containing private definitions not exported to the public,
   -- as well as system-generated definitions stemming from @where@ or @with@.
-  } deriving Generic
+  } deriving (Generic, Show)
 instance ToJSON   TrainData where toJSON    = genericToJSON jsonOpts
 instance FromJSON TrainData where parseJSON = genericParseJSON jsonOpts
 
@@ -157,7 +157,6 @@ data Sample = Sample
   , premises :: [Name]
   -- ^ Definitions used in this "proof", intended to be used for /premise selection/.
   } deriving (Generic, Show, ToJSON, FromJSON)
-
 
 -- | Agda definitions: datatypes, records, functions, postulates and primitives.
 data Definition
@@ -212,7 +211,19 @@ data Term
   | Sort String  -- ^ e.g. @Set@
   | Level String -- ^ e.g. @0ℓ@
   | UnsolvedMeta -- ^ i.e. @{!!}@
-  deriving (Generic, Show, FromJSON)
+  deriving (Generic, Show)
+
+instance {-# OVERLAPPING #-} ToJSON Head where
+  toJSON = object . \case
+    (Left n)  -> [tag "ScopeReference", "name"  .= toJSON n]
+    (Right i) -> [tag "DeBruijn",       "index" .= toJSON i]
+    where tag s = "tag" .= JSON.String s
+
+instance {-# OVERLAPPING #-} FromJSON Head where
+  parseJSON = withObject "Head" $ \o -> o .: "tag" >>= \case
+    String "ScopeReference" -> Left  <$> o .: "name"
+    String "DeBruijn"       -> Right <$> o .: "index"
+    tag -> fail $ "Cannot parse Head: unexpected \"tag\" field " <> show tag
 
 instance ToJSON Term where
   toJSON = \case
@@ -227,20 +238,31 @@ instance ToJSON Term where
       , "abstraction" .= toJSON n
       , "body"        .= toJSON f
       ]
-    (App f xs) ->
+    (App hd xs) -> let hd' = toJSON hd in
       if null xs then
-        refHead
+        hd'
       else
-        object [tag "Application", "head" .= refHead, "arguments" .= toJSON xs]
-      where
-        refHead = object $ case f of
-          (Left n)  -> [tag "ScopeReference", "name"  .= toJSON n]
-          (Right i) -> [tag "DeBruijn",       "index" .= toJSON i]
+        object [tag "Application", "head" .= hd', "arguments" .= toJSON xs]
     (Lit s)   -> object [tag "Literal", "literal" .= toJSON s]
     (Sort s)  -> object [tag "Sort",    "sort"   .= toJSON s]
     (Level s) -> object [tag "Level",   "level"  .= toJSON s]
     UnsolvedMeta -> object [tag "UnsolvedMetavariable"]
     where tag s = "tag" .= JSON.String s
+
+instance FromJSON Term where
+  parseJSON = withObject "Term" $ \o -> o .: "tag" >>= \case
+    String "Pi" -> Pi undefined <$> liftA2 (:~) (o .: "name") (o .: "domain")
+                                <*> o .: "codomain"
+      -- T0D0: also serialise `isDep`
+    String "Lambda" -> Lam <$> liftA2 (:~) (o .: "abstraction") (o .: "body")
+    String "Application"    -> App <$> o .: "head" <*> o .: "arguments"
+    String "ScopeReference" -> flip App [] . Left  <$> o .: "name"
+    String "DeBruijn"       -> flip App [] . Right <$> o .: "index"
+    String "Literal"  -> Lit   <$> o .: "literal"
+    String "Sort"     -> Sort  <$> o .: "sort"
+    String "Level"    -> Level <$> o .: "level"
+    String "UnsolvedMetavariable" -> pure UnsolvedMeta
+    tag -> fail $ "Cannot parse Term: unexpected \"tag\" field " <> show tag
 
 -- * Conversion from Agda's internal syntax
 
