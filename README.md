@@ -1,6 +1,6 @@
 agda2train: An Agda backend to generate training data for machine learning
 ===========================================================================
-[![CI](https://github.com/omelkonian/agda2train/workflows/CI/badge.svg)](https://github.com/omelkonian/agda2train/actions) [![Hackage](https://repology.org/badge/version-for-repo/hackage/haskell:agda2train.svg)](http://hackage.haskell.org/package/agda2train)
+[![CI](https://github.com/omelkonian/agda2train/workflows/CI/badge.svg)](https://github.com/omelkonian/agda2train/actions) [![Hackage](https://repology.org/badge/version-for-repo/hackage/haskell:agda2train.svg)](http://hackage.haskell.org/package/agda2train) [![Haddock](https://img.shields.io/static/v1?label=Documentation&message=Available&color=success)](http://hackage.haskell.org/package/agda2train/docs)
 
 This is work in progress and a neural network trained on these data to provide
 *premise selection* is under way.
