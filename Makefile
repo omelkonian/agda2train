@@ -53,3 +53,9 @@ typetopology:
 		-o$(TYPETOP)/json/ -i $(TYPETOP)/source/ $(TYPETOP)/source/index.lagda
 	zip -j data/typetopology.zip $(TYPETOP)/*.json
 
+	  # +RTS -H3G -M3G -RTS \
+   # --no-privates \
+
+testInfer:
+	cabal run agda2train -- -r -v agda2train:10 \
+	  -oinfer-test/json/ -i infer-test/ infer-test/All.agda
