@@ -167,7 +167,7 @@ withTimeout k = getTC >>= \ s -> liftIO $
     (pure . Just)
 
 mkReduced ::
-  ( MonadFail m, MonadTCM m, PrettyTCM a
+  ( MonadFail m, MonadTCM m, PrettyTCM a -- , MonadReduce m
   , Simplify a, Reduce a, Normalise a, Eq a
   ) => a -> m (Reduced a)
 mkReduced t = do
@@ -177,7 +177,8 @@ mkReduced t = do
   return $ Reduced {original = t, ..}
   where
     compressList :: Eq a => [Maybe a] -> [Maybe a]
-    compressList xs = find ((`notElem` xs) . Just) <$> xs
+    compressList []        = []
+    compressList (mt : ms) = mt : compressList (find ((/= mt) . Just) <$> ms)
 
 reportReduced :: (MonadTCM m, PrettyTCM a) => Reduced a -> m ()
 reportReduced Reduced{..} = do

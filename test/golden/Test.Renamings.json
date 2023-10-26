@@ -81,8 +81,14 @@
           },
           "term": {
             "pretty": "zero",
-            "tag": "ScopeReference",
-            "name": "Agda.Builtin.Nat.Nat.zero<8>"
+            "original": {
+              "tag": "ScopeReference",
+              "name": "Agda.Builtin.Nat.Nat.zero<8>"
+            },
+            "reduced": {
+              "tag": "Literal",
+              "literal": "0"
+            }
           },
           "premises": [
             "Agda.Builtin.Nat.Nat.zero<8>"

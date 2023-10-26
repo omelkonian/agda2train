@@ -482,17 +482,50 @@
           },
           "term": {
             "pretty": "mk n",
-            "tag": "Application",
-            "head": {
-              "tag": "ScopeReference",
-              "name": "Test.OverloadedConstructors.mk<26>"
-            },
-            "arguments": [
-              {
+            "original": {
+              "tag": "Application",
+              "head": {
                 "tag": "ScopeReference",
-                "name": "Test.OverloadedConstructors.n<10>"
-              }
-            ]
+                "name": "Test.OverloadedConstructors.mk<26>"
+              },
+              "arguments": [
+                {
+                  "tag": "ScopeReference",
+                  "name": "Test.OverloadedConstructors.n<10>"
+                }
+              ]
+            },
+            "normalised": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.OverloadedConstructors.mk<26>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.OverloadedConstructors.Nat.S_<8>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "Application",
+                      "head": {
+                        "tag": "ScopeReference",
+                        "name": "Test.OverloadedConstructors.Nat.S_<8>"
+                      },
+                      "arguments": [
+                        {
+                          "tag": "ScopeReference",
+                          "name": "Test.OverloadedConstructors.Nat.O<6>"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
           },
           "premises": [
             "Test.OverloadedConstructors.mk<26>",
@@ -511,8 +544,54 @@
           },
           "term": {
             "pretty": "n",
-            "tag": "ScopeReference",
-            "name": "Test.OverloadedConstructors.n<10>"
+            "original": {
+              "tag": "ScopeReference",
+              "name": "Test.OverloadedConstructors.n<10>"
+            },
+            "reduced": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.OverloadedConstructors.Nat.S_<8>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.OverloadedConstructors.Nat.S_<8>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "ScopeReference",
+                      "name": "Test.OverloadedConstructors.Nat.O<6>"
+                    }
+                  ]
+                }
+              ]
+            },
+            "normalised": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.OverloadedConstructors.Nat.S_<8>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.OverloadedConstructors.Nat.S_<8>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "ScopeReference",
+                      "name": "Test.OverloadedConstructors.Nat.O<6>"
+                    }
+                  ]
+                }
+              ]
+            }
           },
           "premises": [
             "Test.OverloadedConstructors.n<10>"
@@ -606,17 +685,50 @@
           },
           "term": {
             "pretty": "mk 𝕟",
-            "tag": "Application",
-            "head": {
-              "tag": "ScopeReference",
-              "name": "Test.OverloadedConstructors.mk<36>"
-            },
-            "arguments": [
-              {
+            "original": {
+              "tag": "Application",
+              "head": {
                 "tag": "ScopeReference",
-                "name": "Test.OverloadedConstructors.𝕟<18>"
-              }
-            ]
+                "name": "Test.OverloadedConstructors.mk<36>"
+              },
+              "arguments": [
+                {
+                  "tag": "ScopeReference",
+                  "name": "Test.OverloadedConstructors.𝕟<18>"
+                }
+              ]
+            },
+            "normalised": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.OverloadedConstructors.mk<36>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.OverloadedConstructors.ℕ.S_<16>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "Application",
+                      "head": {
+                        "tag": "ScopeReference",
+                        "name": "Test.OverloadedConstructors.ℕ.S_<16>"
+                      },
+                      "arguments": [
+                        {
+                          "tag": "ScopeReference",
+                          "name": "Test.OverloadedConstructors.ℕ.O<14>"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
           },
           "premises": [
             "Test.OverloadedConstructors.mk<36>",
@@ -635,8 +747,54 @@
           },
           "term": {
             "pretty": "𝕟",
-            "tag": "ScopeReference",
-            "name": "Test.OverloadedConstructors.𝕟<18>"
+            "original": {
+              "tag": "ScopeReference",
+              "name": "Test.OverloadedConstructors.𝕟<18>"
+            },
+            "reduced": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.OverloadedConstructors.ℕ.S_<16>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.OverloadedConstructors.ℕ.S_<16>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "ScopeReference",
+                      "name": "Test.OverloadedConstructors.ℕ.O<14>"
+                    }
+                  ]
+                }
+              ]
+            },
+            "normalised": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "name": "Test.OverloadedConstructors.ℕ.S_<16>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "name": "Test.OverloadedConstructors.ℕ.S_<16>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "ScopeReference",
+                      "name": "Test.OverloadedConstructors.ℕ.O<14>"
+                    }
+                  ]
+                }
+              ]
+            }
           },
           "premises": [
             "Test.OverloadedConstructors.𝕟<18>"
