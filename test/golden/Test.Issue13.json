@@ -1,0 +1,1407 @@
+{
+  "name": "Test.Issue13",
+  "scope-global": [],
+  "scope-local": [
+    {
+      "name": "Test.Issue13._∘_<10>",
+      "type": {
+        "pretty": "{B C A : Set} → (B → C) → (A → B) → A → C",
+        "tag": "Pi",
+        "bound-name": "B",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "bound-name": "C",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Pi",
+            "bound-name": "A",
+            "domain": {
+              "tag": "Sort",
+              "sort": "Set"
+            },
+            "codomain": {
+              "tag": "Pi",
+              "bound-name": "_",
+              "domain": {
+                "tag": "Pi",
+                "bound-name": "_",
+                "domain": {
+                  "tag": "DeBruijn",
+                  "index": 2
+                },
+                "codomain": {
+                  "tag": "DeBruijn",
+                  "index": 1
+                }
+              },
+              "codomain": {
+                "tag": "Pi",
+                "bound-name": "_",
+                "domain": {
+                  "tag": "Pi",
+                  "bound-name": "_",
+                  "domain": {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  },
+                  "codomain": {
+                    "tag": "DeBruijn",
+                    "index": 2
+                  }
+                },
+                "codomain": {
+                  "tag": "Pi",
+                  "bound-name": "_",
+                  "domain": {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  },
+                  "codomain": {
+                    "tag": "DeBruijn",
+                    "index": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Issue13._×_<12>",
+      "type": {
+        "pretty": "Set → Set → Set",
+        "tag": "Pi",
+        "bound-name": "_",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "bound-name": "_",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Sort",
+            "sort": "Set"
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Issue13._⊢>_<14>",
+      "type": {
+        "pretty": "Set → Set → Set",
+        "tag": "Pi",
+        "bound-name": "_",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "bound-name": "_",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Sort",
+            "sort": "Set"
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Issue13.List<16>",
+      "type": {
+        "pretty": "Set → Set",
+        "tag": "Pi",
+        "bound-name": "_",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Sort",
+          "sort": "Set"
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Issue13.Map<18>",
+      "type": {
+        "pretty": "Set → Set",
+        "tag": "Pi",
+        "bound-name": "_",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Sort",
+          "sort": "Set"
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Issue13.K<20>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Issue13.V<22>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Issue13.fromList<34>",
+      "type": {
+        "pretty": "List (K × V) → Map V",
+        "tag": "Pi",
+        "bound-name": "_",
+        "domain": {
+          "tag": "Application",
+          "head": {
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.List<16>"
+          },
+          "arguments": [
+            {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13._×_<12>"
+              },
+              "arguments": [
+                {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.K<20>"
+                },
+                {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.V<22>"
+                }
+              ]
+            }
+          ]
+        },
+        "codomain": {
+          "tag": "Application",
+          "head": {
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.Map<18>"
+          },
+          "arguments": [
+            {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13.V<22>"
+            }
+          ]
+        }
+      },
+      "definition": {
+        "pretty": "fromList = AVL.fromList ∘ List.map AVL.fromPair",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [],
+            "patterns": [],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13._∘_<10>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13.List<16>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "Application",
+                      "head": {
+                        "tag": "ScopeReference",
+                        "ref-name": "Test.Issue13._⊢>_<14>"
+                      },
+                      "arguments": [
+                        {
+                          "tag": "ScopeReference",
+                          "ref-name": "Test.Issue13.K<20>"
+                        },
+                        {
+                          "tag": "ScopeReference",
+                          "ref-name": "Test.Issue13.V<22>"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13.Map<18>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "ScopeReference",
+                      "ref-name": "Test.Issue13.V<22>"
+                    }
+                  ]
+                },
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13.List<16>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "Application",
+                      "head": {
+                        "tag": "ScopeReference",
+                        "ref-name": "Test.Issue13._×_<12>"
+                      },
+                      "arguments": [
+                        {
+                          "tag": "ScopeReference",
+                          "ref-name": "Test.Issue13.K<20>"
+                        },
+                        {
+                          "tag": "ScopeReference",
+                          "ref-name": "Test.Issue13.V<22>"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.AVL.fromList<30>"
+                },
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13.List.map<26>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "Application",
+                      "head": {
+                        "tag": "ScopeReference",
+                        "ref-name": "Test.Issue13._×_<12>"
+                      },
+                      "arguments": [
+                        {
+                          "tag": "ScopeReference",
+                          "ref-name": "Test.Issue13.K<20>"
+                        },
+                        {
+                          "tag": "ScopeReference",
+                          "ref-name": "Test.Issue13.V<22>"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "Application",
+                      "head": {
+                        "tag": "ScopeReference",
+                        "ref-name": "Test.Issue13._⊢>_<14>"
+                      },
+                      "arguments": [
+                        {
+                          "tag": "ScopeReference",
+                          "ref-name": "Test.Issue13.K<20>"
+                        },
+                        {
+                          "tag": "ScopeReference",
+                          "ref-name": "Test.Issue13.V<22>"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "ScopeReference",
+                      "ref-name": "Test.Issue13.AVL.fromPair<32>"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "List (K × V) → Map V",
+            "tag": "Pi",
+            "bound-name": "_",
+            "domain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.List<16>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13._×_<12>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "ScopeReference",
+                      "ref-name": "Test.Issue13.K<20>"
+                    },
+                    {
+                      "tag": "ScopeReference",
+                      "ref-name": "Test.Issue13.V<22>"
+                    }
+                  ]
+                }
+              ]
+            },
+            "codomain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.Map<18>"
+              },
+              "arguments": [
+                {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.V<22>"
+                }
+              ]
+            }
+          },
+          "term": {
+            "pretty": "AVL.fromList ∘ List.map AVL.fromPair",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13._∘_<10>"
+            },
+            "arguments": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.List<16>"
+                },
+                "arguments": [
+                  {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "ref-name": "Test.Issue13._⊢>_<14>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "ScopeReference",
+                        "ref-name": "Test.Issue13.K<20>"
+                      },
+                      {
+                        "tag": "ScopeReference",
+                        "ref-name": "Test.Issue13.V<22>"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.Map<18>"
+                },
+                "arguments": [
+                  {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13.V<22>"
+                  }
+                ]
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.List<16>"
+                },
+                "arguments": [
+                  {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "ref-name": "Test.Issue13._×_<12>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "ScopeReference",
+                        "ref-name": "Test.Issue13.K<20>"
+                      },
+                      {
+                        "tag": "ScopeReference",
+                        "ref-name": "Test.Issue13.V<22>"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.AVL.fromList<30>"
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.List.map<26>"
+                },
+                "arguments": [
+                  {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "ref-name": "Test.Issue13._×_<12>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "ScopeReference",
+                        "ref-name": "Test.Issue13.K<20>"
+                      },
+                      {
+                        "tag": "ScopeReference",
+                        "ref-name": "Test.Issue13.V<22>"
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "Application",
+                    "head": {
+                      "tag": "ScopeReference",
+                      "ref-name": "Test.Issue13._⊢>_<14>"
+                    },
+                    "arguments": [
+                      {
+                        "tag": "ScopeReference",
+                        "ref-name": "Test.Issue13.K<20>"
+                      },
+                      {
+                        "tag": "ScopeReference",
+                        "ref-name": "Test.Issue13.V<22>"
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13.AVL.fromPair<32>"
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Test.Issue13._∘_<10>",
+            "Test.Issue13.List<16>",
+            "Test.Issue13._⊢>_<14>",
+            "Test.Issue13.K<20>",
+            "Test.Issue13.V<22>",
+            "Test.Issue13.Map<18>",
+            "Test.Issue13._×_<12>",
+            "Test.Issue13.AVL.fromList<30>",
+            "Test.Issue13.List.map<26>",
+            "Test.Issue13.AVL.fromPair<32>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "List (K ⊢> V)",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13.List<16>"
+            },
+            "arguments": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13._⊢>_<14>"
+                },
+                "arguments": [
+                  {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13.K<20>"
+                  },
+                  {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13.V<22>"
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Test.Issue13.List<16>",
+            "Test.Issue13._⊢>_<14>",
+            "Test.Issue13.K<20>",
+            "Test.Issue13.V<22>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "K ⊢> V",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13._⊢>_<14>"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.K<20>"
+              },
+              {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.V<22>"
+              }
+            ]
+          },
+          "premises": [
+            "Test.Issue13._⊢>_<14>",
+            "Test.Issue13.K<20>",
+            "Test.Issue13.V<22>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "K",
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.K<20>"
+          },
+          "premises": [
+            "Test.Issue13.K<20>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "V",
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.V<22>"
+          },
+          "premises": [
+            "Test.Issue13.V<22>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "Map V",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13.Map<18>"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.V<22>"
+              }
+            ]
+          },
+          "premises": [
+            "Test.Issue13.Map<18>",
+            "Test.Issue13.V<22>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "V",
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.V<22>"
+          },
+          "premises": [
+            "Test.Issue13.V<22>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "List (K × V)",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13.List<16>"
+            },
+            "arguments": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13._×_<12>"
+                },
+                "arguments": [
+                  {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13.K<20>"
+                  },
+                  {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13.V<22>"
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Test.Issue13.List<16>",
+            "Test.Issue13._×_<12>",
+            "Test.Issue13.K<20>",
+            "Test.Issue13.V<22>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "K × V",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13._×_<12>"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.K<20>"
+              },
+              {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.V<22>"
+              }
+            ]
+          },
+          "premises": [
+            "Test.Issue13._×_<12>",
+            "Test.Issue13.K<20>",
+            "Test.Issue13.V<22>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "K",
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.K<20>"
+          },
+          "premises": [
+            "Test.Issue13.K<20>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "V",
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.V<22>"
+          },
+          "premises": [
+            "Test.Issue13.V<22>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "List (K ⊢> V) → Map V",
+            "tag": "Pi",
+            "bound-name": "_",
+            "domain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.List<16>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13._⊢>_<14>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "ScopeReference",
+                      "ref-name": "Test.Issue13.K<20>"
+                    },
+                    {
+                      "tag": "ScopeReference",
+                      "ref-name": "Test.Issue13.V<22>"
+                    }
+                  ]
+                }
+              ]
+            },
+            "codomain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.Map<18>"
+              },
+              "arguments": [
+                {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.V<22>"
+                }
+              ]
+            }
+          },
+          "term": {
+            "pretty": "AVL.fromList",
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.AVL.fromList<30>"
+          },
+          "premises": [
+            "Test.Issue13.AVL.fromList<30>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "List (K × V) → List (K ⊢> V)",
+            "tag": "Pi",
+            "bound-name": "_",
+            "domain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.List<16>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13._×_<12>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "ScopeReference",
+                      "ref-name": "Test.Issue13.K<20>"
+                    },
+                    {
+                      "tag": "ScopeReference",
+                      "ref-name": "Test.Issue13.V<22>"
+                    }
+                  ]
+                }
+              ]
+            },
+            "codomain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.List<16>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13._⊢>_<14>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "ScopeReference",
+                      "ref-name": "Test.Issue13.K<20>"
+                    },
+                    {
+                      "tag": "ScopeReference",
+                      "ref-name": "Test.Issue13.V<22>"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "term": {
+            "pretty": "List.map AVL.fromPair",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13.List.map<26>"
+            },
+            "arguments": [
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13._×_<12>"
+                },
+                "arguments": [
+                  {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13.K<20>"
+                  },
+                  {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13.V<22>"
+                  }
+                ]
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13._⊢>_<14>"
+                },
+                "arguments": [
+                  {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13.K<20>"
+                  },
+                  {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.Issue13.V<22>"
+                  }
+                ]
+              },
+              {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.AVL.fromPair<32>"
+              }
+            ]
+          },
+          "premises": [
+            "Test.Issue13.List.map<26>",
+            "Test.Issue13._×_<12>",
+            "Test.Issue13.K<20>",
+            "Test.Issue13.V<22>",
+            "Test.Issue13._⊢>_<14>",
+            "Test.Issue13.AVL.fromPair<32>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "K × V",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13._×_<12>"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.K<20>"
+              },
+              {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.V<22>"
+              }
+            ]
+          },
+          "premises": [
+            "Test.Issue13._×_<12>",
+            "Test.Issue13.K<20>",
+            "Test.Issue13.V<22>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "K",
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.K<20>"
+          },
+          "premises": [
+            "Test.Issue13.K<20>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "V",
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.V<22>"
+          },
+          "premises": [
+            "Test.Issue13.V<22>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "K ⊢> V",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13._⊢>_<14>"
+            },
+            "arguments": [
+              {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.K<20>"
+              },
+              {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13.V<22>"
+              }
+            ]
+          },
+          "premises": [
+            "Test.Issue13._⊢>_<14>",
+            "Test.Issue13.K<20>",
+            "Test.Issue13.V<22>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "K",
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.K<20>"
+          },
+          "premises": [
+            "Test.Issue13.K<20>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Set",
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "term": {
+            "pretty": "V",
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.V<22>"
+          },
+          "premises": [
+            "Test.Issue13.V<22>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "K × V → K ⊢> V",
+            "tag": "Pi",
+            "bound-name": "_",
+            "domain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13._×_<12>"
+              },
+              "arguments": [
+                {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.K<20>"
+                },
+                {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.V<22>"
+                }
+              ]
+            },
+            "codomain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13._⊢>_<14>"
+              },
+              "arguments": [
+                {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.K<20>"
+                },
+                {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.V<22>"
+                }
+              ]
+            }
+          },
+          "term": {
+            "pretty": "AVL.fromPair",
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.AVL.fromPair<32>"
+          },
+          "premises": [
+            "Test.Issue13.AVL.fromPair<32>"
+          ]
+        }
+      ]
+    }
+  ],
+  "scope-private": [
+    {
+      "name": "Test.Issue13.List.map<26>",
+      "type": {
+        "pretty": "{A B : Set} → (A → B) → List A → List B",
+        "tag": "Pi",
+        "bound-name": "A",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "bound-name": "B",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Pi",
+            "bound-name": "_",
+            "domain": {
+              "tag": "Pi",
+              "bound-name": "_",
+              "domain": {
+                "tag": "DeBruijn",
+                "index": 1
+              },
+              "codomain": {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            },
+            "codomain": {
+              "tag": "Pi",
+              "bound-name": "_",
+              "domain": {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.List<16>"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 1
+                  }
+                ]
+              },
+              "codomain": {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.List<16>"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Issue13.AVL.fromList<30>",
+      "type": {
+        "pretty": "List (K ⊢> V) → Map V",
+        "tag": "Pi",
+        "bound-name": "_",
+        "domain": {
+          "tag": "Application",
+          "head": {
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.List<16>"
+          },
+          "arguments": [
+            {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.Issue13._⊢>_<14>"
+              },
+              "arguments": [
+                {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.K<20>"
+                },
+                {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.Issue13.V<22>"
+                }
+              ]
+            }
+          ]
+        },
+        "codomain": {
+          "tag": "Application",
+          "head": {
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13.Map<18>"
+          },
+          "arguments": [
+            {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13.V<22>"
+            }
+          ]
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.Issue13.AVL.fromPair<32>",
+      "type": {
+        "pretty": "K × V → K ⊢> V",
+        "tag": "Pi",
+        "bound-name": "_",
+        "domain": {
+          "tag": "Application",
+          "head": {
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13._×_<12>"
+          },
+          "arguments": [
+            {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13.K<20>"
+            },
+            {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13.V<22>"
+            }
+          ]
+        },
+        "codomain": {
+          "tag": "Application",
+          "head": {
+            "tag": "ScopeReference",
+            "ref-name": "Test.Issue13._⊢>_<14>"
+          },
+          "arguments": [
+            {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13.K<20>"
+            },
+            {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Issue13.V<22>"
+            }
+          ]
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    }
+  ]
+}

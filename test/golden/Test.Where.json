@@ -137,6 +137,55 @@
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           "term": {
+            "pretty": "Test.Where.g n (suc n)",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Where._.g<14>"
+            },
+            "arguments": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Agda.Builtin.Nat.Nat.suc<12>"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Test.Where._.g<14>",
+            "Agda.Builtin.Nat.Nat.suc<12>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "(n₁ : Nat)",
+            "telescope": [
+              {
+                "pretty": "(n : Nat)",
+                "name": "n",
+                "tag": "ScopeReference",
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "term": {
             "pretty": "suc n",
             "tag": "Application",
             "head": {
@@ -223,6 +272,55 @@
         {
           "ctx": {
             "pretty": "(n : Nat)",
+            "telescope": [
+              {
+                "pretty": "(n : Nat)",
+                "name": "n",
+                "tag": "ScopeReference",
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "term": {
+            "pretty": "Test.Where.g n (suc n)",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.Where._.g<22>"
+            },
+            "arguments": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Agda.Builtin.Nat.Nat.suc<12>"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Test.Where._.g<22>",
+            "Agda.Builtin.Nat.Nat.suc<12>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "(n₁ : Nat)",
             "telescope": [
               {
                 "pretty": "(n : Nat)",

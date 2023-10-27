@@ -131,7 +131,83 @@
           }
         ]
       },
-      "holes": []
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "X → Nat",
+            "tag": "Pi",
+            "bound-name": "_",
+            "domain": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.PrivateDefinitions.X<6>"
+            },
+            "codomain": {
+              "tag": "ScopeReference",
+              "ref-name": "Agda.Builtin.Nat.Nat<6>"
+            }
+          },
+          "term": {
+            "pretty": "λ r → X.x r",
+            "tag": "Lambda",
+            "abstraction": "r",
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.PrivateDefinitions.X.x<10>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                }
+              ]
+            }
+          },
+          "premises": [
+            "Test.PrivateDefinitions.X.x<10>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "(r : X)",
+            "telescope": [
+              {
+                "pretty": "(r : X)",
+                "name": "r",
+                "tag": "ScopeReference",
+                "ref-name": "Test.PrivateDefinitions.X<6>"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "term": {
+            "pretty": "X.x r",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.PrivateDefinitions.X.x<10>"
+            },
+            "arguments": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ]
+          },
+          "premises": [
+            "Test.PrivateDefinitions.X.x<10>"
+          ]
+        }
+      ]
     },
     {
       "name": "Test.PrivateDefinitions.g<16>",
@@ -200,7 +276,180 @@
           }
         ]
       },
-      "holes": []
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "(x : Nat)",
+            "telescope": [
+              {
+                "pretty": "(x : Nat)",
+                "name": "x",
+                "tag": "ScopeReference",
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "term": {
+            "pretty": "Test.PrivateDefinitions.f x (Test.PrivateDefinitions.f x 0)",
+            "original": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.PrivateDefinitions.f<14>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                },
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.PrivateDefinitions.f<14>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "DeBruijn",
+                      "index": 0
+                    },
+                    {
+                      "tag": "Literal",
+                      "literal": "0"
+                    }
+                  ]
+                }
+              ]
+            },
+            "reduced": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Agda.Builtin.Nat._+_<14>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                },
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.PrivateDefinitions.f<14>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "DeBruijn",
+                      "index": 0
+                    },
+                    {
+                      "tag": "Literal",
+                      "literal": "0"
+                    }
+                  ]
+                }
+              ]
+            },
+            "normalised": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Agda.Builtin.Nat._+_<14>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                },
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "ref-name": "Agda.Builtin.Nat._+_<14>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "DeBruijn",
+                      "index": 0
+                    },
+                    {
+                      "tag": "Literal",
+                      "literal": "0"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "premises": [
+            "Test.PrivateDefinitions.f<14>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "(x₁ : Nat)",
+            "telescope": [
+              {
+                "pretty": "(x : Nat)",
+                "name": "x",
+                "tag": "ScopeReference",
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "term": {
+            "pretty": "Test.PrivateDefinitions.f x 0",
+            "original": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.PrivateDefinitions.f<14>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                },
+                {
+                  "tag": "Literal",
+                  "literal": "0"
+                }
+              ]
+            },
+            "reduced": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Agda.Builtin.Nat._+_<14>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                },
+                {
+                  "tag": "Literal",
+                  "literal": "0"
+                }
+              ]
+            }
+          },
+          "premises": [
+            "Test.PrivateDefinitions.f<14>"
+          ]
+        }
+      ]
     }
   ],
   "scope-private": [
@@ -316,7 +565,43 @@
           }
         ]
       },
-      "holes": []
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "",
+            "telescope": []
+          },
+          "goal": {
+            "pretty": "Nat → Nat → Nat",
+            "tag": "Pi",
+            "bound-name": "_",
+            "domain": {
+              "tag": "ScopeReference",
+              "ref-name": "Agda.Builtin.Nat.Nat<6>"
+            },
+            "codomain": {
+              "tag": "Pi",
+              "bound-name": "_",
+              "domain": {
+                "tag": "ScopeReference",
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
+              },
+              "codomain": {
+                "tag": "ScopeReference",
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            }
+          },
+          "term": {
+            "pretty": "Agda.Builtin.Nat._+_",
+            "tag": "ScopeReference",
+            "ref-name": "Agda.Builtin.Nat._+_<14>"
+          },
+          "premises": [
+            "Agda.Builtin.Nat._+_<14>"
+          ]
+        }
+      ]
     }
   ]
 }

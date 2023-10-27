@@ -120,7 +120,9 @@ mkBackend trainF = Backend'
           privScopeEntries <- mapMaybeM processScopeEntry (HM.keys privs)
           report 10 "******************************************************************"
           return $ Recompile (scopeEntries, privScopeEntries)
-  , compileDef = \ _ _ _ def -> (ppName (defName def) ,) <$> runC (forEachHole trainF def)
+  , compileDef = \ opts _ _ def ->
+      (ppName (defName def) ,) <$>
+        runC (includePrivs opts) (forEachHole trainF def)
   , postModule = \ opts (scopeEntries, privScopeEntries) isMain md samples ->
     let mn = pp md in
     unlessM (skip opts isMain md) $ do

@@ -9,6 +9,7 @@ import Data.FileEmbed ( embedStringFile )
 
 import Control.Monad ( forM_, void, when, unless )
 import Control.Monad.Writer ( WriterT(runWriterT) )
+import Control.Monad.Reader ( ReaderT(runReaderT), ask )
 import Control.Monad.Error.Class ( catchError )
 import Control.Monad.IO.Class ( liftIO )
 import Control.Concurrent ( threadDelay )
@@ -38,11 +39,15 @@ import Output hiding ( Definition(..), Clause(..), Term(..), Type(..) )
 
 -- * Wrapper around Agda's typechecking monad 'TCM'
 
--- | Additionally records/outputs training samples.
-type C = WriterT [Sample] TCM
+type CEnv = Bool -- ^ whether to include private definitions
+type COut = [Sample] -- the training samples to output
 
-runC :: C () -> TCM [Sample]
-runC = (snd <$>) . runWriterT
+
+-- | The typechecking monad with an additional environment and output of samples.
+type C = WriterT COut (ReaderT CEnv TCM)
+
+runC :: CEnv -> C () -> TCM COut
+runC b = (snd <$>) . flip runReaderT b . runWriterT
 
 noop :: C ()
 noop = return ()
@@ -62,8 +67,9 @@ train :: TrainF
 train ty t = do
   let ns = names t
   allNs <- nsInScope . allThingsInScope <$> liftTCM getCurrentScope
+  includePrivs <- ask
   unless (null ns) $
-    when (S.fromList ns `S.isSubsetOf` allNs) $ do
+    when (includePrivs || (S.fromList ns `S.isSubsetOf` allNs)) $ do
       ctx <- getContextTelescope
       pctx <- liftTCM $ ppm ctx; pty <- liftTCM $ ppm ty; pt <- liftTCM $ ppm t
       rty <- mkReduced ty

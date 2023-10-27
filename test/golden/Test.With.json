@@ -172,6 +172,55 @@
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           "term": {
+            "pretty": "f n | g n",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.With.with-10<12>"
+            },
+            "arguments": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              },
+              {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.With.g<4>"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "premises": [
+            "Test.With.with-10<12>",
+            "Test.With.g<4>"
+          ]
+        },
+        {
+          "ctx": {
+            "pretty": "(n₁ : Nat)",
+            "telescope": [
+              {
+                "pretty": "(n : Nat)",
+                "name": "n",
+                "tag": "ScopeReference",
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "Nat",
+            "tag": "ScopeReference",
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
+          },
+          "term": {
             "pretty": "g n",
             "tag": "Application",
             "head": {
