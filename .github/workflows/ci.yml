@@ -27,7 +27,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      if: github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.ref == 'refs/heads/master'
 
     # Takes care of ghc and cabal. See https://github.com/haskell/actions.
     - uses: haskell-actions/setup@v2
@@ -41,6 +40,7 @@ jobs:
     # hash of this as the cache key, so when a dependency changes we upload a
     # new cache.
     - name: Freeze
+      if: github.ref == 'refs/heads/master'
       run: cabal freeze
 
     # Cache the contents of ~/.cabal/store to avoid rebuilding dependencies for
