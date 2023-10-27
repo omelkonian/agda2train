@@ -29,11 +29,11 @@
         "fields": [
           {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.String.String<6>"
+            "ref-name": "Agda.Builtin.String.String<6>"
           },
           {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.String.String<6>"
+            "ref-name": "Agda.Builtin.String.String<6>"
           }
         ]
       },
@@ -44,14 +44,14 @@
       "type": {
         "pretty": "Name → String",
         "tag": "Pi",
-        "name": "r",
+        "bound-name": "r",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Test.Fields.Name<4>"
+          "ref-name": "Test.Fields.Name<4>"
         },
         "codomain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         }
       },
       "definition": {
@@ -62,13 +62,15 @@
             "telescope": [
               {
                 "pretty": "(first : String)",
+                "name": "first",
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.String.String<6>"
+                "ref-name": "Agda.Builtin.String.String<6>"
               },
               {
                 "pretty": "(last : String)",
+                "name": "last",
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.String.String<6>"
+                "ref-name": "Agda.Builtin.String.String<6>"
               }
             ],
             "patterns": [
@@ -76,7 +78,7 @@
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
-                  "name": "Test.Fields.Name.constructor"
+                  "ref-name": "Test.Fields.Name.constructor"
                 },
                 "arguments": [
                   {
@@ -104,14 +106,14 @@
       "type": {
         "pretty": "Name → String",
         "tag": "Pi",
-        "name": "r",
+        "bound-name": "r",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Test.Fields.Name<4>"
+          "ref-name": "Test.Fields.Name<4>"
         },
         "codomain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         }
       },
       "definition": {
@@ -122,13 +124,15 @@
             "telescope": [
               {
                 "pretty": "(first : String)",
+                "name": "first",
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.String.String<6>"
+                "ref-name": "Agda.Builtin.String.String<6>"
               },
               {
                 "pretty": "(last : String)",
+                "name": "last",
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.String.String<6>"
+                "ref-name": "Agda.Builtin.String.String<6>"
               }
             ],
             "patterns": [
@@ -136,7 +140,7 @@
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
-                  "name": "Test.Fields.Name.constructor"
+                  "ref-name": "Test.Fields.Name.constructor"
                 },
                 "arguments": [
                   {
@@ -173,7 +177,7 @@
         "fields": [
           {
             "tag": "ScopeReference",
-            "name": "Test.Fields.Name<4>"
+            "ref-name": "Test.Fields.Name<4>"
           }
         ]
       },
@@ -184,14 +188,14 @@
       "type": {
         "pretty": "User → Name",
         "tag": "Pi",
-        "name": "r",
+        "bound-name": "r",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Test.Fields.User<14>"
+          "ref-name": "Test.Fields.User<14>"
         },
         "codomain": {
           "tag": "ScopeReference",
-          "name": "Test.Fields.Name<4>"
+          "ref-name": "Test.Fields.Name<4>"
         }
       },
       "definition": {
@@ -202,8 +206,9 @@
             "telescope": [
               {
                 "pretty": "(name : Name)",
+                "name": "name",
                 "tag": "ScopeReference",
-                "name": "Test.Fields.Name<4>"
+                "ref-name": "Test.Fields.Name<4>"
               }
             ],
             "patterns": [
@@ -211,7 +216,7 @@
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
-                  "name": "Test.Fields.User.constructor"
+                  "ref-name": "Test.Fields.User.constructor"
                 },
                 "arguments": [
                   {
@@ -235,7 +240,7 @@
       "type": {
         "pretty": "User",
         "tag": "ScopeReference",
-        "name": "Test.Fields.User<14>"
+        "ref-name": "Test.Fields.User<14>"
       },
       "definition": {
         "pretty": "<Axiom>",
@@ -248,7 +253,7 @@
       "type": {
         "pretty": "String",
         "tag": "ScopeReference",
-        "name": "Agda.Builtin.String.String<6>"
+        "ref-name": "Agda.Builtin.String.String<6>"
       },
       "definition": {
         "pretty": "kokos = koks .name .first",
@@ -261,19 +266,19 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.Fields.Name.first<10>"
+                "ref-name": "Test.Fields.Name.first<10>"
               },
               "arguments": [
                 {
                   "tag": "Application",
                   "head": {
                     "tag": "ScopeReference",
-                    "name": "Test.Fields.User.name<18>"
+                    "ref-name": "Test.Fields.User.name<18>"
                   },
                   "arguments": [
                     {
                       "tag": "ScopeReference",
-                      "name": "Test.Fields.koks<20>"
+                      "ref-name": "Test.Fields.koks<20>"
                     }
                   ]
                 }
@@ -291,26 +296,26 @@
           "goal": {
             "pretty": "String",
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.String.String<6>"
+            "ref-name": "Agda.Builtin.String.String<6>"
           },
           "term": {
             "pretty": "koks .name .first",
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.Fields.Name.first<10>"
+              "ref-name": "Test.Fields.Name.first<10>"
             },
             "arguments": [
               {
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
-                  "name": "Test.Fields.User.name<18>"
+                  "ref-name": "Test.Fields.User.name<18>"
                 },
                 "arguments": [
                   {
                     "tag": "ScopeReference",
-                    "name": "Test.Fields.koks<20>"
+                    "ref-name": "Test.Fields.koks<20>"
                   }
                 ]
               }
@@ -331,14 +336,14 @@
       "type": {
         "pretty": "(name₁ : Name) → User",
         "tag": "Pi",
-        "name": "name",
+        "bound-name": "name",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Test.Fields.Name<4>"
+          "ref-name": "Test.Fields.Name<4>"
         },
         "codomain": {
           "tag": "ScopeReference",
-          "name": "Test.Fields.User<14>"
+          "ref-name": "Test.Fields.User<14>"
         }
       },
       "definition": {
@@ -354,21 +359,21 @@
       "type": {
         "pretty": "(first₁ last₁ : String) → Name",
         "tag": "Pi",
-        "name": "first",
+        "bound-name": "first",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "last",
+          "bound-name": "last",
           "domain": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.String.String<6>"
+            "ref-name": "Agda.Builtin.String.String<6>"
           },
           "codomain": {
             "tag": "ScopeReference",
-            "name": "Test.Fields.Name<4>"
+            "ref-name": "Test.Fields.Name<4>"
           }
         }
       },

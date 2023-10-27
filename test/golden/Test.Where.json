@@ -14,18 +14,18 @@
         "variants": [
           {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.Nat.Nat<6>"
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           {
             "tag": "Pi",
-            "name": "n",
+            "bound-name": "n",
             "domain": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.Nat.Nat<6>"
+              "ref-name": "Agda.Builtin.Nat.Nat<6>"
             },
             "codomain": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.Nat.Nat<6>"
+              "ref-name": "Agda.Builtin.Nat.Nat<6>"
             }
           }
         ]
@@ -36,14 +36,14 @@
       "type": {
         "pretty": "Nat → Nat",
         "tag": "Pi",
-        "name": "n",
+        "bound-name": "n",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.Nat.Nat<6>"
+          "ref-name": "Agda.Builtin.Nat.Nat<6>"
         },
         "codomain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.Nat.Nat<6>"
+          "ref-name": "Agda.Builtin.Nat.Nat<6>"
         }
       },
       "definition": {
@@ -60,14 +60,14 @@
       "type": {
         "pretty": "Nat → Nat",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.Nat.Nat<6>"
+          "ref-name": "Agda.Builtin.Nat.Nat<6>"
         },
         "codomain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.Nat.Nat<6>"
+          "ref-name": "Agda.Builtin.Nat.Nat<6>"
         }
       },
       "definition": {
@@ -78,8 +78,9 @@
             "telescope": [
               {
                 "pretty": "(n : Nat)",
+                "name": "n",
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.Nat.Nat<6>"
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
             ],
             "patterns": [
@@ -92,7 +93,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.Where._.g<14>"
+                "ref-name": "Test.Where._.g<14>"
               },
               "arguments": [
                 {
@@ -103,7 +104,7 @@
                   "tag": "Application",
                   "head": {
                     "tag": "ScopeReference",
-                    "name": "Agda.Builtin.Nat.Nat.suc<12>"
+                    "ref-name": "Agda.Builtin.Nat.Nat.suc<12>"
                   },
                   "arguments": [
                     {
@@ -124,22 +125,23 @@
             "telescope": [
               {
                 "pretty": "(n : Nat)",
+                "name": "n",
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.Nat.Nat<6>"
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
             ]
           },
           "goal": {
             "pretty": "Nat",
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.Nat.Nat<6>"
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           "term": {
             "pretty": "suc n",
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.Nat.Nat.suc<12>"
+              "ref-name": "Agda.Builtin.Nat.Nat.suc<12>"
             },
             "arguments": [
               {
@@ -159,14 +161,14 @@
       "type": {
         "pretty": "Nat → Nat",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.Nat.Nat<6>"
+          "ref-name": "Agda.Builtin.Nat.Nat<6>"
         },
         "codomain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.Nat.Nat<6>"
+          "ref-name": "Agda.Builtin.Nat.Nat<6>"
         }
       },
       "definition": {
@@ -177,8 +179,9 @@
             "telescope": [
               {
                 "pretty": "(n : Nat)",
+                "name": "n",
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.Nat.Nat<6>"
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
             ],
             "patterns": [
@@ -191,7 +194,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.Where._.g<22>"
+                "ref-name": "Test.Where._.g<22>"
               },
               "arguments": [
                 {
@@ -202,7 +205,7 @@
                   "tag": "Application",
                   "head": {
                     "tag": "ScopeReference",
-                    "name": "Agda.Builtin.Nat.Nat.suc<12>"
+                    "ref-name": "Agda.Builtin.Nat.Nat.suc<12>"
                   },
                   "arguments": [
                     {
@@ -223,22 +226,23 @@
             "telescope": [
               {
                 "pretty": "(n : Nat)",
+                "name": "n",
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.Nat.Nat<6>"
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
             ]
           },
           "goal": {
             "pretty": "Nat",
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.Nat.Nat<6>"
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           "term": {
             "pretty": "suc n",
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.Nat.Nat.suc<12>"
+              "ref-name": "Agda.Builtin.Nat.Nat.suc<12>"
             },
             "arguments": [
               {
@@ -260,21 +264,21 @@
       "type": {
         "pretty": "(n : Nat) → Nat → Nat",
         "tag": "Pi",
-        "name": "n",
+        "bound-name": "n",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.Nat.Nat<6>"
+          "ref-name": "Agda.Builtin.Nat.Nat<6>"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "_",
+          "bound-name": "_",
           "domain": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.Nat.Nat<6>"
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           "codomain": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.Nat.Nat<6>"
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
           }
         }
       },
@@ -289,21 +293,21 @@
       "type": {
         "pretty": "(n : Nat) → Nat → Nat",
         "tag": "Pi",
-        "name": "n",
+        "bound-name": "n",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.Nat.Nat<6>"
+          "ref-name": "Agda.Builtin.Nat.Nat<6>"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "_",
+          "bound-name": "_",
           "domain": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.Nat.Nat<6>"
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           "codomain": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.Nat.Nat<6>"
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
           }
         }
       },

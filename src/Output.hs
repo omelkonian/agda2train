@@ -220,13 +220,13 @@ data Term
 
 instance {-# OVERLAPPING #-} ToJSON Head where
   toJSON = object . \case
-    (Ref n)  -> [tag "ScopeReference", "name"  .= toJSON n]
+    (Ref n)  -> [tag "ScopeReference", "ref-name"  .= toJSON n]
     (DB i) -> [tag "DeBruijn",       "index" .= toJSON i]
     where tag s = "tag" .= JSON.String s
 
 instance {-# OVERLAPPING #-} FromJSON Head where
   parseJSON = withObject "Head" $ \o -> o .: "tag" >>= \case
-    String "ScopeReference" -> Ref <$> o .: "name"
+    String "ScopeReference" -> Ref <$> o .: "ref-name"
     String "DeBruijn"       -> DB  <$> o .: "index"
     tag -> fail $ "Cannot parse Head: unexpected \"tag\" field " <> show tag
 
@@ -234,9 +234,9 @@ instance ToJSON Term where
   toJSON = \case
     (Pi isDep (n :~ dom) codom) -> object
       [ tag "Pi"
-      , "name"     .= toJSON n -- T0D0: remove if "(nothing) (or _)?"
-      , "domain"   .= toJSON dom
-      , "codomain" .= toJSON codom
+      , "bound-name" .= toJSON n -- T0D0: remove if "(nothing) (or _)?"
+      , "domain"    .= toJSON dom
+      , "codomain"  .= toJSON codom
       ]
     (Lam (n :~ f)) -> object
       [ tag "Lambda"
@@ -256,12 +256,12 @@ instance ToJSON Term where
 
 instance FromJSON Term where
   parseJSON = withObject "Term" $ \o -> o .: "tag" >>= \case
-    String "Pi" -> Pi True <$> liftA2 (:~) (o .: "name") (o .: "domain")
+    String "Pi" -> Pi True <$> liftA2 (:~) (o .: "bound-name") (o .: "domain")
                            <*> o .: "codomain"
       -- T0D0: also serialise `isDep`
     String "Lambda" -> Lam <$> liftA2 (:~) (o .: "abstraction") (o .: "body")
     String "Application"    -> App <$> o .: "head" <*> o .: "arguments"
-    String "ScopeReference" -> flip App [] . Ref <$> o .: "name"
+    String "ScopeReference" -> flip App [] . Ref <$> o .: "ref-name"
     String "DeBruijn"       -> flip App [] . DB  <$> o .: "index"
     String "Literal"  -> Lit   <$> o .: "literal"
     String "Sort"     -> Sort  <$> o .: "sort"
@@ -425,6 +425,8 @@ jsonOpts = defaultOptions
       "scopeGlobal"  -> "scope-global"
       "scopeLocal"   -> "scope-local"
       "scopePrivate" -> "scope-private"
+      "refName"      -> "ref-name"
+      "boundName"    -> "bound-name"
       s -> s
   }
 
@@ -434,17 +436,17 @@ encode = encodePretty' $ defConfig
   { confIndent = Spaces 2
   , confCompare = keyOrder
       [ "pretty"
-      , "tag"
       , "name"
+      , "tag"
       , "original", "simplified", "reduced", "normalised"
       , "telescope", "patterns", "fields"
-      , "domain", "codomain"
+      , "bound-name" , "domain", "codomain"
       , "abstraction", "body"
       , "sort", "level", "literal"
       , "head", "arguments"
       , "variants", "reference", "variant"
-      , "index"
-      , "scopeGlobal", "scopeLocal"
+      , "ref-name", "index"
+      , "scope-global", "scope-local", "scope-private"
       , "type", "definition", "holes"
       , "ctx", "goal", "term", "premises"
       ]

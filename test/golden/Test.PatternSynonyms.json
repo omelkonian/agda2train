@@ -14,18 +14,18 @@
         "variants": [
           {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.Nat.Nat<6>"
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           {
             "tag": "Pi",
-            "name": "n",
+            "bound-name": "n",
             "domain": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.Nat.Nat<6>"
+              "ref-name": "Agda.Builtin.Nat.Nat<6>"
             },
             "codomain": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.Nat.Nat<6>"
+              "ref-name": "Agda.Builtin.Nat.Nat<6>"
             }
           }
         ]
@@ -36,31 +36,31 @@
       "type": {
         "pretty": "{a b : Agda.Primitive.Level} (A : Set a) (B : A → Set b) → Set (a Agda.Primitive.⊔ b)",
         "tag": "Pi",
-        "name": "a",
+        "bound-name": "a",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Primitive.Level<14>"
+          "ref-name": "Agda.Primitive.Level<14>"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "b",
+          "bound-name": "b",
           "domain": {
             "tag": "ScopeReference",
-            "name": "Agda.Primitive.Level<14>"
+            "ref-name": "Agda.Primitive.Level<14>"
           },
           "codomain": {
             "tag": "Pi",
-            "name": "A",
+            "bound-name": "A",
             "domain": {
               "tag": "Sort",
               "sort": "Set @1"
             },
             "codomain": {
               "tag": "Pi",
-              "name": "B",
+              "bound-name": "B",
               "domain": {
                 "tag": "Pi",
-                "name": "_",
+                "bound-name": "_",
                 "domain": {
                   "tag": "DeBruijn",
                   "index": 0
@@ -84,24 +84,27 @@
         "telescope": [
           {
             "pretty": "{a : Agda.Primitive.Level}",
+            "name": "a",
             "tag": "ScopeReference",
-            "name": "Agda.Primitive.Level<14>"
+            "ref-name": "Agda.Primitive.Level<14>"
           },
           {
             "pretty": "{b : Agda.Primitive.Level}",
+            "name": "b",
             "tag": "ScopeReference",
-            "name": "Agda.Primitive.Level<14>"
+            "ref-name": "Agda.Primitive.Level<14>"
           },
           {
             "pretty": "{A : Set @1}",
-            "tag": "Sort",
             "name": "A",
+            "tag": "Sort",
             "sort": "Set @1"
           },
           {
             "pretty": "{B : @0 → Set @1}",
+            "name": "B",
             "tag": "Pi",
-            "name": "_",
+            "bound-name": "_",
             "domain": {
               "tag": "DeBruijn",
               "index": 0
@@ -138,31 +141,31 @@
       "type": {
         "pretty": "{a b : Agda.Primitive.Level} {A : Set a} {B : A → Set b} (fst : A) (snd : B fst) → Σ A B",
         "tag": "Pi",
-        "name": "a",
+        "bound-name": "a",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Primitive.Level<14>"
+          "ref-name": "Agda.Primitive.Level<14>"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "b",
+          "bound-name": "b",
           "domain": {
             "tag": "ScopeReference",
-            "name": "Agda.Primitive.Level<14>"
+            "ref-name": "Agda.Primitive.Level<14>"
           },
           "codomain": {
             "tag": "Pi",
-            "name": "A",
+            "bound-name": "A",
             "domain": {
               "tag": "Sort",
               "sort": "Set @1"
             },
             "codomain": {
               "tag": "Pi",
-              "name": "B",
+              "bound-name": "B",
               "domain": {
                 "tag": "Pi",
-                "name": "_",
+                "bound-name": "_",
                 "domain": {
                   "tag": "DeBruijn",
                   "index": 0
@@ -174,14 +177,14 @@
               },
               "codomain": {
                 "tag": "Pi",
-                "name": "fst",
+                "bound-name": "fst",
                 "domain": {
                   "tag": "DeBruijn",
                   "index": 1
                 },
                 "codomain": {
                   "tag": "Pi",
-                  "name": "snd",
+                  "bound-name": "snd",
                   "domain": {
                     "tag": "Application",
                     "head": {
@@ -199,7 +202,7 @@
                     "tag": "Application",
                     "head": {
                       "tag": "ScopeReference",
-                      "name": "Agda.Builtin.Sigma.Σ<14>"
+                      "ref-name": "Agda.Builtin.Sigma.Σ<14>"
                     },
                     "arguments": [
                       {
@@ -240,16 +243,16 @@
       "type": {
         "pretty": "Nat → Σ Nat (λ _ → Nat)",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.Nat.Nat<6>"
+          "ref-name": "Agda.Builtin.Nat.Nat<6>"
         },
         "codomain": {
           "tag": "Application",
           "head": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.Sigma.Σ<14>"
+            "ref-name": "Agda.Builtin.Sigma.Σ<14>"
           },
           "arguments": [
             {
@@ -262,14 +265,14 @@
             },
             {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.Nat.Nat<6>"
+              "ref-name": "Agda.Builtin.Nat.Nat<6>"
             },
             {
               "tag": "Lambda",
               "abstraction": "_",
               "body": {
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.Nat.Nat<6>"
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
             }
           ]
@@ -283,8 +286,9 @@
             "telescope": [
               {
                 "pretty": "(n : Nat)",
+                "name": "n",
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.Nat.Nat<6>"
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
             ],
             "patterns": [
@@ -297,7 +301,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.Sigma._,_<32>"
+                "ref-name": "Agda.Builtin.Sigma._,_<32>"
               },
               "arguments": [
                 {
@@ -320,8 +324,9 @@
             "telescope": [
               {
                 "pretty": "(n : Nat)",
+                "name": "n",
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.Nat.Nat<6>"
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
             ]
           },
@@ -330,7 +335,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.Sigma.Σ<14>"
+              "ref-name": "Agda.Builtin.Sigma.Σ<14>"
             },
             "arguments": [
               {
@@ -343,14 +348,14 @@
               },
               {
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.Nat.Nat<6>"
+                "ref-name": "Agda.Builtin.Nat.Nat<6>"
               },
               {
                 "tag": "Lambda",
                 "abstraction": "_",
                 "body": {
                   "tag": "ScopeReference",
-                  "name": "Agda.Builtin.Nat.Nat<6>"
+                  "ref-name": "Agda.Builtin.Nat.Nat<6>"
                 }
               }
             ]
@@ -360,7 +365,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.Sigma._,_<32>"
+              "ref-name": "Agda.Builtin.Sigma._,_<32>"
             },
             "arguments": [
               {

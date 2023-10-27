@@ -18,16 +18,16 @@
       "type": {
         "pretty": "String → Agda.Builtin.Maybe.Maybe (Agda.Builtin.Sigma.Σ Agda.Builtin.Char.Char (λ _ → String))",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         },
         "codomain": {
           "tag": "Application",
           "head": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.Maybe.Maybe<10>"
+            "ref-name": "Agda.Builtin.Maybe.Maybe<10>"
           },
           "arguments": [
             {
@@ -38,7 +38,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.Sigma.Σ<14>"
+                "ref-name": "Agda.Builtin.Sigma.Σ<14>"
               },
               "arguments": [
                 {
@@ -51,14 +51,14 @@
                 },
                 {
                   "tag": "ScopeReference",
-                  "name": "Agda.Builtin.Char.Char<6>"
+                  "ref-name": "Agda.Builtin.Char.Char<6>"
                 },
                 {
                   "tag": "Lambda",
                   "abstraction": "_",
                   "body": {
                     "tag": "ScopeReference",
-                    "name": "Agda.Builtin.String.String<6>"
+                    "ref-name": "Agda.Builtin.String.String<6>"
                   }
                 }
               ]
@@ -76,16 +76,16 @@
       "type": {
         "pretty": "String → Agda.Builtin.List.List Agda.Builtin.Char.Char",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         },
         "codomain": {
           "tag": "Application",
           "head": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.List.List<10>"
+            "ref-name": "Agda.Builtin.List.List<10>"
           },
           "arguments": [
             {
@@ -94,7 +94,7 @@
             },
             {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.Char.Char<6>"
+              "ref-name": "Agda.Builtin.Char.Char<6>"
             }
           ]
         }
@@ -109,12 +109,12 @@
       "type": {
         "pretty": "Agda.Builtin.List.List Agda.Builtin.Char.Char → String",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "Application",
           "head": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.List.List<10>"
+            "ref-name": "Agda.Builtin.List.List<10>"
           },
           "arguments": [
             {
@@ -123,13 +123,13 @@
             },
             {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.Char.Char<6>"
+              "ref-name": "Agda.Builtin.Char.Char<6>"
             }
           ]
         },
         "codomain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         }
       },
       "definition": {
@@ -142,21 +142,21 @@
       "type": {
         "pretty": "String → String → String",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "_",
+          "bound-name": "_",
           "domain": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.String.String<6>"
+            "ref-name": "Agda.Builtin.String.String<6>"
           },
           "codomain": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.String.String<6>"
+            "ref-name": "Agda.Builtin.String.String<6>"
           }
         }
       },
@@ -170,21 +170,21 @@
       "type": {
         "pretty": "String → String → Agda.Builtin.Bool.Bool",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "_",
+          "bound-name": "_",
           "domain": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.String.String<6>"
+            "ref-name": "Agda.Builtin.String.String<6>"
           },
           "codomain": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.Bool.Bool<6>"
+            "ref-name": "Agda.Builtin.Bool.Bool<6>"
           }
         }
       },
@@ -198,14 +198,14 @@
       "type": {
         "pretty": "Agda.Builtin.Char.Char → String",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.Char.Char<6>"
+          "ref-name": "Agda.Builtin.Char.Char<6>"
         },
         "codomain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         }
       },
       "definition": {
@@ -218,14 +218,14 @@
       "type": {
         "pretty": "String → String",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         },
         "codomain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         }
       },
       "definition": {
@@ -238,14 +238,14 @@
       "type": {
         "pretty": "Agda.Builtin.Nat.Nat → String",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.Nat.Nat<6>"
+          "ref-name": "Agda.Builtin.Nat.Nat<6>"
         },
         "codomain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         }
       },
       "definition": {
@@ -260,21 +260,21 @@
       "type": {
         "pretty": "String → String → String",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "_",
+          "bound-name": "_",
           "domain": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.String.String<6>"
+            "ref-name": "Agda.Builtin.String.String<6>"
           },
           "codomain": {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.String.String<6>"
+            "ref-name": "Agda.Builtin.String.String<6>"
           }
         }
       },
@@ -287,7 +287,7 @@
             "patterns": [],
             "body": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.String.primStringAppend<16>"
+              "ref-name": "Agda.Builtin.String.primStringAppend<16>"
             }
           }
         ]
@@ -301,28 +301,28 @@
           "goal": {
             "pretty": "String → String → String",
             "tag": "Pi",
-            "name": "_",
+            "bound-name": "_",
             "domain": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.String.String<6>"
+              "ref-name": "Agda.Builtin.String.String<6>"
             },
             "codomain": {
               "tag": "Pi",
-              "name": "_",
+              "bound-name": "_",
               "domain": {
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.String.String<6>"
+                "ref-name": "Agda.Builtin.String.String<6>"
               },
               "codomain": {
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.String.String<6>"
+                "ref-name": "Agda.Builtin.String.String<6>"
               }
             }
           },
           "term": {
             "pretty": "primStringAppend",
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.String.primStringAppend<16>"
+            "ref-name": "Agda.Builtin.String.primStringAppend<16>"
           },
           "premises": [
             "Agda.Builtin.String.primStringAppend<16>"

@@ -7,14 +7,14 @@
       "type": {
         "pretty": "{A : Set} → A → A",
         "tag": "Pi",
-        "name": "A",
+        "bound-name": "A",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "_",
+          "bound-name": "_",
           "domain": {
             "tag": "DeBruijn",
             "index": 0
@@ -33,14 +33,14 @@
             "telescope": [
               {
                 "pretty": "{A : Set}",
-                "tag": "Sort",
                 "name": "A",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(x : @0)",
-                "tag": "DeBruijn",
                 "name": "x",
+                "tag": "DeBruijn",
                 "index": 0
               }
             ],

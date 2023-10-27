@@ -13,3 +13,4 @@ json/
 
 test/build/*
 test/agda2train
+test/agda2train-db

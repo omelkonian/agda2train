@@ -14,18 +14,18 @@
         "variants": [
           {
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.Nat.Nat<6>"
+            "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           {
             "tag": "Pi",
-            "name": "n",
+            "bound-name": "n",
             "domain": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.Nat.Nat<6>"
+              "ref-name": "Agda.Builtin.Nat.Nat<6>"
             },
             "codomain": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.Nat.Nat<6>"
+              "ref-name": "Agda.Builtin.Nat.Nat<6>"
             }
           }
         ]
@@ -38,7 +38,7 @@
       "type": {
         "pretty": "Nat",
         "tag": "ScopeReference",
-        "name": "Agda.Builtin.Nat.Nat<6>"
+        "ref-name": "Agda.Builtin.Nat.Nat<6>"
       },
       "definition": {
         "pretty": "n = ?0",

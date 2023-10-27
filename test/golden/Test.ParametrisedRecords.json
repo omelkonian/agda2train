@@ -20,7 +20,7 @@
       "type": {
         "pretty": "(NameId : Set) → Set",
         "tag": "Pi",
-        "name": "NameId",
+        "bound-name": "NameId",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
@@ -36,8 +36,8 @@
         "telescope": [
           {
             "pretty": "{NameId : Set}",
-            "tag": "Sort",
             "name": "NameId",
+            "tag": "Sort",
             "sort": "Set"
           }
         ],
@@ -59,19 +59,19 @@
       "type": {
         "pretty": "{NameId : Set} → Name NameId → NameId",
         "tag": "Pi",
-        "name": "NameId",
+        "bound-name": "NameId",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "r",
+          "bound-name": "r",
           "domain": {
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.ParametrisedRecords.Name<6>"
+              "ref-name": "Test.ParametrisedRecords.Name<6>"
             },
             "arguments": [
               {
@@ -94,20 +94,20 @@
             "telescope": [
               {
                 "pretty": "{NameId : Set}",
-                "tag": "Sort",
                 "name": "NameId",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(first : @0)",
-                "tag": "DeBruijn",
                 "name": "first",
+                "tag": "DeBruijn",
                 "index": 0
               },
               {
                 "pretty": "(last : @1)",
-                "tag": "DeBruijn",
                 "name": "last",
+                "tag": "DeBruijn",
                 "index": 1
               }
             ],
@@ -116,7 +116,7 @@
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
-                  "name": "Test.ParametrisedRecords.Name.constructor"
+                  "ref-name": "Test.ParametrisedRecords.Name.constructor"
                 },
                 "arguments": [
                   {
@@ -144,19 +144,19 @@
       "type": {
         "pretty": "{NameId : Set} → Name NameId → NameId",
         "tag": "Pi",
-        "name": "NameId",
+        "bound-name": "NameId",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "r",
+          "bound-name": "r",
           "domain": {
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.ParametrisedRecords.Name<6>"
+              "ref-name": "Test.ParametrisedRecords.Name<6>"
             },
             "arguments": [
               {
@@ -179,20 +179,20 @@
             "telescope": [
               {
                 "pretty": "{NameId : Set}",
-                "tag": "Sort",
                 "name": "NameId",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(first : @0)",
-                "tag": "DeBruijn",
                 "name": "first",
+                "tag": "DeBruijn",
                 "index": 0
               },
               {
                 "pretty": "(last : @1)",
-                "tag": "DeBruijn",
                 "name": "last",
+                "tag": "DeBruijn",
                 "index": 1
               }
             ],
@@ -201,7 +201,7 @@
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
-                  "name": "Test.ParametrisedRecords.Name.constructor"
+                  "ref-name": "Test.ParametrisedRecords.Name.constructor"
                 },
                 "arguments": [
                   {
@@ -240,12 +240,12 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.ParametrisedRecords.Name<6>"
+              "ref-name": "Test.ParametrisedRecords.Name<6>"
             },
             "arguments": [
               {
                 "tag": "ScopeReference",
-                "name": "Agda.Builtin.String.String<6>"
+                "ref-name": "Agda.Builtin.String.String<6>"
               }
             ]
           }
@@ -258,21 +258,21 @@
       "type": {
         "pretty": "User → Name String",
         "tag": "Pi",
-        "name": "r",
+        "bound-name": "r",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Test.ParametrisedRecords.User<18>"
+          "ref-name": "Test.ParametrisedRecords.User<18>"
         },
         "codomain": {
           "tag": "Application",
           "head": {
             "tag": "ScopeReference",
-            "name": "Test.ParametrisedRecords.Name<6>"
+            "ref-name": "Test.ParametrisedRecords.Name<6>"
           },
           "arguments": [
             {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.String.String<6>"
+              "ref-name": "Agda.Builtin.String.String<6>"
             }
           ]
         }
@@ -285,16 +285,16 @@
             "telescope": [
               {
                 "pretty": "(name : Name String)",
-                "tag": "Application",
                 "name": "name",
+                "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
-                  "name": "Test.ParametrisedRecords.Name<6>"
+                  "ref-name": "Test.ParametrisedRecords.Name<6>"
                 },
                 "arguments": [
                   {
                     "tag": "ScopeReference",
-                    "name": "Agda.Builtin.String.String<6>"
+                    "ref-name": "Agda.Builtin.String.String<6>"
                   }
                 ]
               }
@@ -304,7 +304,7 @@
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
-                  "name": "Test.ParametrisedRecords.User.constructor"
+                  "ref-name": "Test.ParametrisedRecords.User.constructor"
                 },
                 "arguments": [
                   {
@@ -328,7 +328,7 @@
       "type": {
         "pretty": "User",
         "tag": "ScopeReference",
-        "name": "Test.ParametrisedRecords.User<18>"
+        "ref-name": "Test.ParametrisedRecords.User<18>"
       },
       "definition": {
         "pretty": "<Axiom>",
@@ -341,7 +341,7 @@
       "type": {
         "pretty": "String",
         "tag": "ScopeReference",
-        "name": "Agda.Builtin.String.String<6>"
+        "ref-name": "Agda.Builtin.String.String<6>"
       },
       "definition": {
         "pretty": "kokos = koks .name .first",
@@ -354,19 +354,19 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.ParametrisedRecords.Name.first<14>"
+                "ref-name": "Test.ParametrisedRecords.Name.first<14>"
               },
               "arguments": [
                 {
                   "tag": "Application",
                   "head": {
                     "tag": "ScopeReference",
-                    "name": "Test.ParametrisedRecords.User.name<22>"
+                    "ref-name": "Test.ParametrisedRecords.User.name<22>"
                   },
                   "arguments": [
                     {
                       "tag": "ScopeReference",
-                      "name": "Test.ParametrisedRecords.koks<24>"
+                      "ref-name": "Test.ParametrisedRecords.koks<24>"
                     }
                   ]
                 }
@@ -384,26 +384,26 @@
           "goal": {
             "pretty": "String",
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.String.String<6>"
+            "ref-name": "Agda.Builtin.String.String<6>"
           },
           "term": {
             "pretty": "koks .name .first",
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.ParametrisedRecords.Name.first<14>"
+              "ref-name": "Test.ParametrisedRecords.Name.first<14>"
             },
             "arguments": [
               {
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
-                  "name": "Test.ParametrisedRecords.User.name<22>"
+                  "ref-name": "Test.ParametrisedRecords.User.name<22>"
                 },
                 "arguments": [
                   {
                     "tag": "ScopeReference",
-                    "name": "Test.ParametrisedRecords.koks<24>"
+                    "ref-name": "Test.ParametrisedRecords.koks<24>"
                   }
                 ]
               }
@@ -424,21 +424,21 @@
       "type": {
         "pretty": "{NameId : Set} (first₁ last₁ : NameId) → Name NameId",
         "tag": "Pi",
-        "name": "NameId",
+        "bound-name": "NameId",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "first",
+          "bound-name": "first",
           "domain": {
             "tag": "DeBruijn",
             "index": 0
           },
           "codomain": {
             "tag": "Pi",
-            "name": "last",
+            "bound-name": "last",
             "domain": {
               "tag": "DeBruijn",
               "index": 1
@@ -447,7 +447,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.ParametrisedRecords.Name<6>"
+                "ref-name": "Test.ParametrisedRecords.Name<6>"
               },
               "arguments": [
                 {
@@ -472,23 +472,23 @@
       "type": {
         "pretty": "(name₁ : Name String) → User",
         "tag": "Pi",
-        "name": "name",
+        "bound-name": "name",
         "domain": {
           "tag": "Application",
           "head": {
             "tag": "ScopeReference",
-            "name": "Test.ParametrisedRecords.Name<6>"
+            "ref-name": "Test.ParametrisedRecords.Name<6>"
           },
           "arguments": [
             {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.String.String<6>"
+              "ref-name": "Agda.Builtin.String.String<6>"
             }
           ]
         },
         "codomain": {
           "tag": "ScopeReference",
-          "name": "Test.ParametrisedRecords.User<18>"
+          "ref-name": "Test.ParametrisedRecords.User<18>"
         }
       },
       "definition": {

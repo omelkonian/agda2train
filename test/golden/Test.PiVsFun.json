@@ -7,14 +7,14 @@
       "type": {
         "pretty": "Set → Set → Set",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "_",
+          "bound-name": "_",
           "domain": {
             "tag": "Sort",
             "sort": "Set"
@@ -36,14 +36,14 @@
       "type": {
         "pretty": "{x y : Set} → x ≡ y",
         "tag": "Pi",
-        "name": "x",
+        "bound-name": "x",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "y",
+          "bound-name": "y",
           "domain": {
             "tag": "Sort",
             "sort": "Set"
@@ -52,7 +52,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_<4>"
+              "ref-name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -78,14 +78,14 @@
       "type": {
         "pretty": "(x : Set) → Set → x ≡ x",
         "tag": "Pi",
-        "name": "x",
+        "bound-name": "x",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "_",
+          "bound-name": "_",
           "domain": {
             "tag": "Sort",
             "sort": "Set"
@@ -94,7 +94,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_<4>"
+              "ref-name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -117,14 +117,14 @@
             "telescope": [
               {
                 "pretty": "(x : Set)",
-                "tag": "Sort",
                 "name": "x",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(x : Set)",
-                "tag": "Sort",
                 "name": "x",
+                "tag": "Sort",
                 "sort": "Set"
               }
             ],
@@ -142,7 +142,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.PiVsFun.refl<10>"
+                "ref-name": "Test.PiVsFun.refl<10>"
               },
               "arguments": [
                 {
@@ -165,14 +165,14 @@
             "telescope": [
               {
                 "pretty": "(x : Set)",
-                "tag": "Sort",
                 "name": "x",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(x : Set)",
-                "tag": "Sort",
                 "name": "x",
+                "tag": "Sort",
                 "sort": "Set"
               }
             ]
@@ -182,7 +182,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_<4>"
+              "ref-name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -200,7 +200,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun.refl<10>"
+              "ref-name": "Test.PiVsFun.refl<10>"
             },
             "arguments": [
               {
@@ -224,14 +224,14 @@
       "type": {
         "pretty": "(x y : Set) → x ≡ y",
         "tag": "Pi",
-        "name": "x",
+        "bound-name": "x",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "y",
+          "bound-name": "y",
           "domain": {
             "tag": "Sort",
             "sort": "Set"
@@ -240,7 +240,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_<4>"
+              "ref-name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -263,14 +263,14 @@
             "telescope": [
               {
                 "pretty": "(x : Set)",
-                "tag": "Sort",
                 "name": "x",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(y : Set)",
-                "tag": "Sort",
                 "name": "y",
+                "tag": "Sort",
                 "sort": "Set"
               }
             ],
@@ -288,7 +288,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.PiVsFun.refl<10>"
+                "ref-name": "Test.PiVsFun.refl<10>"
               },
               "arguments": [
                 {
@@ -311,14 +311,14 @@
             "telescope": [
               {
                 "pretty": "(x : Set)",
-                "tag": "Sort",
                 "name": "x",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(y : Set)",
-                "tag": "Sort",
                 "name": "y",
+                "tag": "Sort",
                 "sort": "Set"
               }
             ]
@@ -328,7 +328,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_<4>"
+              "ref-name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -346,7 +346,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun.refl<10>"
+              "ref-name": "Test.PiVsFun.refl<10>"
             },
             "arguments": [
               {
@@ -370,14 +370,14 @@
       "type": {
         "pretty": "{x _ : Set} → x ≡ x",
         "tag": "Pi",
-        "name": "x",
+        "bound-name": "x",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "_",
+          "bound-name": "_",
           "domain": {
             "tag": "Sort",
             "sort": "Set"
@@ -386,7 +386,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_<4>"
+              "ref-name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -409,14 +409,14 @@
             "telescope": [
               {
                 "pretty": "{x : Set}",
-                "tag": "Sort",
                 "name": "x",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{_ : Set}",
-                "tag": "Sort",
                 "name": "_",
+                "tag": "Sort",
                 "sort": "Set"
               }
             ],
@@ -434,7 +434,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.PiVsFun.refl<10>"
+                "ref-name": "Test.PiVsFun.refl<10>"
               },
               "arguments": [
                 {
@@ -457,14 +457,14 @@
             "telescope": [
               {
                 "pretty": "{x : Set}",
-                "tag": "Sort",
                 "name": "x",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{x : Set}",
-                "tag": "Sort",
                 "name": "x",
+                "tag": "Sort",
                 "sort": "Set"
               }
             ]
@@ -474,7 +474,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_<4>"
+              "ref-name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -492,7 +492,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun.refl<10>"
+              "ref-name": "Test.PiVsFun.refl<10>"
             },
             "arguments": [
               {
@@ -516,14 +516,14 @@
       "type": {
         "pretty": "{x y : Set} → x ≡ y",
         "tag": "Pi",
-        "name": "x",
+        "bound-name": "x",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "y",
+          "bound-name": "y",
           "domain": {
             "tag": "Sort",
             "sort": "Set"
@@ -532,7 +532,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_<4>"
+              "ref-name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -555,14 +555,14 @@
             "telescope": [
               {
                 "pretty": "{x : Set}",
-                "tag": "Sort",
                 "name": "x",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{y : Set}",
-                "tag": "Sort",
                 "name": "y",
+                "tag": "Sort",
                 "sort": "Set"
               }
             ],
@@ -580,7 +580,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.PiVsFun.refl<10>"
+                "ref-name": "Test.PiVsFun.refl<10>"
               },
               "arguments": [
                 {
@@ -603,14 +603,14 @@
             "telescope": [
               {
                 "pretty": "{x : Set}",
-                "tag": "Sort",
                 "name": "x",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{y : Set}",
-                "tag": "Sort",
                 "name": "y",
+                "tag": "Sort",
                 "sort": "Set"
               }
             ]
@@ -620,7 +620,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_<4>"
+              "ref-name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -638,7 +638,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun.refl<10>"
+              "ref-name": "Test.PiVsFun.refl<10>"
             },
             "arguments": [
               {
@@ -662,26 +662,26 @@
       "type": {
         "pretty": "{x y : Set} → x ≡ y → x ≡ x",
         "tag": "Pi",
-        "name": "x",
+        "bound-name": "x",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "y",
+          "bound-name": "y",
           "domain": {
             "tag": "Sort",
             "sort": "Set"
           },
           "codomain": {
             "tag": "Pi",
-            "name": "_",
+            "bound-name": "_",
             "domain": {
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.PiVsFun._≡_<4>"
+                "ref-name": "Test.PiVsFun._≡_<4>"
               },
               "arguments": [
                 {
@@ -698,7 +698,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.PiVsFun._≡_<4>"
+                "ref-name": "Test.PiVsFun._≡_<4>"
               },
               "arguments": [
                 {
@@ -722,23 +722,23 @@
             "telescope": [
               {
                 "pretty": "{x : Set}",
-                "tag": "Sort",
                 "name": "x",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{y : Set}",
-                "tag": "Sort",
                 "name": "y",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(eq : @1 ≡ @0)",
-                "tag": "Application",
                 "name": "eq",
+                "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
-                  "name": "Test.PiVsFun._≡_<4>"
+                  "ref-name": "Test.PiVsFun._≡_<4>"
                 },
                 "arguments": [
                   {
@@ -770,7 +770,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.PiVsFun.refl<10>"
+                "ref-name": "Test.PiVsFun.refl<10>"
               },
               "arguments": [
                 {
@@ -793,23 +793,23 @@
             "telescope": [
               {
                 "pretty": "{x : Set}",
-                "tag": "Sort",
                 "name": "x",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{y : Set}",
-                "tag": "Sort",
                 "name": "y",
+                "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(eq : y ≡ eq)",
-                "tag": "Application",
                 "name": "eq",
+                "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
-                  "name": "Test.PiVsFun._≡_<4>"
+                  "ref-name": "Test.PiVsFun._≡_<4>"
                 },
                 "arguments": [
                   {
@@ -829,7 +829,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun._≡_<4>"
+              "ref-name": "Test.PiVsFun._≡_<4>"
             },
             "arguments": [
               {
@@ -847,7 +847,7 @@
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
-              "name": "Test.PiVsFun.refl<10>"
+              "ref-name": "Test.PiVsFun.refl<10>"
             },
             "arguments": [
               {

@@ -18,14 +18,14 @@
       "type": {
         "pretty": "Agda.Builtin.Nat.Nat → String",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.Nat.Nat<6>"
+          "ref-name": "Agda.Builtin.Nat.Nat<6>"
         },
         "codomain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         }
       },
       "definition": {
@@ -40,14 +40,14 @@
       "type": {
         "pretty": "Agda.Builtin.Nat.Nat → String",
         "tag": "Pi",
-        "name": "_",
+        "bound-name": "_",
         "domain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.Nat.Nat<6>"
+          "ref-name": "Agda.Builtin.Nat.Nat<6>"
         },
         "codomain": {
           "tag": "ScopeReference",
-          "name": "Agda.Builtin.String.String<6>"
+          "ref-name": "Agda.Builtin.String.String<6>"
         }
       },
       "definition": {
@@ -59,7 +59,7 @@
             "patterns": [],
             "body": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.String.primShowNat<24>"
+              "ref-name": "Agda.Builtin.String.primShowNat<24>"
             }
           }
         ]
@@ -73,20 +73,20 @@
           "goal": {
             "pretty": "Agda.Builtin.Nat.Nat → String",
             "tag": "Pi",
-            "name": "_",
+            "bound-name": "_",
             "domain": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.Nat.Nat<6>"
+              "ref-name": "Agda.Builtin.Nat.Nat<6>"
             },
             "codomain": {
               "tag": "ScopeReference",
-              "name": "Agda.Builtin.String.String<6>"
+              "ref-name": "Agda.Builtin.String.String<6>"
             }
           },
           "term": {
             "pretty": "primShowNat",
             "tag": "ScopeReference",
-            "name": "Agda.Builtin.String.primShowNat<24>"
+            "ref-name": "Agda.Builtin.String.primShowNat<24>"
           },
           "premises": [
             "Agda.Builtin.String.primShowNat<24>"

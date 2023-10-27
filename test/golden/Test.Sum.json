@@ -7,14 +7,14 @@
       "type": {
         "pretty": "Set → Set → Set",
         "tag": "Pi",
-        "name": "A",
+        "bound-name": "A",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "B",
+          "bound-name": "B",
           "domain": {
             "tag": "Sort",
             "sort": "Set"
@@ -31,21 +31,21 @@
         "variants": [
           {
             "tag": "Pi",
-            "name": "A",
+            "bound-name": "A",
             "domain": {
               "tag": "Sort",
               "sort": "Set"
             },
             "codomain": {
               "tag": "Pi",
-              "name": "B",
+              "bound-name": "B",
               "domain": {
                 "tag": "Sort",
                 "sort": "Set"
               },
               "codomain": {
                 "tag": "Pi",
-                "name": "_",
+                "bound-name": "_",
                 "domain": {
                   "tag": "DeBruijn",
                   "index": 1
@@ -54,7 +54,7 @@
                   "tag": "Application",
                   "head": {
                     "tag": "ScopeReference",
-                    "name": "Test.Sum._⊎_<8>"
+                    "ref-name": "Test.Sum._⊎_<8>"
                   },
                   "arguments": [
                     {
@@ -72,21 +72,21 @@
           },
           {
             "tag": "Pi",
-            "name": "A",
+            "bound-name": "A",
             "domain": {
               "tag": "Sort",
               "sort": "Set"
             },
             "codomain": {
               "tag": "Pi",
-              "name": "B",
+              "bound-name": "B",
               "domain": {
                 "tag": "Sort",
                 "sort": "Set"
               },
               "codomain": {
                 "tag": "Pi",
-                "name": "_",
+                "bound-name": "_",
                 "domain": {
                   "tag": "DeBruijn",
                   "index": 0
@@ -95,7 +95,7 @@
                   "tag": "Application",
                   "head": {
                     "tag": "ScopeReference",
-                    "name": "Test.Sum._⊎_<8>"
+                    "ref-name": "Test.Sum._⊎_<8>"
                   },
                   "arguments": [
                     {
@@ -120,21 +120,21 @@
       "type": {
         "pretty": "{A B : Set} → A → A ⊎ B",
         "tag": "Pi",
-        "name": "A",
+        "bound-name": "A",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "B",
+          "bound-name": "B",
           "domain": {
             "tag": "Sort",
             "sort": "Set"
           },
           "codomain": {
             "tag": "Pi",
-            "name": "_",
+            "bound-name": "_",
             "domain": {
               "tag": "DeBruijn",
               "index": 1
@@ -143,7 +143,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.Sum._⊎_<8>"
+                "ref-name": "Test.Sum._⊎_<8>"
               },
               "arguments": [
                 {
@@ -172,21 +172,21 @@
       "type": {
         "pretty": "{A B : Set} → B → A ⊎ B",
         "tag": "Pi",
-        "name": "A",
+        "bound-name": "A",
         "domain": {
           "tag": "Sort",
           "sort": "Set"
         },
         "codomain": {
           "tag": "Pi",
-          "name": "B",
+          "bound-name": "B",
           "domain": {
             "tag": "Sort",
             "sort": "Set"
           },
           "codomain": {
             "tag": "Pi",
-            "name": "_",
+            "bound-name": "_",
             "domain": {
               "tag": "DeBruijn",
               "index": 0
@@ -195,7 +195,7 @@
               "tag": "Application",
               "head": {
                 "tag": "ScopeReference",
-                "name": "Test.Sum._⊎_<8>"
+                "ref-name": "Test.Sum._⊎_<8>"
               },
               "arguments": [
                 {

@@ -1,0 +1,285 @@
+{
+  "name": "Test.ContextShadowing",
+  "scope-global": [],
+  "scope-local": [
+    {
+      "name": "Test.ContextShadowing.ℕ<4>",
+      "type": {
+        "pretty": "Set",
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ContextShadowing._+_<6>",
+      "type": {
+        "pretty": "ℕ → ℕ → ℕ",
+        "tag": "Pi",
+        "bound-name": "_",
+        "domain": {
+          "tag": "ScopeReference",
+          "ref-name": "Test.ContextShadowing.ℕ<4>"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "bound-name": "_",
+          "domain": {
+            "tag": "ScopeReference",
+            "ref-name": "Test.ContextShadowing.ℕ<4>"
+          },
+          "codomain": {
+            "tag": "ScopeReference",
+            "ref-name": "Test.ContextShadowing.ℕ<4>"
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ContextShadowing._≡_<8>",
+      "type": {
+        "pretty": "ℕ → ℕ → Set",
+        "tag": "Pi",
+        "bound-name": "_",
+        "domain": {
+          "tag": "ScopeReference",
+          "ref-name": "Test.ContextShadowing.ℕ<4>"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "bound-name": "_",
+          "domain": {
+            "tag": "ScopeReference",
+            "ref-name": "Test.ContextShadowing.ℕ<4>"
+          },
+          "codomain": {
+            "tag": "Sort",
+            "sort": "Set"
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.ContextShadowing.double<16>",
+      "type": {
+        "pretty": "ℕ → (m n : ℕ) → m ≡ n → ℕ",
+        "tag": "Pi",
+        "bound-name": "n",
+        "domain": {
+          "tag": "ScopeReference",
+          "ref-name": "Test.ContextShadowing.ℕ<4>"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "bound-name": "m",
+          "domain": {
+            "tag": "ScopeReference",
+            "ref-name": "Test.ContextShadowing.ℕ<4>"
+          },
+          "codomain": {
+            "tag": "Pi",
+            "bound-name": "n",
+            "domain": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.ContextShadowing.ℕ<4>"
+            },
+            "codomain": {
+              "tag": "Pi",
+              "bound-name": "_",
+              "domain": {
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.ContextShadowing._≡_<8>"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 1
+                  },
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              },
+              "codomain": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.ContextShadowing.ℕ<4>"
+              }
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "double _ m n _ = n + m",
+        "tag": "Function",
+        "clauses": [
+          {
+            "telescope": [
+              {
+                "pretty": "(n : ℕ)",
+                "name": "n",
+                "tag": "ScopeReference",
+                "ref-name": "Test.ContextShadowing.ℕ<4>"
+              },
+              {
+                "pretty": "(m : ℕ)",
+                "name": "m",
+                "tag": "ScopeReference",
+                "ref-name": "Test.ContextShadowing.ℕ<4>"
+              },
+              {
+                "pretty": "(n : ℕ)",
+                "name": "n",
+                "tag": "ScopeReference",
+                "ref-name": "Test.ContextShadowing.ℕ<4>"
+              },
+              {
+                "pretty": "(x : @1 ≡ @0)",
+                "name": "x",
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.ContextShadowing._≡_<8>"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 1
+                  },
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ],
+            "patterns": [
+              {
+                "tag": "DeBruijn",
+                "index": 3
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 2
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 1
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ],
+            "body": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.ContextShadowing._+_<6>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 1
+                },
+                {
+                  "tag": "DeBruijn",
+                  "index": 2
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "holes": [
+        {
+          "ctx": {
+            "pretty": "(n : ℕ) (m : ℕ) (n₁ : ℕ) (x : m ≡ n₁)",
+            "telescope": [
+              {
+                "pretty": "(n : ℕ)",
+                "name": "n",
+                "tag": "ScopeReference",
+                "ref-name": "Test.ContextShadowing.ℕ<4>"
+              },
+              {
+                "pretty": "(m : ℕ)",
+                "name": "m",
+                "tag": "ScopeReference",
+                "ref-name": "Test.ContextShadowing.ℕ<4>"
+              },
+              {
+                "pretty": "(n : ℕ)",
+                "name": "n",
+                "tag": "ScopeReference",
+                "ref-name": "Test.ContextShadowing.ℕ<4>"
+              },
+              {
+                "pretty": "(x : n ≡ x)",
+                "name": "x",
+                "tag": "Application",
+                "head": {
+                  "tag": "ScopeReference",
+                  "ref-name": "Test.ContextShadowing._≡_<8>"
+                },
+                "arguments": [
+                  {
+                    "tag": "DeBruijn",
+                    "index": 1
+                  },
+                  {
+                    "tag": "DeBruijn",
+                    "index": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "goal": {
+            "pretty": "ℕ",
+            "tag": "ScopeReference",
+            "ref-name": "Test.ContextShadowing.ℕ<4>"
+          },
+          "term": {
+            "pretty": "n + m",
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.ContextShadowing._+_<6>"
+            },
+            "arguments": [
+              {
+                "tag": "DeBruijn",
+                "index": 1
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 2
+              }
+            ]
+          },
+          "premises": [
+            "Test.ContextShadowing._+_<6>"
+          ]
+        }
+      ]
+    }
+  ],
+  "scope-private": []
+}
