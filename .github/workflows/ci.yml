@@ -5,7 +5,7 @@ on:
   # schedule: [{cron: '0 0 * * *'}]
   pull_request:
   push:
-    branches: [master]
+    branches: [master, db-example]
 
 jobs:
   cabal:
@@ -48,6 +48,7 @@ jobs:
     # fingerprint doesn't match, so we don't need to start from scratch every
     # time a dependency changes.
     - uses: actions/cache@v3
+      if: github.ref == 'refs/heads/master'
       name: Cache ~/.cabal/store
       with:
         path:         ${{ steps.setup-haskell-cabal.outputs.cabal-store }}
@@ -55,7 +56,9 @@ jobs:
         restore-keys: ${{ runner.os }}-${{ matrix.ghc }}-
 
     - name: Test
-      run: make test
+      run: |
+        make test
+        make testDB
 
     # - name: Free disk space
     #   if: ${{ matrix.stdlib }}

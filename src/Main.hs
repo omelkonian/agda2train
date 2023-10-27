@@ -13,9 +13,6 @@ import qualified Data.List as L
 import qualified Data.Set as S
 import qualified Data.HashMap.Strict as HM
 import qualified Data.ByteString.Lazy as BL
-import Data.Aeson ( ToJSON )
-import Data.Aeson.Encode.Pretty
-  ( encodePretty', Config(..), defConfig, Indent(..), keyOrder )
 
 import Control.Monad
 import Control.Monad.IO.Class ( liftIO )
@@ -205,30 +202,3 @@ getOutDir opts = case outDir opts of
 
 getOutFn :: Options -> String -> FilePath
 getOutFn opts mn = getOutDir opts </> mn <> ".json"
-
--- * JSON encoding
-
--- | Uses "Aeson.Pretty" to order the JSON fields.
-encode :: ToJSON a => a -> BL.ByteString
-encode = encodePretty' $ defConfig
-  { confIndent = Spaces 2
-  , confCompare = keyOrder
-      [ "pretty"
-      , "tag"
-      , "name"
-      , "original", "simplified", "reduced", "normalised"
-      , "telescope", "patterns", "fields"
-      , "domain", "codomain"
-      , "abstraction", "body"
-      , "sort", "level", "literal"
-      , "head", "arguments"
-      , "variants", "reference", "variant"
-      , "index"
-      , "scopeGlobal", "scopeLocal"
-      , "type", "definition", "holes"
-      , "ctx", "goal", "term", "premises"
-      ]
-  }
-
-encodeFile :: ToJSON a => FilePath -> a -> IO ()
-encodeFile = \fn -> BL.writeFile fn . encode
