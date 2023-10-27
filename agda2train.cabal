@@ -48,6 +48,8 @@ common globalOptions
     , mtl >=2.2.1 && <2.4
     , async >=2.2 && <2.3
     , file-embed == 0.0.15.0
+    , aeson-pretty >= 0.8.9 && < 0.9
+    , bytestring >=0.10.8.1 && <0.13
 
 library agda2train-lib
   import: globalOptions
@@ -65,8 +67,17 @@ executable agda2train
   build-depends:
       agda2train-lib
     , deepseq >=1.4.2.0 && <1.6
-    , bytestring >=0.10.8.1 && <0.13
     , directory >=1.2.6.2 && <1.4
     , filepath >=1.4.1.0 && <1.5
     , unordered-containers >=0.2.9.0 && <0.3
-    , aeson-pretty >= 0.8.9 && < 0.9
+
+executable agda2train-db
+  import: globalOptions
+  main-is: DB.hs
+  ghc-options:
+    -threaded -rtsopts -with-rtsopts=-N
+    -Wno-missing-home-modules
+  build-depends:
+      agda2train-lib
+    , unordered-containers >=0.2.9.0 && <0.3
+    , hashable

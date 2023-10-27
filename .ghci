@@ -7,3 +7,5 @@
 :def! unimath (\_ -> return ":r\n :set args --no-terms -r -v agda2train:10 -ojson/ -i $HOME/agda-unimath/src $HOME/agda-unimath/src/everything.lagda.md\n main")
 :def! typetopo (\_ -> return ":r\n :set args --no-terms -r -v agda2train:10 -ojson/ -i $HOME/TypeTopology/source $HOME/TypeTopology/source/index.lagda\n main")
 :def! prelude (\_ -> return ":r\n :set args -r -v agda2train:10 -ojson/ -i $HOME/git/formal-prelude/ $HOME/git/formal-prelude/Prelude/Main.agda\n main")
+:def! testDB (\x -> return $ ":r\n :set args add data/db.json test/golden/" <> x <> ".json\n main")
+:def! testQueryDB (\x -> return $ ":r\n :set args query data/db.json " <> x <> ".json\n main")

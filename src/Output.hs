@@ -3,14 +3,20 @@
 -- internal Agda definition to this format.
 module Output where
 
+import GHC.Generics ( Generic )
+
 import Control.Arrow ( second )
 import Control.Applicative ( (<|>), liftA2 )
-import GHC.Generics ( Generic )
+
 import Data.List ( notElem, elemIndex )
 import Data.String ( fromString )
-import Data.Aeson
+
+import qualified Data.ByteString.Lazy as BL
+import Data.Aeson hiding ( encode )
 import qualified Data.Aeson as JSON
 import qualified Data.Aeson.KeyMap as KM
+import Data.Aeson.Encode.Pretty
+  ( encodePretty', Config(..), defConfig, Indent(..), keyOrder )
 
 import Agda.Syntax.Common ( unArg )
 import qualified Agda.Syntax.Common as A
@@ -40,6 +46,7 @@ type DB   = Int
 -- | A head of a λ-application can either be a defined name in the global scope,
 -- or a DeBruijn index into the local context.
 type Head = Either Name DB
+pattern Ref x = Left x; pattern DB x = Right x
 
 -- * Generic constructions
 
@@ -51,18 +58,17 @@ infixr 4 :>; pattern x :> y = Pretty {pretty = x, thing = y}
 data Pretty a = Pretty
   { pretty :: String
   , thing  :: a
-  } deriving Generic
-deriving instance Show a => Show (Pretty a)
+  } deriving (Generic, Show, Eq)
 instance ToJSON a => ToJSON (Pretty a) where
   toJSON (Pretty{..}) = let pretty' = toJSON pretty in
     case toJSON thing of
       (Object fs)  -> object ("pretty" .= pretty' : KM.toList fs)
       t@(Array xs) -> object ["pretty" .= pretty', "telescope" .= t]
-      t            -> object ["pretty" .= pretty', "thing" .= toJSON t]
+      t            -> object ["pretty" .= pretty', "thing"     .= t]
 instance FromJSON a => FromJSON (Pretty a) where
   parseJSON = withObject "Pretty" $ \v -> Pretty
     <$> v .: "pretty"
-    <*> (v .: "thing" <|> parseJSON (Object v))
+    <*> (v .: "telescope" <|> v .: "thing" <|> parseJSON (Object v))
 
 -- | Bundle a term with (several of) its normalised forms.
 --
@@ -76,8 +82,7 @@ data Reduced a = Reduced
   , simplified :: Maybe a
   , reduced    :: Maybe a
   , normalised :: Maybe a
-  } deriving (Generic, Functor, Foldable, Traversable)
-deriving instance Show a => Show (Reduced a)
+  } deriving (Generic, Show, Eq, Functor, Foldable, Traversable)
 instance ToJSON a => ToJSON (Reduced a) where
   toJSON r@(Reduced{..})
     | Nothing <- simplified <|> reduced <|> normalised
@@ -99,7 +104,7 @@ infixr 4 :~; pattern x :~ y = Named {name = x, item = y}
 data Named a = Named
   { name :: Name
   , item :: a
-  } deriving (Generic, Show)
+  } deriving (Generic, Show, Eq, Functor)
 instance ToJSON a => ToJSON (Named a) where
   toJSON (Named{..}) = let name' = toJSON name in
     case toJSON item of
@@ -126,8 +131,8 @@ data TrainData = TrainData
   , scopePrivate :: Maybe [ScopeEntry]
   -- ^ The /private/ scope, containing private definitions not exported to the public,
   -- as well as system-generated definitions stemming from @where@ or @with@.
-  } deriving (Generic, Show)
-instance ToJSON   TrainData where toJSON    = genericToJSON jsonOpts
+  } deriving (Generic, Show, Eq)
+instance ToJSON   TrainData where toJSON    = genericToJSON    jsonOpts
 instance FromJSON TrainData where parseJSON = genericParseJSON jsonOpts
 
 -- | Every 'ScopeEntry'' is /named/.
@@ -140,7 +145,7 @@ data ScopeEntry' = ScopeEntry
   -- ^ The actual body of this entry's definition.
   , holes      :: Maybe [Sample]
   -- ^ Training data for each of the subterms in this entry's 'definition'.
-  } deriving (Generic, Show)
+  } deriving (Generic, Show, Eq)
 instance ToJSON   ScopeEntry' where toJSON    = genericToJSON    jsonOpts
 instance FromJSON ScopeEntry' where parseJSON = genericParseJSON jsonOpts
 
@@ -156,7 +161,7 @@ data Sample = Sample
   -- ^ The term that successfully fills the current 'goal'.
   , premises :: [Name]
   -- ^ Definitions used in this "proof", intended to be used for /premise selection/.
-  } deriving (Generic, Show, ToJSON, FromJSON)
+  } deriving (Generic, Show, Eq, ToJSON, FromJSON)
 
 -- | Agda definitions: datatypes, records, functions, postulates and primitives.
 data Definition
@@ -180,7 +185,7 @@ data Definition
   -- ^ e.g. `postulate pred : ℕ → ℕ`
   | Primitive {}
   -- ^ e.g. `primitive primShowNat : ℕ → String`
-  deriving (Generic, Show, ToJSON, FromJSON)
+  deriving (Generic, Show, Eq, ToJSON, FromJSON)
 
 -- | Function clauses.
 data Clause = Clause
@@ -190,8 +195,8 @@ data Clause = Clause
   -- ^ the actual patterns of this function clause
   , body      :: Maybe Term
   -- ^ the right hand side of the clause (@Nothing@ for absurd clauses)
-  } deriving (Generic, Show)
-instance ToJSON   Clause where toJSON    = genericToJSON jsonOpts
+  } deriving (Generic, Show, Eq)
+instance ToJSON   Clause where toJSON    = genericToJSON    jsonOpts
 instance FromJSON Clause where parseJSON = genericParseJSON jsonOpts
 
 -- | A telescope is a sequence of (named) types, a.k.a. bindings.
@@ -211,18 +216,18 @@ data Term
   | Sort String  -- ^ e.g. @Set@
   | Level String -- ^ e.g. @0ℓ@
   | UnsolvedMeta -- ^ i.e. @{!!}@
-  deriving (Generic, Show)
+  deriving (Generic, Show, Eq)
 
 instance {-# OVERLAPPING #-} ToJSON Head where
   toJSON = object . \case
-    (Left n)  -> [tag "ScopeReference", "name"  .= toJSON n]
-    (Right i) -> [tag "DeBruijn",       "index" .= toJSON i]
+    (Ref n)  -> [tag "ScopeReference", "name"  .= toJSON n]
+    (DB i) -> [tag "DeBruijn",       "index" .= toJSON i]
     where tag s = "tag" .= JSON.String s
 
 instance {-# OVERLAPPING #-} FromJSON Head where
   parseJSON = withObject "Head" $ \o -> o .: "tag" >>= \case
-    String "ScopeReference" -> Left  <$> o .: "name"
-    String "DeBruijn"       -> Right <$> o .: "index"
+    String "ScopeReference" -> Ref <$> o .: "name"
+    String "DeBruijn"       -> DB  <$> o .: "index"
     tag -> fail $ "Cannot parse Head: unexpected \"tag\" field " <> show tag
 
 instance ToJSON Term where
@@ -251,13 +256,13 @@ instance ToJSON Term where
 
 instance FromJSON Term where
   parseJSON = withObject "Term" $ \o -> o .: "tag" >>= \case
-    String "Pi" -> Pi undefined <$> liftA2 (:~) (o .: "name") (o .: "domain")
-                                <*> o .: "codomain"
+    String "Pi" -> Pi True <$> liftA2 (:~) (o .: "name") (o .: "domain")
+                           <*> o .: "codomain"
       -- T0D0: also serialise `isDep`
     String "Lambda" -> Lam <$> liftA2 (:~) (o .: "abstraction") (o .: "body")
     String "Application"    -> App <$> o .: "head" <*> o .: "arguments"
-    String "ScopeReference" -> flip App [] . Left  <$> o .: "name"
-    String "DeBruijn"       -> flip App [] . Right <$> o .: "index"
+    String "ScopeReference" -> flip App [] . Ref <$> o .: "name"
+    String "DeBruijn"       -> flip App [] . DB  <$> o .: "index"
     String "Literal"  -> Lit   <$> o .: "literal"
     String "Sort"     -> Sort  <$> o .: "sort"
     String "Level"    -> Level <$> o .: "level"
@@ -314,12 +319,12 @@ instance A.Clause ~> Clause where
 
 instance A.DeBruijnPattern ~> Pattern where
   go = \case
-    A.VarP _ v -> return $ App (Right $ dbPatVarIndex v) []
+    A.VarP _ v -> return $ App (DB $ dbPatVarIndex v) []
     A.DotP _ t -> go t
     A.ConP c _ ps -> do
-      App (Left $ pp c) <$> traverse go (A.namedThing . unArg <$> ps)
+      App (Ref $ pp c) <$> traverse go (A.namedThing . unArg <$> ps)
     A.LitP _ lit -> return $ Lit (pp lit)
-    A.ProjP _ qn -> return $ App (Left $ pp qn) []
+    A.ProjP _ qn -> return $ App (Ref $ pp qn) []
     p@(A.IApplyP _ _ _ _) -> panic "pattern (cubical)" p
     p@(A.DefP _ _ _)      -> panic "pattern (cubical)" p
 
@@ -349,9 +354,9 @@ instance A.Term ~> Term where
       ab' <- go (unAbs ab)
       return $ Lam (pp (absName ab) :~ ab')
     -- ** applications
-    (A.Var i   xs) -> App (Right i)                   <$> (traverse go xs)
-    (A.Def f   xs) -> App (Left $ ppName f)           <$> (traverse go xs)
-    (A.Con c _ xs) -> App (Left $ ppName $ conName c) <$> (traverse go xs)
+    (A.Var i   xs) -> App (DB i)                     <$> (traverse go xs)
+    (A.Def f   xs) -> App (Ref $ ppName f)           <$> (traverse go xs)
+    (A.Con c _ xs) -> App (Ref $ ppName $ conName c) <$> (traverse go xs)
     -- ** other constants
     (A.Lit   x)   -> return $ Lit   $ pp x
     (A.Level x)   -> return $ Level $ pp x
@@ -365,7 +370,7 @@ instance A.Term ~> Term where
 instance A.Elim ~> Term where
   go = \case
     (A.Apply x)      -> go (unArg x)
-    (A.Proj _ qn)    -> return $ App (Left $ ppName qn) []
+    (A.Proj _ qn)    -> return $ App (Ref $ ppName qn) []
     (A.IApply _ _ x) -> go x
 
 -- * Utilities
@@ -408,6 +413,8 @@ isNotCubical A.Clause{..}
   | otherwise
   = True
 
+-- ** JSON encoding
+
 -- | Configure JSON to omit empty (optional) fields and switch
 -- from camelCase to kebab-case.
 jsonOpts :: JSON.Options
@@ -420,6 +427,33 @@ jsonOpts = defaultOptions
       "scopePrivate" -> "scope-private"
       s -> s
   }
+
+-- | Uses "Aeson.Pretty" to order the JSON fields.
+encode :: ToJSON a => a -> BL.ByteString
+encode = encodePretty' $ defConfig
+  { confIndent = Spaces 2
+  , confCompare = keyOrder
+      [ "pretty"
+      , "tag"
+      , "name"
+      , "original", "simplified", "reduced", "normalised"
+      , "telescope", "patterns", "fields"
+      , "domain", "codomain"
+      , "abstraction", "body"
+      , "sort", "level", "literal"
+      , "head", "arguments"
+      , "variants", "reference", "variant"
+      , "index"
+      , "scopeGlobal", "scopeLocal"
+      , "type", "definition", "holes"
+      , "ctx", "goal", "term", "premises"
+      ]
+  }
+
+encodeFile :: ToJSON a => FilePath -> a -> IO ()
+encodeFile = \fn -> BL.writeFile fn . encode
+
+--
 
 instance P.PrettyTCM A.Definition where
   prettyTCM d = go (theDef d)

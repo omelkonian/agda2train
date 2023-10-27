@@ -1,0 +1,72 @@
+{
+  "scope": [
+    {
+      "name": "Test.PiVsFun.refl<10>",
+      "type": {
+        "tag": "Pi",
+        "name": "x",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "name": "y",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "name": "Test.PiVsFun._≡_<4>"
+            },
+            "arguments": [
+              {
+                "tag": "DeBruijn",
+                "index": 1
+              },
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ]
+          }
+        }
+      },
+      "definition": {
+        "tag": "Postulate"
+      }
+    }
+  ],
+  "context": [
+	{
+	"tag": "Sort",
+	"name": "x",
+	"sort": "Set"
+	},
+	{
+	"tag": "Sort",
+	"name": "x",
+	"sort": "Set"
+	}
+  ],
+  "goal": {
+    "tag": "Application",
+    "head": {
+	"tag": "ScopeReference",
+	"name": "Test.PiVsFun._≡_<4>"
+    },
+    "arguments": [
+	{
+	"tag": "DeBruijn",
+	"index": 1
+	},
+	{
+	"tag": "DeBruijn",
+	"index": 1
+	}
+    ]
+  }
+}

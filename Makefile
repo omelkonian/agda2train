@@ -5,6 +5,9 @@ default: repl
 repl:
 	cabal repl agda2train # e.g. `:set args -r -o json -itest test/First.agda ... main ... :r ... main`
 
+replDB:
+	cabal repl agda2train-db
+
 build:
 	cabal build
 
@@ -26,6 +29,13 @@ cleanTest:
 	@rm test/agda2train
 	make -C test clean
 	make -C test cleanGolden
+
+# DB example
+
+testDB:
+	cabal run agda2train-db -- add data/db.json test/golden/Test.PiVsFun.json
+	cabal run agda2train-db -- query data/db.json data/query.json \
+		| tail -n1 | cmp data/expected_response.txt
 
 # Extracting training data from whole libraries
 
