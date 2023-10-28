@@ -3,7 +3,7 @@
     {
       "name": "Test.PiVsFun.refl<10>",
       "type": {
-        "dependency-level": 0,
+        "dependency-level": 2,
         "tag": "Pi",
         "bound-name": "x",
         "domain": {
