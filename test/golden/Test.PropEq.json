@@ -5,6 +5,7 @@
       "name": "Agda.Builtin.Nat.Nat<6>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -13,10 +14,12 @@
         "tag": "ADT",
         "variants": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           {
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "n",
             "domain": {
@@ -35,6 +38,7 @@
       "name": "Agda.Builtin.Equality._≡_<12>",
       "type": {
         "pretty": "{a : Agda.Primitive.Level} {A : Set a} → A → A → Set a",
+        "dependency-level": 3,
         "tag": "Pi",
         "bound-name": "a",
         "domain": {
@@ -75,6 +79,7 @@
         "tag": "ADT",
         "variants": [
           {
+            "dependency-level": 4,
             "tag": "Pi",
             "bound-name": "a",
             "domain": {
@@ -130,6 +135,7 @@
       "name": "Agda.Builtin.Nat.Nat.suc<12>",
       "type": {
         "pretty": "Nat → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "n",
         "domain": {
@@ -152,6 +158,7 @@
       "name": "Agda.Builtin.Equality._≡_.refl<20>",
       "type": {
         "pretty": "{a : Agda.Primitive.Level} {A : Set a} {x : A} → x ≡ x",
+        "dependency-level": 4,
         "tag": "Pi",
         "bound-name": "a",
         "domain": {
@@ -213,6 +220,7 @@
       "name": "Test.PropEq.reflℕ<6>",
       "type": {
         "pretty": "(n : Nat) → n ≡ n",
+        "dependency-level": 2,
         "tag": "Pi",
         "bound-name": "n",
         "domain": {
@@ -254,6 +262,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -279,6 +288,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -286,6 +296,7 @@
           },
           "goal": {
             "pretty": "n ≡ n",
+            "dependency-level": 0,
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
@@ -325,6 +336,7 @@
       "name": "Test.PropEq.symℕ<14>",
       "type": {
         "pretty": "(n m : Nat) → n ≡ suc m → Nat",
+        "dependency-level": 2,
         "tag": "Pi",
         "bound-name": "n",
         "domain": {
@@ -391,6 +403,7 @@
               {
                 "pretty": "(k : Nat)",
                 "name": "k",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -428,12 +441,14 @@
               {
                 "pretty": "(m : Nat)",
                 "name": "m",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               },
               {
                 "pretty": "(_ : Nat.zero ≡ suc @0)",
                 "name": "_",
+                "dependency-level": 0,
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",

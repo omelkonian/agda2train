@@ -1,0 +1,352 @@
+{
+  "name": "Test.DependencyLevels",
+  "scope-global": [
+    {
+      "name": "Agda.Primitive.Level<14>",
+      "type": {
+        "pretty": "Set",
+        "dependency-level": 0,
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      }
+    }
+  ],
+  "scope-local": [
+    {
+      "name": "Test.DependencyLevels.ℕ<4>",
+      "type": {
+        "pretty": "Set",
+        "dependency-level": 0,
+        "tag": "Sort",
+        "sort": "Set"
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.DependencyLevels.Fin<6>",
+      "type": {
+        "pretty": "ℕ → Set",
+        "dependency-level": 0,
+        "tag": "Pi",
+        "bound-name": "_",
+        "domain": {
+          "tag": "ScopeReference",
+          "ref-name": "Test.DependencyLevels.ℕ<4>"
+        },
+        "codomain": {
+          "tag": "Sort",
+          "sort": "Set"
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.DependencyLevels._+_<8>",
+      "type": {
+        "pretty": "ℕ → ℕ → ℕ",
+        "dependency-level": 0,
+        "tag": "Pi",
+        "bound-name": "_",
+        "domain": {
+          "tag": "ScopeReference",
+          "ref-name": "Test.DependencyLevels.ℕ<4>"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "bound-name": "_",
+          "domain": {
+            "tag": "ScopeReference",
+            "ref-name": "Test.DependencyLevels.ℕ<4>"
+          },
+          "codomain": {
+            "tag": "ScopeReference",
+            "ref-name": "Test.DependencyLevels.ℕ<4>"
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.DependencyLevels.dep2<12>",
+      "type": {
+        "pretty": "(A : Set) → A → A",
+        "dependency-level": 2,
+        "tag": "Pi",
+        "bound-name": "A",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "bound-name": "_",
+          "domain": {
+            "tag": "DeBruijn",
+            "index": 0
+          },
+          "codomain": {
+            "tag": "DeBruijn",
+            "index": 0
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.DependencyLevels.lvl<18>",
+      "type": {
+        "pretty": "(a : Level) (A : Set a) → A → A",
+        "dependency-level": 2,
+        "tag": "Pi",
+        "bound-name": "a",
+        "domain": {
+          "tag": "ScopeReference",
+          "ref-name": "Agda.Primitive.Level<14>"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "bound-name": "A",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set @0"
+          },
+          "codomain": {
+            "tag": "Pi",
+            "bound-name": "_",
+            "domain": {
+              "tag": "DeBruijn",
+              "index": 0
+            },
+            "codomain": {
+              "tag": "DeBruijn",
+              "index": 0
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.DependencyLevels.dep3<22>",
+      "type": {
+        "pretty": "(n : ℕ) → Fin n → Fin n → Fin n",
+        "dependency-level": 3,
+        "tag": "Pi",
+        "bound-name": "n",
+        "domain": {
+          "tag": "ScopeReference",
+          "ref-name": "Test.DependencyLevels.ℕ<4>"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "bound-name": "_",
+          "domain": {
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.DependencyLevels.Fin<6>"
+            },
+            "arguments": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ]
+          },
+          "codomain": {
+            "tag": "Pi",
+            "bound-name": "_",
+            "domain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.DependencyLevels.Fin<6>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                }
+              ]
+            },
+            "codomain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.DependencyLevels.Fin<6>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.DependencyLevels.dep4<26>",
+      "type": {
+        "pretty": "(n : ℕ) → Fin n → Fin n → Fin (n + n)",
+        "dependency-level": 4,
+        "tag": "Pi",
+        "bound-name": "n",
+        "domain": {
+          "tag": "ScopeReference",
+          "ref-name": "Test.DependencyLevels.ℕ<4>"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "bound-name": "_",
+          "domain": {
+            "tag": "Application",
+            "head": {
+              "tag": "ScopeReference",
+              "ref-name": "Test.DependencyLevels.Fin<6>"
+            },
+            "arguments": [
+              {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            ]
+          },
+          "codomain": {
+            "tag": "Pi",
+            "bound-name": "_",
+            "domain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.DependencyLevels.Fin<6>"
+              },
+              "arguments": [
+                {
+                  "tag": "DeBruijn",
+                  "index": 0
+                }
+              ]
+            },
+            "codomain": {
+              "tag": "Application",
+              "head": {
+                "tag": "ScopeReference",
+                "ref-name": "Test.DependencyLevels.Fin<6>"
+              },
+              "arguments": [
+                {
+                  "tag": "Application",
+                  "head": {
+                    "tag": "ScopeReference",
+                    "ref-name": "Test.DependencyLevels._+_<8>"
+                  },
+                  "arguments": [
+                    {
+                      "tag": "DeBruijn",
+                      "index": 0
+                    },
+                    {
+                      "tag": "DeBruijn",
+                      "index": 0
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    },
+    {
+      "name": "Test.DependencyLevels.id<32>",
+      "type": {
+        "pretty": "(A B : Set) → (A → B) → A → B",
+        "dependency-level": 4,
+        "tag": "Pi",
+        "bound-name": "A",
+        "domain": {
+          "tag": "Sort",
+          "sort": "Set"
+        },
+        "codomain": {
+          "tag": "Pi",
+          "bound-name": "B",
+          "domain": {
+            "tag": "Sort",
+            "sort": "Set"
+          },
+          "codomain": {
+            "tag": "Pi",
+            "bound-name": "_",
+            "domain": {
+              "tag": "Pi",
+              "bound-name": "_",
+              "domain": {
+                "tag": "DeBruijn",
+                "index": 1
+              },
+              "codomain": {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            },
+            "codomain": {
+              "tag": "Pi",
+              "bound-name": "_",
+              "domain": {
+                "tag": "DeBruijn",
+                "index": 1
+              },
+              "codomain": {
+                "tag": "DeBruijn",
+                "index": 0
+              }
+            }
+          }
+        }
+      },
+      "definition": {
+        "pretty": "<Axiom>",
+        "tag": "Postulate"
+      },
+      "holes": []
+    }
+  ],
+  "scope-private": []
+}

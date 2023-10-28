@@ -5,6 +5,7 @@
       "name": "Agda.Builtin.Nat.Nat<6>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -13,10 +14,12 @@
         "tag": "ADT",
         "variants": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           {
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "n",
             "domain": {
@@ -35,6 +38,7 @@
       "name": "Agda.Builtin.Nat.Nat.suc<12>",
       "type": {
         "pretty": "Nat → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "n",
         "domain": {
@@ -59,6 +63,7 @@
       "name": "Test.Where.f<4>",
       "type": {
         "pretty": "Nat → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -79,6 +84,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -126,6 +132,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -133,6 +140,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
@@ -175,6 +183,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -182,6 +191,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
@@ -209,6 +219,7 @@
       "name": "Test.Where.f²<6>",
       "type": {
         "pretty": "Nat → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -229,6 +240,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -276,6 +288,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -283,6 +296,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
@@ -325,6 +339,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -332,6 +347,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
@@ -361,6 +377,7 @@
       "name": "Test.Where._.g<14>",
       "type": {
         "pretty": "(n : Nat) → Nat → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "n",
         "domain": {
@@ -390,6 +407,7 @@
       "name": "Test.Where._.g<22>",
       "type": {
         "pretty": "(n : Nat) → Nat → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "n",
         "domain": {

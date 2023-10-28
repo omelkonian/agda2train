@@ -6,6 +6,7 @@
       "name": "Test.ContextShadowing.ℕ<4>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -19,6 +20,7 @@
       "name": "Test.ContextShadowing._+_<6>",
       "type": {
         "pretty": "ℕ → ℕ → ℕ",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -48,6 +50,7 @@
       "name": "Test.ContextShadowing._≡_<8>",
       "type": {
         "pretty": "ℕ → ℕ → Set",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -77,6 +80,7 @@
       "name": "Test.ContextShadowing.double<16>",
       "type": {
         "pretty": "ℕ → (m n : ℕ) → m ≡ n → ℕ",
+        "dependency-level": 2,
         "tag": "Pi",
         "bound-name": "n",
         "domain": {
@@ -134,24 +138,28 @@
               {
                 "pretty": "(n : ℕ)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Test.ContextShadowing.ℕ<4>"
               },
               {
                 "pretty": "(m : ℕ)",
                 "name": "m",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Test.ContextShadowing.ℕ<4>"
               },
               {
                 "pretty": "(n : ℕ)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Test.ContextShadowing.ℕ<4>"
               },
               {
                 "pretty": "(x : @1 ≡ @0)",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
@@ -215,24 +223,28 @@
               {
                 "pretty": "(n : ℕ)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Test.ContextShadowing.ℕ<4>"
               },
               {
                 "pretty": "(m : ℕ)",
                 "name": "m",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Test.ContextShadowing.ℕ<4>"
               },
               {
                 "pretty": "(n : ℕ)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Test.ContextShadowing.ℕ<4>"
               },
               {
                 "pretty": "(x : n ≡ x)",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
@@ -253,6 +265,7 @@
           },
           "goal": {
             "pretty": "ℕ",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.ContextShadowing.ℕ<4>"
           },

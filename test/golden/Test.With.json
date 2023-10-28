@@ -5,6 +5,7 @@
       "name": "Agda.Builtin.Nat.Nat<6>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -13,10 +14,12 @@
         "tag": "ADT",
         "variants": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           {
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "n",
             "domain": {
@@ -35,6 +38,7 @@
       "name": "Agda.Builtin.Nat.Nat.zero<8>",
       "type": {
         "pretty": "Nat",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Agda.Builtin.Nat.Nat<6>"
       },
@@ -49,6 +53,7 @@
       "name": "Agda.Builtin.Nat.Nat.suc<12>",
       "type": {
         "pretty": "Nat → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "n",
         "domain": {
@@ -73,6 +78,7 @@
       "name": "Test.With.g<4>",
       "type": {
         "pretty": "Nat → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -94,6 +100,7 @@
       "name": "Test.With.f<6>",
       "type": {
         "pretty": "Nat → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -114,6 +121,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -161,6 +169,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -168,6 +177,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
@@ -210,6 +220,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -217,6 +228,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
@@ -246,6 +258,7 @@
       "name": "Test.With.with-10<12>",
       "type": {
         "pretty": "(n : Nat) → Nat → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "n",
         "domain": {
@@ -274,6 +287,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -298,12 +312,14 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               },
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -369,6 +385,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -376,6 +393,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
@@ -401,12 +419,14 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               },
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -414,6 +434,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
@@ -461,12 +482,14 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               },
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -474,6 +497,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
@@ -512,12 +536,14 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               },
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -525,6 +551,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },

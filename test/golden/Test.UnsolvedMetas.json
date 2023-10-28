@@ -5,6 +5,7 @@
       "name": "Agda.Builtin.Nat.Nat<6>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -13,10 +14,12 @@
         "tag": "ADT",
         "variants": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           {
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "n",
             "domain": {
@@ -37,6 +40,7 @@
       "name": "Test.UnsolvedMetas.n<4>",
       "type": {
         "pretty": "Nat",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Agda.Builtin.Nat.Nat<6>"
       },

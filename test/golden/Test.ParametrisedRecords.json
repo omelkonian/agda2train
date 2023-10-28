@@ -5,6 +5,7 @@
       "name": "Agda.Builtin.String.String<6>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -19,6 +20,7 @@
       "name": "Test.ParametrisedRecords.Name<6>",
       "type": {
         "pretty": "(NameId : Set) → Set",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "NameId",
         "domain": {
@@ -37,16 +39,19 @@
           {
             "pretty": "{NameId : Set}",
             "name": "NameId",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           }
         ],
         "fields": [
           {
+            "dependency-level": 0,
             "tag": "DeBruijn",
             "index": 0
           },
           {
+            "dependency-level": 0,
             "tag": "DeBruijn",
             "index": 1
           }
@@ -58,6 +63,7 @@
       "name": "Test.ParametrisedRecords.Name.first<14>",
       "type": {
         "pretty": "{NameId : Set} → Name NameId → NameId",
+        "dependency-level": 2,
         "tag": "Pi",
         "bound-name": "NameId",
         "domain": {
@@ -95,18 +101,21 @@
               {
                 "pretty": "{NameId : Set}",
                 "name": "NameId",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(first : @0)",
                 "name": "first",
+                "dependency-level": 0,
                 "tag": "DeBruijn",
                 "index": 0
               },
               {
                 "pretty": "(last : @1)",
                 "name": "last",
+                "dependency-level": 0,
                 "tag": "DeBruijn",
                 "index": 1
               }
@@ -143,6 +152,7 @@
       "name": "Test.ParametrisedRecords.Name.last<16>",
       "type": {
         "pretty": "{NameId : Set} → Name NameId → NameId",
+        "dependency-level": 2,
         "tag": "Pi",
         "bound-name": "NameId",
         "domain": {
@@ -180,18 +190,21 @@
               {
                 "pretty": "{NameId : Set}",
                 "name": "NameId",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(first : @0)",
                 "name": "first",
+                "dependency-level": 0,
                 "tag": "DeBruijn",
                 "index": 0
               },
               {
                 "pretty": "(last : @1)",
                 "name": "last",
+                "dependency-level": 0,
                 "tag": "DeBruijn",
                 "index": 1
               }
@@ -228,6 +241,7 @@
       "name": "Test.ParametrisedRecords.User<18>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -237,6 +251,7 @@
         "telescope": [],
         "fields": [
           {
+            "dependency-level": 0,
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
@@ -257,6 +272,7 @@
       "name": "Test.ParametrisedRecords.User.name<22>",
       "type": {
         "pretty": "User → Name String",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "r",
         "domain": {
@@ -286,6 +302,7 @@
               {
                 "pretty": "(name : Name String)",
                 "name": "name",
+                "dependency-level": 0,
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
@@ -327,6 +344,7 @@
       "name": "Test.ParametrisedRecords.koks<24>",
       "type": {
         "pretty": "User",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Test.ParametrisedRecords.User<18>"
       },
@@ -340,6 +358,7 @@
       "name": "Test.ParametrisedRecords.kokos<26>",
       "type": {
         "pretty": "String",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Agda.Builtin.String.String<6>"
       },
@@ -383,6 +402,7 @@
           },
           "goal": {
             "pretty": "String",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.String.String<6>"
           },
@@ -423,6 +443,7 @@
       "name": "Test.ParametrisedRecords.Name.constructor<7>",
       "type": {
         "pretty": "{NameId : Set} (first₁ last₁ : NameId) → Name NameId",
+        "dependency-level": 3,
         "tag": "Pi",
         "bound-name": "NameId",
         "domain": {
@@ -471,6 +492,7 @@
       "name": "Test.ParametrisedRecords.User.constructor<71>",
       "type": {
         "pretty": "(name₁ : Name String) → User",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "name",
         "domain": {

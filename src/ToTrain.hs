@@ -2,16 +2,16 @@
 -- | This module contains everything related to the generation of the training data.
 module ToTrain where
 
-import Data.Maybe ( isJust )
 import Data.List ( isPrefixOf, isInfixOf, find, nub )
 import qualified Data.Set as S
 import Data.FileEmbed ( embedStringFile )
 
-import Control.Monad ( forM_, void, when, unless )
+import Control.Monad ( forM_, void, unless )
 import Control.Monad.Writer ( WriterT(runWriterT) )
-import Control.Monad.Reader ( ReaderT(runReaderT), ask )
+import Control.Monad.Reader ( ReaderT(runReaderT), asks )
 import Control.Monad.Error.Class ( catchError )
 import Control.Monad.IO.Class ( liftIO )
+import Control.Monad.Trans.Class ( lift )
 import Control.Concurrent ( threadDelay )
 import Control.Concurrent.Async ( race )
 
@@ -24,6 +24,7 @@ import Agda.Syntax.Internal.Generic ( TermLike, foldTerm )
 import Agda.Syntax.Scope.Base ( nsInScope, allThingsInScope )
 import Agda.Syntax.Scope.Monad ( getCurrentScope )
 
+import Agda.Utils.Functor ( (<&>) )
 import Agda.Utils.Monad ( whenM, tell1 )
 import Agda.Utils.Either ( caseEitherM )
 
@@ -33,15 +34,15 @@ import Agda.TypeChecking.Reduce
 import Agda.TypeChecking.CheckInternal ( Action(..), defaultAction, checkInternal' )
 import Agda.TypeChecking.Pretty ( PrettyTCM )
 
-
 import AgdaInternals ()
-import Output hiding ( Definition(..), Clause(..), Term(..), Type(..) )
+import Options
+import JSON hiding ( Term, Type, Definition, Clause, Function )
+import InternalToJSON
 
 -- * Wrapper around Agda's typechecking monad 'TCM'
 
-type CEnv = Bool -- ^ whether to include private definitions
-type COut = [Sample] -- the training samples to output
-
+type CEnv = Options  -- ^ configuration options
+type COut = [Sample] -- ^ the training samples to output
 
 -- | The typechecking monad with an additional environment and output of samples.
 type C = WriterT COut (ReaderT CEnv TCM)
@@ -67,9 +68,8 @@ train :: TrainF
 train ty t = do
   let ns = names t
   allNs <- nsInScope . allThingsInScope <$> liftTCM getCurrentScope
-  includePrivs <- ask
   unless (null ns) $
-    when (includePrivs || (S.fromList ns `S.isSubsetOf` allNs)) $ do
+    whenM (asks includePrivs <&> (|| S.fromList ns `S.isSubsetOf` allNs)) $ do
       ctx <- getContextTelescope
       pctx <- liftTCM $ ppm ctx; pty <- liftTCM $ ppm ty; pt <- liftTCM $ ppm t
       rty <- mkReduced ty
@@ -77,9 +77,9 @@ train ty t = do
 
       rt <- mkReduced t
 
-      ctx' <- liftTCM $ convert ctx
-      rty' <- liftTCM $ traverse convert rty
-      rt'  <- liftTCM $ traverse convert rt
+      ctx' <- lift $ convert ctx
+      rty' <- lift $ traverse convert rty
+      rt'  <- lift $ traverse convert rt
       tell1 $ Sample
         { ctx      = prender pctx :> ctx'
         , goal     = prender pty  :> rty'

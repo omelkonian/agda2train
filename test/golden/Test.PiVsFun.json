@@ -6,6 +6,7 @@
       "name": "Test.PiVsFun._≡_<4>",
       "type": {
         "pretty": "Set → Set → Set",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -35,6 +36,7 @@
       "name": "Test.PiVsFun.refl<10>",
       "type": {
         "pretty": "{x y : Set} → x ≡ y",
+        "dependency-level": 2,
         "tag": "Pi",
         "bound-name": "x",
         "domain": {
@@ -77,6 +79,7 @@
       "name": "Test.PiVsFun.f<14>",
       "type": {
         "pretty": "(x : Set) → Set → x ≡ x",
+        "dependency-level": 2,
         "tag": "Pi",
         "bound-name": "x",
         "domain": {
@@ -118,12 +121,14 @@
               {
                 "pretty": "(x : Set)",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(x : Set)",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               }
@@ -166,12 +171,14 @@
               {
                 "pretty": "(x : Set)",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(x : Set)",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               }
@@ -179,6 +186,7 @@
           },
           "goal": {
             "pretty": "x ≡ x",
+            "dependency-level": 0,
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
@@ -223,6 +231,7 @@
       "name": "Test.PiVsFun.g<22>",
       "type": {
         "pretty": "(x y : Set) → x ≡ y",
+        "dependency-level": 2,
         "tag": "Pi",
         "bound-name": "x",
         "domain": {
@@ -264,12 +273,14 @@
               {
                 "pretty": "(x : Set)",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(y : Set)",
                 "name": "y",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               }
@@ -312,12 +323,14 @@
               {
                 "pretty": "(x : Set)",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(y : Set)",
                 "name": "y",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               }
@@ -325,6 +338,7 @@
           },
           "goal": {
             "pretty": "x ≡ y",
+            "dependency-level": 0,
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
@@ -369,6 +383,7 @@
       "name": "Test.PiVsFun.fi<30>",
       "type": {
         "pretty": "{x _ : Set} → x ≡ x",
+        "dependency-level": 2,
         "tag": "Pi",
         "bound-name": "x",
         "domain": {
@@ -410,12 +425,14 @@
               {
                 "pretty": "{x : Set}",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{_ : Set}",
                 "name": "_",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               }
@@ -458,12 +475,14 @@
               {
                 "pretty": "{x : Set}",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{x : Set}",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               }
@@ -471,6 +490,7 @@
           },
           "goal": {
             "pretty": "x ≡ x",
+            "dependency-level": 0,
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
@@ -515,6 +535,7 @@
       "name": "Test.PiVsFun.gi<38>",
       "type": {
         "pretty": "{x y : Set} → x ≡ y",
+        "dependency-level": 2,
         "tag": "Pi",
         "bound-name": "x",
         "domain": {
@@ -556,12 +577,14 @@
               {
                 "pretty": "{x : Set}",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{y : Set}",
                 "name": "y",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               }
@@ -604,12 +627,14 @@
               {
                 "pretty": "{x : Set}",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{y : Set}",
                 "name": "y",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               }
@@ -617,6 +642,7 @@
           },
           "goal": {
             "pretty": "x ≡ y",
+            "dependency-level": 0,
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
@@ -661,6 +687,7 @@
       "name": "Test.PiVsFun.id<66>",
       "type": {
         "pretty": "{x y : Set} → x ≡ y → x ≡ x",
+        "dependency-level": 4,
         "tag": "Pi",
         "bound-name": "x",
         "domain": {
@@ -723,18 +750,21 @@
               {
                 "pretty": "{x : Set}",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{y : Set}",
                 "name": "y",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(eq : @1 ≡ @0)",
                 "name": "eq",
+                "dependency-level": 0,
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
@@ -794,18 +824,21 @@
               {
                 "pretty": "{x : Set}",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{y : Set}",
                 "name": "y",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(eq : y ≡ eq)",
                 "name": "eq",
+                "dependency-level": 0,
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
@@ -826,6 +859,7 @@
           },
           "goal": {
             "pretty": "x ≡ x",
+            "dependency-level": 0,
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",

@@ -5,6 +5,7 @@
       "name": "Agda.Builtin.Nat.Nat<6>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -13,10 +14,12 @@
         "tag": "ADT",
         "variants": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           {
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "n",
             "domain": {
@@ -35,6 +38,7 @@
       "name": "Agda.Builtin.String.String<6>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -49,6 +53,7 @@
       "name": "Test.ParametrisedDatatypes._×_<4>",
       "type": {
         "pretty": "Set → Set → Set",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -78,6 +83,7 @@
       "name": "Test.ParametrisedDatatypes._.Expr<18>",
       "type": {
         "pretty": "(𝕀 : Set) → Set → Set → Set₁",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "𝕀",
         "domain": {
@@ -110,6 +116,7 @@
         "tag": "ADT",
         "variants": [
           {
+            "dependency-level": 4,
             "tag": "Pi",
             "bound-name": "𝕀",
             "domain": {
@@ -163,6 +170,7 @@
             }
           },
           {
+            "dependency-level": 2,
             "tag": "Pi",
             "bound-name": "𝕀",
             "domain": {
@@ -208,6 +216,7 @@
             }
           },
           {
+            "dependency-level": 10,
             "tag": "Pi",
             "bound-name": "𝕀",
             "domain": {
@@ -331,6 +340,7 @@
       "name": "Test.ParametrisedDatatypes._.Expr.var<22>",
       "type": {
         "pretty": "{𝕀 𝕂 A : Set} → 𝕀 → Expr 𝕀 𝕂 A",
+        "dependency-level": 4,
         "tag": "Pi",
         "bound-name": "𝕀",
         "domain": {
@@ -395,6 +405,7 @@
       "name": "Test.ParametrisedDatatypes._.Expr.con<24>",
       "type": {
         "pretty": "{𝕀 𝕂 : Set} → ℕ → Expr 𝕀 𝕂 ℕ",
+        "dependency-level": 2,
         "tag": "Pi",
         "bound-name": "𝕀",
         "domain": {
@@ -451,6 +462,7 @@
       "name": "Test.ParametrisedDatatypes._.Expr._⊗_<26>",
       "type": {
         "pretty": "{𝕀 𝕂 A B : Set} → Expr 𝕀 𝕂 A → Expr 𝕀 𝕂 B → Expr 𝕀 𝕂 (A × B)",
+        "dependency-level": 10,
         "tag": "Pi",
         "bound-name": "𝕀",
         "domain": {
@@ -578,6 +590,7 @@
       "name": "Test.ParametrisedDatatypes.ex<28>",
       "type": {
         "pretty": "Expr String ℕ (ℕ × (ℕ → ℕ) × ℕ)",
+        "dependency-level": 0,
         "tag": "Application",
         "head": {
           "tag": "ScopeReference",
@@ -764,6 +777,7 @@
           },
           "goal": {
             "pretty": "Expr String ℕ (ℕ × (ℕ → ℕ) × ℕ)",
+            "dependency-level": 0,
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
@@ -948,6 +962,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -967,6 +982,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1008,6 +1024,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1035,6 +1052,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1054,6 +1072,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1073,6 +1092,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1092,6 +1112,7 @@
           },
           "goal": {
             "pretty": "Expr String ℕ ℕ",
+            "dependency-level": 0,
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
@@ -1137,6 +1158,7 @@
           },
           "goal": {
             "pretty": "Expr String ℕ ((ℕ → ℕ) × ℕ)",
+            "dependency-level": 0,
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
@@ -1256,6 +1278,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1283,6 +1306,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1302,6 +1326,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1321,6 +1346,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1340,6 +1366,7 @@
           },
           "goal": {
             "pretty": "Expr String ℕ (ℕ → ℕ)",
+            "dependency-level": 0,
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",
@@ -1406,6 +1433,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1433,6 +1461,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1452,6 +1481,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1471,6 +1501,7 @@
           },
           "goal": {
             "pretty": "Expr String ℕ ℕ",
+            "dependency-level": 0,
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",

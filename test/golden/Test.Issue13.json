@@ -6,6 +6,7 @@
       "name": "Test.Issue13._∘_<10>",
       "type": {
         "pretty": "{B C A : Set} → (B → C) → (A → B) → A → C",
+        "dependency-level": 6,
         "tag": "Pi",
         "bound-name": "B",
         "domain": {
@@ -83,6 +84,7 @@
       "name": "Test.Issue13._×_<12>",
       "type": {
         "pretty": "Set → Set → Set",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -112,6 +114,7 @@
       "name": "Test.Issue13._⊢>_<14>",
       "type": {
         "pretty": "Set → Set → Set",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -141,6 +144,7 @@
       "name": "Test.Issue13.List<16>",
       "type": {
         "pretty": "Set → Set",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -162,6 +166,7 @@
       "name": "Test.Issue13.Map<18>",
       "type": {
         "pretty": "Set → Set",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -183,6 +188,7 @@
       "name": "Test.Issue13.K<20>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -196,6 +202,7 @@
       "name": "Test.Issue13.V<22>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -209,6 +216,7 @@
       "name": "Test.Issue13.fromList<34>",
       "type": {
         "pretty": "List (K × V) → Map V",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -394,6 +402,7 @@
           },
           "goal": {
             "pretty": "List (K × V) → Map V",
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "_",
             "domain": {
@@ -582,6 +591,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -626,6 +636,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -660,6 +671,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -679,6 +691,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -698,6 +711,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -727,6 +741,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -746,6 +761,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -790,6 +806,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -824,6 +841,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -843,6 +861,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -862,6 +881,7 @@
           },
           "goal": {
             "pretty": "List (K ⊢> V) → Map V",
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "_",
             "domain": {
@@ -920,6 +940,7 @@
           },
           "goal": {
             "pretty": "List (K × V) → List (K ⊢> V)",
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "_",
             "domain": {
@@ -1039,6 +1060,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1073,6 +1095,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1092,6 +1115,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1111,6 +1135,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1145,6 +1170,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1164,6 +1190,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -1183,6 +1210,7 @@
           },
           "goal": {
             "pretty": "K × V → K ⊢> V",
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "_",
             "domain": {
@@ -1237,6 +1265,7 @@
       "name": "Test.Issue13.List.map<26>",
       "type": {
         "pretty": "{A B : Set} → (A → B) → List A → List B",
+        "dependency-level": 4,
         "tag": "Pi",
         "bound-name": "A",
         "domain": {
@@ -1308,6 +1337,7 @@
       "name": "Test.Issue13.AVL.fromList<30>",
       "type": {
         "pretty": "List (K ⊢> V) → Map V",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -1360,6 +1390,7 @@
       "name": "Test.Issue13.AVL.fromPair<32>",
       "type": {
         "pretty": "K × V → K ⊢> V",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {

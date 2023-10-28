@@ -6,6 +6,7 @@
       "name": "Test.OverloadedConstructors.Nat<4>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -14,10 +15,12 @@
         "tag": "ADT",
         "variants": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.OverloadedConstructors.Nat<4>"
           },
           {
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "_",
             "domain": {
@@ -37,6 +40,7 @@
       "name": "Test.OverloadedConstructors.Nat.O<6>",
       "type": {
         "pretty": "Nat",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Test.OverloadedConstructors.Nat<4>"
       },
@@ -52,6 +56,7 @@
       "name": "Test.OverloadedConstructors.Nat.S_<8>",
       "type": {
         "pretty": "Nat → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -75,6 +80,7 @@
       "name": "Test.OverloadedConstructors.n<10>",
       "type": {
         "pretty": "Nat",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Test.OverloadedConstructors.Nat<4>"
       },
@@ -118,6 +124,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.OverloadedConstructors.Nat<4>"
           },
@@ -156,6 +163,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.OverloadedConstructors.Nat<4>"
           },
@@ -185,6 +193,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.OverloadedConstructors.Nat<4>"
           },
@@ -203,6 +212,7 @@
       "name": "Test.OverloadedConstructors.ℕ<12>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -211,10 +221,12 @@
         "tag": "ADT",
         "variants": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.OverloadedConstructors.ℕ<12>"
           },
           {
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "_",
             "domain": {
@@ -234,6 +246,7 @@
       "name": "Test.OverloadedConstructors.ℕ.O<14>",
       "type": {
         "pretty": "ℕ",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Test.OverloadedConstructors.ℕ<12>"
       },
@@ -249,6 +262,7 @@
       "name": "Test.OverloadedConstructors.ℕ.S_<16>",
       "type": {
         "pretty": "ℕ → ℕ",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -272,6 +286,7 @@
       "name": "Test.OverloadedConstructors.𝕟<18>",
       "type": {
         "pretty": "ℕ",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Test.OverloadedConstructors.ℕ<12>"
       },
@@ -315,6 +330,7 @@
           },
           "goal": {
             "pretty": "ℕ",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.OverloadedConstructors.ℕ<12>"
           },
@@ -353,6 +369,7 @@
           },
           "goal": {
             "pretty": "ℕ",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.OverloadedConstructors.ℕ<12>"
           },
@@ -382,6 +399,7 @@
           },
           "goal": {
             "pretty": "ℕ",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.OverloadedConstructors.ℕ<12>"
           },
@@ -400,6 +418,7 @@
       "name": "Test.OverloadedConstructors.X<20>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -409,6 +428,7 @@
         "telescope": [],
         "fields": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.OverloadedConstructors.Nat<4>"
           }
@@ -420,6 +440,7 @@
       "name": "Test.OverloadedConstructors.mk<26>",
       "type": {
         "pretty": "(x : Nat) → X",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "x",
         "domain": {
@@ -443,6 +464,7 @@
       "name": "Test.OverloadedConstructors.ex-x<28>",
       "type": {
         "pretty": "X",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Test.OverloadedConstructors.X<20>"
       },
@@ -477,6 +499,7 @@
           },
           "goal": {
             "pretty": "X",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.OverloadedConstructors.X<20>"
           },
@@ -539,6 +562,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.OverloadedConstructors.Nat<4>"
           },
@@ -603,6 +627,7 @@
       "name": "Test.OverloadedConstructors.𝕏<30>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -612,6 +637,7 @@
         "telescope": [],
         "fields": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.OverloadedConstructors.ℕ<12>"
           }
@@ -623,6 +649,7 @@
       "name": "Test.OverloadedConstructors.mk<36>",
       "type": {
         "pretty": "(𝕩 : ℕ) → 𝕏",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "𝕩",
         "domain": {
@@ -646,6 +673,7 @@
       "name": "Test.OverloadedConstructors.ex-𝕩<38>",
       "type": {
         "pretty": "𝕏",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Test.OverloadedConstructors.𝕏<30>"
       },
@@ -680,6 +708,7 @@
           },
           "goal": {
             "pretty": "𝕏",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.OverloadedConstructors.𝕏<30>"
           },
@@ -742,6 +771,7 @@
           },
           "goal": {
             "pretty": "ℕ",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.OverloadedConstructors.ℕ<12>"
           },
@@ -808,6 +838,7 @@
       "name": "Test.OverloadedConstructors.X.x<24>",
       "type": {
         "pretty": "X → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "r",
         "domain": {
@@ -828,6 +859,7 @@
               {
                 "pretty": "(x : Nat)",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Test.OverloadedConstructors.Nat<4>"
               }
@@ -860,6 +892,7 @@
       "name": "Test.OverloadedConstructors.𝕏.𝕩<34>",
       "type": {
         "pretty": "𝕏 → ℕ",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "r",
         "domain": {
@@ -880,6 +913,7 @@
               {
                 "pretty": "(𝕩 : ℕ)",
                 "name": "𝕩",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Test.OverloadedConstructors.ℕ<12>"
               }

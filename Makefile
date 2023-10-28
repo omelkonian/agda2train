@@ -3,10 +3,10 @@
 default: repl
 
 repl:
-	cabal repl agda2train # e.g. `:set args -r -o json -itest test/First.agda ... main ... :r ... main`
+	cabal repl exe:agda2train # e.g. `:set args -r -o json -itest test/First.agda ... main ... :r ... main`
 
 replDB:
-	cabal repl agda2train-db
+	cabal repl exe:agda2train-db
 
 build:
 	cabal build

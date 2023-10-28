@@ -6,6 +6,7 @@
       "name": "Test.Lambda.id<6>",
       "type": {
         "pretty": "{A : Set} → A → A",
+        "dependency-level": 2,
         "tag": "Pi",
         "bound-name": "A",
         "domain": {
@@ -34,12 +35,14 @@
               {
                 "pretty": "{A : Set}",
                 "name": "A",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "(x : @0)",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "DeBruijn",
                 "index": 0
               }

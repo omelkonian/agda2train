@@ -5,6 +5,7 @@
       "name": "Agda.Builtin.Equality._≡_<12>",
       "type": {
         "pretty": "{a : Agda.Primitive.Level} {A : Set a} → A → A → Set a",
+        "dependency-level": 3,
         "tag": "Pi",
         "bound-name": "a",
         "domain": {
@@ -45,6 +46,7 @@
         "tag": "ADT",
         "variants": [
           {
+            "dependency-level": 4,
             "tag": "Pi",
             "bound-name": "a",
             "domain": {
@@ -100,6 +102,7 @@
       "name": "Agda.Builtin.Equality._≡_.refl<20>",
       "type": {
         "pretty": "{a : Agda.Primitive.Level} {A : Set a} {x : A} → x ≡ x",
+        "dependency-level": 4,
         "tag": "Pi",
         "bound-name": "a",
         "domain": {
@@ -161,6 +164,7 @@
       "name": "Test.CubicalCompatible.trans<12>",
       "type": {
         "pretty": "{A : Set} {x y z : A} → x ≡ y → y ≡ z → x ≡ z",
+        "dependency-level": 12,
         "tag": "Pi",
         "bound-name": "A",
         "domain": {
@@ -284,24 +288,28 @@
               {
                 "pretty": "{A : Set}",
                 "name": "A",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{x : @0}",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "DeBruijn",
                 "index": 0
               },
               {
                 "pretty": "{z : @1}",
                 "name": "z",
+                "dependency-level": 0,
                 "tag": "DeBruijn",
                 "index": 1
               },
               {
                 "pretty": "(eq : @1 ≡ @0)",
                 "name": "eq",
+                "dependency-level": 0,
                 "tag": "Application",
                 "head": {
                   "tag": "ScopeReference",
@@ -366,6 +374,7 @@
       "name": "Test.CubicalCompatible.trans′<22>",
       "type": {
         "pretty": "{A : Set} {x y z : A} → x ≡ y → y ≡ z → x ≡ z",
+        "dependency-level": 12,
         "tag": "Pi",
         "bound-name": "A",
         "domain": {
@@ -489,12 +498,14 @@
               {
                 "pretty": "{A : Set}",
                 "name": "A",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{x : @0}",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "DeBruijn",
                 "index": 0
               }
@@ -540,12 +551,14 @@
               {
                 "pretty": "{A : Set}",
                 "name": "A",
+                "dependency-level": 0,
                 "tag": "Sort",
                 "sort": "Set"
               },
               {
                 "pretty": "{x : x}",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "DeBruijn",
                 "index": 0
               }
@@ -553,6 +566,7 @@
           },
           "goal": {
             "pretty": "x ≡ x",
+            "dependency-level": 0,
             "tag": "Application",
             "head": {
               "tag": "ScopeReference",

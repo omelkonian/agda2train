@@ -5,6 +5,7 @@
       "name": "Agda.Builtin.String.String<6>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -19,6 +20,7 @@
       "name": "Test.Fields.Name<4>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -28,10 +30,12 @@
         "telescope": [],
         "fields": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.String.String<6>"
           },
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.String.String<6>"
           }
@@ -43,6 +47,7 @@
       "name": "Test.Fields.Name.first<10>",
       "type": {
         "pretty": "Name → String",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "r",
         "domain": {
@@ -63,12 +68,14 @@
               {
                 "pretty": "(first : String)",
                 "name": "first",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.String.String<6>"
               },
               {
                 "pretty": "(last : String)",
                 "name": "last",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.String.String<6>"
               }
@@ -105,6 +112,7 @@
       "name": "Test.Fields.Name.last<12>",
       "type": {
         "pretty": "Name → String",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "r",
         "domain": {
@@ -125,12 +133,14 @@
               {
                 "pretty": "(first : String)",
                 "name": "first",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.String.String<6>"
               },
               {
                 "pretty": "(last : String)",
                 "name": "last",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.String.String<6>"
               }
@@ -167,6 +177,7 @@
       "name": "Test.Fields.User<14>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -176,6 +187,7 @@
         "telescope": [],
         "fields": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.Fields.Name<4>"
           }
@@ -187,6 +199,7 @@
       "name": "Test.Fields.User.name<18>",
       "type": {
         "pretty": "User → Name",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "r",
         "domain": {
@@ -207,6 +220,7 @@
               {
                 "pretty": "(name : Name)",
                 "name": "name",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Test.Fields.Name<4>"
               }
@@ -239,6 +253,7 @@
       "name": "Test.Fields.koks<20>",
       "type": {
         "pretty": "User",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Test.Fields.User<14>"
       },
@@ -252,6 +267,7 @@
       "name": "Test.Fields.kokos<22>",
       "type": {
         "pretty": "String",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Agda.Builtin.String.String<6>"
       },
@@ -295,6 +311,7 @@
           },
           "goal": {
             "pretty": "String",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.String.String<6>"
           },
@@ -335,6 +352,7 @@
       "name": "Test.Fields.User.constructor<43>",
       "type": {
         "pretty": "(name₁ : Name) → User",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "name",
         "domain": {
@@ -358,6 +376,7 @@
       "name": "Test.Fields.Name.constructor<3>",
       "type": {
         "pretty": "(first₁ last₁ : String) → Name",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "first",
         "domain": {

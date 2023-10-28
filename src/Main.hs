@@ -6,7 +6,6 @@ import GHC.Generics
 
 import System.Environment ( getArgs, withArgs )
 import System.Directory ( createDirectoryIfMissing, doesFileExist )
-import System.FilePath ( (</>) )
 import System.Console.GetOpt ( OptDescr(..), ArgDescr(..) )
 
 import qualified Data.List as L
@@ -15,8 +14,8 @@ import qualified Data.HashMap.Strict as HM
 import qualified Data.ByteString.Lazy as BL
 
 import Control.Monad
+import Control.Monad.Reader ( runReaderT )
 import Control.Monad.IO.Class ( liftIO )
-import Control.DeepSeq ( NFData )
 
 import Agda.Main ( runAgda )
 import Agda.Compiler.Backend hiding (Reduced)
@@ -35,8 +34,10 @@ import qualified Agda.TypeChecking.Pretty as P
 
 import Agda.Compiler.Common ( curIF )
 
+import Options
 import ToTrain
-import Output
+import JSON
+import InternalToJSON
 
 -- | The main entrypoint for the @agda2train@ executable.
 main :: IO ()
@@ -47,6 +48,18 @@ main = do
     runAgda [Backend $ mkBackend train]
 
 -- | Make an Agda backend from a given training function (c.f. 'ToTrain.TrainF').
+--
+-- * Command-line flags (run `agda2train --help` to display this)
+--
+-- agda2train backend options
+--   -r      --recurse               Recurse into imports/dependencies.
+--   -x      --no-json               Skip generation of JSON files. (just debug print)
+--           --ignore-existing-json  Ignore existing JSON files. (i.e. always overwrite)
+--           --print-json            Print JSON output. (for debugging)
+--           --no-terms              Do not include definitions of things in scope
+--           --no-privates           Do not include private definitions
+--           --no-dep-levels         Do not include dependency levels
+--   -o DIR  --out-dir=DIR           Generate data at DIR. (default: project root)
 mkBackend :: TrainF ->
   Backend' Options Options ([ScopeEntry], [ScopeEntry]) () (String, [Sample])
 mkBackend trainF = Backend'
@@ -65,6 +78,8 @@ mkBackend trainF = Backend'
       , Option [] ["no-terms"] (NoArg includeDefsOpt)
         "Do not include definitions of things in scope"
       , Option [] ["no-privates"] (NoArg includePrivsOpt)
+        "Do not include private definitions"
+      , Option [] ["no-dep-levels"] (NoArg includePrivsOpt)
         "Do not include private definitions"
       , Option ['o'] ["out-dir"] (ReqArg outDirOpt "DIR")
         "Generate data at DIR. (default: project root)"
@@ -86,11 +101,11 @@ mkBackend trainF = Backend'
               _ -> typeOfConst qn) (pure Nothing) $ \ty -> do
             rty  <- mkReduced ty
             pty  <- ppm ty
-            rty' <- traverse convert rty
+            rty' <- runReaderT (traverse convert rty) opts
 
             def  <- getConstInfo qn
             pdef <- ppm def
-            def' <- convert def
+            def' <- runReaderT (convert def) opts
 
             report 20 $ ppm (pp qn) <> " : " <> ppm ty
             report 30 $ "      *pretty: " <> P.text (pp ty)
@@ -121,8 +136,7 @@ mkBackend trainF = Backend'
           report 10 "******************************************************************"
           return $ Recompile (scopeEntries, privScopeEntries)
   , compileDef = \ opts _ _ def ->
-      (ppName (defName def) ,) <$>
-        runC (includePrivs opts) (forEachHole trainF def)
+      (ppName (defName def) ,) <$> runC opts (forEachHole trainF def)
   , postModule = \ opts (scopeEntries, privScopeEntries) isMain md samples ->
     let mn = pp md in
     unlessM (skip opts isMain md) $ do
@@ -153,54 +167,3 @@ mkBackend trainF = Backend'
       jsonExists <- liftIO $ doesFileExist (getOutFn opts $ pp md)
       return $ (not recurse && (isMain == NotMain))
             || (not noJson && jsonExists && not ignoreJson)
-
--- * Command-line flags
-
--- | Available options to configure how @agda2train@ generates training data:
---
--- ['recurse'] whether to recursively generate data from all transitive dependencies
---
--- ['noJson'] mock run without generating any actual JSON files
---
--- ['ignoreJson'] compile everything from scratch
---
--- ['includeDefs'] whether to include definitions in scope, or just their type
---
--- ['includePrivs'] whether to include private definitions as well
---
--- (run @agda2train --help@ for a human-readable description of all options)
-data Options = Options
-  { recurse, noJson, ignoreJson, printJson, includeDefs, includePrivs :: Bool
-  , outDir  :: Maybe FilePath
-  } deriving (Generic, NFData)
-
--- | The default options.
-defaultOptions = Options
-  { recurse      = False
-  , noJson       = False
-  , ignoreJson   = False
-  , printJson    = False
-  , includeDefs  = True
-  , includePrivs = True
-  , outDir       = Nothing
-  }
-
-recOpt, noJsonOpt, ignoreJsonOpt, printJsonOpt, includeDefsOpt, includePrivsOpt
-  :: Monad m => Options -> m Options
-recOpt          opts = return $ opts { recurse      = True }
-noJsonOpt       opts = return $ opts { noJson       = True }
-printJsonOpt    opts = return $ opts { printJson    = True }
-ignoreJsonOpt   opts = return $ opts { ignoreJson   = True }
-includeDefsOpt  opts = return $ opts { includeDefs  = False }
-includePrivsOpt opts = return $ opts { includePrivs = False }
-
-outDirOpt :: Monad m => FilePath -> Options -> m Options
-outDirOpt fp opts = return $ opts { outDir = Just fp }
-
-getOutDir :: Options -> FilePath
-getOutDir opts = case outDir opts of
-  Just fp -> fp
-  Nothing -> "."
-
-getOutFn :: Options -> String -> FilePath
-getOutFn opts mn = getOutDir opts </> mn <> ".json"

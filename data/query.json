@@ -3,6 +3,7 @@
     {
       "name": "Test.PiVsFun.refl<10>",
       "type": {
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "x",
         "domain": {
@@ -43,16 +44,19 @@
   "context": [
 	{
   "name": "x",
+  "dependency-level": 0,
 	"tag": "Sort",
 	"sort": "Set"
 	},
 	{
   "name": "x",
+  "dependency-level": 0,
 	"tag": "Sort",
 	"sort": "Set"
 	}
   ],
   "goal": {
+    "dependency-level": 0,
     "tag": "Application",
     "head": {
 	"tag": "ScopeReference",

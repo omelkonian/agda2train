@@ -5,6 +5,7 @@
       "name": "Agda.Builtin.Nat.Nat<6>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -13,10 +14,12 @@
         "tag": "ADT",
         "variants": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           {
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "n",
             "domain": {
@@ -35,6 +38,7 @@
       "name": "Agda.Builtin.Nat.Nat.zero<8>",
       "type": {
         "pretty": "Nat",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Agda.Builtin.Nat.Nat<6>"
       },
@@ -51,6 +55,7 @@
       "name": "Test.NominalTyping.Nat′<4>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -59,10 +64,12 @@
         "tag": "ADT",
         "variants": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Test.NominalTyping.Nat′<4>"
           },
           {
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "_",
             "domain": {
@@ -82,6 +89,7 @@
       "name": "Test.NominalTyping.Nat′.zero<6>",
       "type": {
         "pretty": "Nat′",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Test.NominalTyping.Nat′<4>"
       },
@@ -97,6 +105,7 @@
       "name": "Test.NominalTyping.Nat′.suc<8>",
       "type": {
         "pretty": "Nat′ → Nat′",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -120,6 +129,7 @@
       "name": "Test.NominalTyping.ℕ<10>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -145,6 +155,7 @@
           },
           "goal": {
             "pretty": "Set",
+            "dependency-level": 0,
             "tag": "Sort",
             "sort": "Set"
           },
@@ -164,6 +175,7 @@
       "type": {
         "pretty": "Nat → ℕ",
         "original": {
+          "dependency-level": 0,
           "tag": "Pi",
           "bound-name": "_",
           "domain": {
@@ -176,6 +188,7 @@
           }
         },
         "normalised": {
+          "dependency-level": 0,
           "tag": "Pi",
           "bound-name": "_",
           "domain": {
@@ -197,6 +210,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -222,6 +236,7 @@
               {
                 "pretty": "(n : Nat)",
                 "name": "n",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -230,10 +245,12 @@
           "goal": {
             "pretty": "ℕ",
             "original": {
+              "dependency-level": 0,
               "tag": "ScopeReference",
               "ref-name": "Test.NominalTyping.ℕ<10>"
             },
             "reduced": {
+              "dependency-level": 0,
               "tag": "ScopeReference",
               "ref-name": "Agda.Builtin.Nat.Nat<6>"
             }

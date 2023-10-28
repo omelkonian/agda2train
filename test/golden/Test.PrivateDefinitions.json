@@ -5,6 +5,7 @@
       "name": "Agda.Builtin.Nat.Nat<6>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -13,10 +14,12 @@
         "tag": "ADT",
         "variants": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
           {
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "n",
             "domain": {
@@ -35,6 +38,7 @@
       "name": "Agda.Builtin.Nat.Nat.zero<8>",
       "type": {
         "pretty": "Nat",
+        "dependency-level": 0,
         "tag": "ScopeReference",
         "ref-name": "Agda.Builtin.Nat.Nat<6>"
       },
@@ -49,6 +53,7 @@
       "name": "Agda.Builtin.Nat.Nat.suc<12>",
       "type": {
         "pretty": "Nat → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "n",
         "domain": {
@@ -73,6 +78,7 @@
       "name": "Test.PrivateDefinitions.X<6>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -82,6 +88,7 @@
         "telescope": [],
         "fields": [
           {
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           }
@@ -93,6 +100,7 @@
       "name": "Test.PrivateDefinitions.proj<12>",
       "type": {
         "pretty": "X → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -139,6 +147,7 @@
           },
           "goal": {
             "pretty": "X → Nat",
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "_",
             "domain": {
@@ -179,6 +188,7 @@
               {
                 "pretty": "(r : X)",
                 "name": "r",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Test.PrivateDefinitions.X<6>"
               }
@@ -186,6 +196,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
@@ -213,6 +224,7 @@
       "name": "Test.PrivateDefinitions.g<16>",
       "type": {
         "pretty": "Nat → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -233,6 +245,7 @@
               {
                 "pretty": "(x : Nat)",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -284,6 +297,7 @@
               {
                 "pretty": "(x : Nat)",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -291,6 +305,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
@@ -398,6 +413,7 @@
               {
                 "pretty": "(x : Nat)",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -405,6 +421,7 @@
           },
           "goal": {
             "pretty": "Nat",
+            "dependency-level": 0,
             "tag": "ScopeReference",
             "ref-name": "Agda.Builtin.Nat.Nat<6>"
           },
@@ -457,6 +474,7 @@
       "name": "Test.PrivateDefinitions.X.x<10>",
       "type": {
         "pretty": "X → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "r",
         "domain": {
@@ -477,6 +495,7 @@
               {
                 "pretty": "(x : Nat)",
                 "name": "x",
+                "dependency-level": 0,
                 "tag": "ScopeReference",
                 "ref-name": "Agda.Builtin.Nat.Nat<6>"
               }
@@ -509,6 +528,7 @@
       "name": "Test.PrivateDefinitions.X.constructor<5>",
       "type": {
         "pretty": "(x : Nat) → X",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "x",
         "domain": {
@@ -532,6 +552,7 @@
       "name": "Test.PrivateDefinitions.f<14>",
       "type": {
         "pretty": "Nat → Nat → Nat",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -573,6 +594,7 @@
           },
           "goal": {
             "pretty": "Nat → Nat → Nat",
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "_",
             "domain": {

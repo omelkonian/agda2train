@@ -5,6 +5,7 @@
       "name": "Agda.Builtin.String.String<6>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -17,6 +18,7 @@
       "name": "Agda.Builtin.String.primShowNat<24>",
       "type": {
         "pretty": "Agda.Builtin.Nat.Nat → String",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -39,6 +41,7 @@
       "name": "Test.TransitiveDependencies.showNat<4>",
       "type": {
         "pretty": "Agda.Builtin.Nat.Nat → String",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -72,6 +75,7 @@
           },
           "goal": {
             "pretty": "Agda.Builtin.Nat.Nat → String",
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "_",
             "domain": {

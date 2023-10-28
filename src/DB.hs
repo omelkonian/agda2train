@@ -19,13 +19,10 @@ import Data.Aeson
 
 import Data.Hashable ( Hashable, hash )
 
--- import Database.Persist.TH
-
 import Agda.Utils.Either ( caseEitherM )
 
-import ToTrain ( names )
-import Output hiding ( ScopeEntry, ScopeEntry' )
-import qualified Output as O
+import JSON hiding ( ScopeEntry, ScopeEntry' )
+import qualified JSON as O
 
 data ScopeEntry' = ScopeEntry
   { _type      :: Type
@@ -52,7 +49,8 @@ instance Hashable a => Hashable (Named a)
 instance Hashable a => Hashable (Pretty a)
 instance Hashable a => Hashable (Reduced a)
 instance Hashable O.ScopeEntry'; instance Hashable Sample
-instance Hashable Definition; instance Hashable Clause; instance Hashable Term
+instance Hashable Definition; instance Hashable Clause
+instance Hashable Type; instance Hashable Term
 
 fileSamples :: FileData -> [(Key', Value)]
 fileSamples (Named{item = TrainData{..}}) =
@@ -86,7 +84,7 @@ fileSamples (Named{item = TrainData{..}}) =
 main :: IO ()
 main = getArgs >>= \case
   ("add" : dbJson : jsonFns) -> forM_ jsonFns $ \jsonFn -> do
-    caseEitherM (eitherDecodeFileStrict' jsonFn) fail $ \fd -> do
+    caseEitherM (eitherDecodeFileStrict' @FileData jsonFn) fail $ \fd -> do
       -- putStrLn "** File Data" >> print fd
       let samples = fileSamples fd
       putStrLn "** Samples" -- >> print samples

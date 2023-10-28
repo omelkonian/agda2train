@@ -6,6 +6,7 @@
       "name": "Test.Sum._⊎_<8>",
       "type": {
         "pretty": "Set → Set → Set",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "A",
         "domain": {
@@ -30,6 +31,7 @@
         "tag": "ADT",
         "variants": [
           {
+            "dependency-level": 3,
             "tag": "Pi",
             "bound-name": "A",
             "domain": {
@@ -71,6 +73,7 @@
             }
           },
           {
+            "dependency-level": 3,
             "tag": "Pi",
             "bound-name": "A",
             "domain": {
@@ -119,6 +122,7 @@
       "name": "Test.Sum._⊎_.inj₁<14>",
       "type": {
         "pretty": "{A B : Set} → A → A ⊎ B",
+        "dependency-level": 3,
         "tag": "Pi",
         "bound-name": "A",
         "domain": {
@@ -171,6 +175,7 @@
       "name": "Test.Sum._⊎_.inj₂<16>",
       "type": {
         "pretty": "{A B : Set} → B → A ⊎ B",
+        "dependency-level": 3,
         "tag": "Pi",
         "bound-name": "A",
         "domain": {

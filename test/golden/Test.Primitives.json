@@ -5,6 +5,7 @@
       "name": "Agda.Builtin.String.String<6>",
       "type": {
         "pretty": "Set",
+        "dependency-level": 0,
         "tag": "Sort",
         "sort": "Set"
       },
@@ -17,6 +18,7 @@
       "name": "Agda.Builtin.String.primStringUncons<10>",
       "type": {
         "pretty": "String → Agda.Builtin.Maybe.Maybe (Agda.Builtin.Sigma.Σ Agda.Builtin.Char.Char (λ _ → String))",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -75,6 +77,7 @@
       "name": "Agda.Builtin.String.primStringToList<12>",
       "type": {
         "pretty": "String → Agda.Builtin.List.List Agda.Builtin.Char.Char",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -108,6 +111,7 @@
       "name": "Agda.Builtin.String.primStringFromList<14>",
       "type": {
         "pretty": "Agda.Builtin.List.List Agda.Builtin.Char.Char → String",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -141,6 +145,7 @@
       "name": "Agda.Builtin.String.primStringAppend<16>",
       "type": {
         "pretty": "String → String → String",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -169,6 +174,7 @@
       "name": "Agda.Builtin.String.primStringEquality<18>",
       "type": {
         "pretty": "String → String → Agda.Builtin.Bool.Bool",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -197,6 +203,7 @@
       "name": "Agda.Builtin.String.primShowChar<20>",
       "type": {
         "pretty": "Agda.Builtin.Char.Char → String",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -217,6 +224,7 @@
       "name": "Agda.Builtin.String.primShowString<22>",
       "type": {
         "pretty": "String → String",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -237,6 +245,7 @@
       "name": "Agda.Builtin.String.primShowNat<24>",
       "type": {
         "pretty": "Agda.Builtin.Nat.Nat → String",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -259,6 +268,7 @@
       "name": "Test.Primitives._++_<4>",
       "type": {
         "pretty": "String → String → String",
+        "dependency-level": 0,
         "tag": "Pi",
         "bound-name": "_",
         "domain": {
@@ -300,6 +310,7 @@
           },
           "goal": {
             "pretty": "String → String → String",
+            "dependency-level": 0,
             "tag": "Pi",
             "bound-name": "_",
             "domain": {
