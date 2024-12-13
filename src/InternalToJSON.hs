@@ -25,7 +25,9 @@ import Agda.TypeChecking.Monad
 import Agda.TypeChecking.Free ( freeVars, VarCounts(..) )
 import Agda.TypeChecking.Level ( isLevelType )
 
-import qualified Agda.Utils.Pretty as P
+-- import qualified Agda.Utils.Pretty as P
+-- import qualified Text.PrettyPrint as P
+import qualified Agda.Syntax.Common.Pretty as P
 import Agda.TypeChecking.Pretty
   ( PrettyTCM(..), MonadPretty, fsep, punctuate, braces, parens, Doc )
 import qualified Agda.TypeChecking.Pretty as P
@@ -71,11 +73,11 @@ instance A.Defn ~> Definition where
           let Just ix = elemIndex (unqualify cn) (unqualify <$> dataCons)
           in  Constructor (pp conData) (toInteger ix)
         A.Record{..} -> Constructor (pp conData) 0
-    A.Primitive{..}      -> return Primitive
-    A.PrimitiveSort{..}  -> return Primitive
-    A.Axiom{..}          -> return Postulate
-    d@A.DataOrRecSig{..} -> panic "dataOrRecSig" d
-    d@A.GeneralizableVar -> panic "generalizable variable" d
+    A.Primitive{..}          -> return Primitive
+    A.PrimitiveSort{..}      -> return Primitive
+    A.Axiom{..}              -> return Postulate
+    d@A.DataOrRecSig{..}     -> panic "dataOrRecSig" d
+    d@(A.GeneralizableVar _) -> panic "generalizable variable" d
 
 instance A.Clause ~> Clause where
   go A.Clause{..} =
@@ -230,10 +232,10 @@ instance P.PrettyTCM A.Definition where
             let Just ix = elemIndex (unqualify cn) (unqualify <$> dataCons)
             in  ppm conData <> "@" <> ppm ix
           A.Record{..} -> ppm conData <> "@0"
-      A.Primitive{..}     -> "<Primitive>"
-      A.PrimitiveSort{..} -> "<PrimitiveSort>"
-      A.Axiom{..}         -> "<Axiom>"
-      A.DataOrRecSig{..}  -> "<DataOrRecSig>"
-      A.GeneralizableVar  -> "<GeneralizableVar>"
+      A.Primitive{..}      -> "<Primitive>"
+      A.PrimitiveSort{..}  -> "<PrimitiveSort>"
+      A.Axiom{..}          -> "<Axiom>"
+      A.DataOrRecSig{..}   -> "<DataOrRecSig>"
+      A.GeneralizableVar _ -> "<GeneralizableVar>"
 
 

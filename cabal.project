@@ -1,0 +1,6 @@
+with-compiler: ghc-9.4.8
+
+source-repository-package
+  type: git
+  location: https://github.com/agda/agda
+  tag: 7c0eb828ddaa6ac2ca545cd36b302f339c76218e

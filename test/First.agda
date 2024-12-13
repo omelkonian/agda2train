@@ -1,3 +1,4 @@
+{-# OPTIONS --erasure #-}
 module First where
 
 variable A : Set

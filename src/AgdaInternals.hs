@@ -14,17 +14,6 @@ import Agda.TypeChecking.Monad
 import Agda.TypeChecking.Warnings
 import Agda.TypeChecking.Pretty
 
-instance (Monoid r, Monad m, Semigroup (m Doc)) => Semigroup (WriterT r m Doc) where
-  (<>) = liftM2 (<>)
-instance (Monoid r, Monad m, IsString (m a)) => IsString (WriterT r m a) where
-  fromString s = WriterT $ fmap (,mempty) $ fromString s
-instance (Monoid r, MonadStConcreteNames m) => MonadStConcreteNames (WriterT r m) where
-  runStConcreteNames m = WriterT $ runStConcreteNames $ StateT $ \s -> do
-    ((x,s'),ns) <- runWriterT $ runStateT m s
-    return ((x,ns),s')
-instance (Monoid r, MonadInteractionPoints m) => MonadInteractionPoints (WriterT r m)
-instance (Monoid r, MonadFresh i m) => MonadFresh i (WriterT r m)
-instance (Monoid r, MonadWarning m) => MonadWarning (WriterT r m) where
 instance (Monoid r, MonadBlock m) => MonadBlock (WriterT r m) where
   catchPatternErr h m = WriterT $ catchPatternErr (runWriterT . h) (runWriterT m)
 instance (Monoid r, MonadTCM m, MonadConstraint m) => MonadConstraint (WriterT r m) where

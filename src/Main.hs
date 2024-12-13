@@ -13,7 +13,7 @@ import qualified Data.Set as S
 import qualified Data.HashMap.Strict as HM
 import qualified Data.ByteString.Lazy as BL
 
-import Control.Monad
+-- import Control.Monad
 import Control.Monad.Reader ( runReaderT )
 import Control.Monad.IO.Class ( liftIO )
 
@@ -21,7 +21,6 @@ import Agda.Main ( runAgda )
 import Agda.Compiler.Backend hiding (Reduced)
 import Agda.Compiler.Common ( curDefs )
 
-import Agda.Utils.Pretty
 import Agda.Utils.Maybe
 import Agda.Utils.Monad
 
@@ -96,8 +95,8 @@ mkBackend trainF = Backend'
           caseMaybeM (tryMaybe $ do
             def <- getConstInfo qn
             case theDef def of
-              GeneralizableVar -> fail "not handling `variable` definitions"
-              DataOrRecSig _   -> fail "not handling `DataOrRecSig` definitions"
+              GeneralizableVar _ -> fail "not handling `variable` definitions"
+              DataOrRecSig _     -> fail "not handling `DataOrRecSig` definitions"
               _ -> typeOfConst qn) (pure Nothing) $ \ty -> do
             rty  <- mkReduced ty
             pty  <- ppm ty
@@ -160,6 +159,8 @@ mkBackend trainF = Backend'
           putStrLn "************************ JSON ************************"
           BL.putStr (encode fileData)
           putStrLn "******************************************************"
+  , backendInteractTop = Nothing
+  , backendInteractHole = Nothing
   }
   where
     skip :: Options -> IsMain -> TopLevelModuleName -> TCM Bool
