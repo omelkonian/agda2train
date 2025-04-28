@@ -35,7 +35,7 @@ infixr 4 :>; pattern x :> y = Pretty {pretty = x, thing = y}
 data Pretty a = Pretty
   { pretty :: String
   , thing  :: a
-  } deriving (Generic, Show, Eq)
+  } deriving (Generic, Show, Functor, Eq)
 instance ToJSON a => ToJSON (Pretty a) where
   toJSON (Pretty{..}) = let pretty' = toJSON pretty in
     case toJSON thing of
@@ -74,6 +74,14 @@ instance FromJSON a => FromJSON (Reduced a) where
     <*> v .:? "normalised"
 
 infixr 4 :~; pattern x :~ y = Named {name = x, item = y}
+
+notReduced :: a -> Reduced a
+notReduced x = Reduced
+  { original   = x
+  , simplified = Nothing
+  , reduced    = Nothing
+  , normalised = Nothing
+  }
 
 -- | Bundle a thing with its name.
 --
@@ -139,6 +147,39 @@ data Sample = Sample
   , premises :: [Name]
   -- ^ Definitions used in this "proof", intended to be used for /premise selection/.
   } deriving (Generic, Show, Eq, ToJSON, FromJSON)
+
+-- | Goal type and its context; used for interaction.
+data JsonQuery = JsonQuery
+  { query_scope    :: TrainData
+  -- ^ The current scope.
+  --   - just types
+  --   - no holes or definitions
+  --   - everything under "scope-local"
+  , query_ctx      :: Pretty Telescope
+  -- ^ The current context, as a /binding telescope/.
+  , query_goal     :: Pretty Type
+  -- ^ The current goal, i.e. type of the sub-term.
+  } deriving (Generic, Show, Eq, ToJSON, FromJSON)
+
+mkJsonQuery :: JsonQuery -> FileData
+mkJsonQuery jq = "json-query" :~
+  (query_scope jq) { scopeLocal = addHole $ scopeLocal (query_scope jq) }
+  where
+  sample = Sample
+    { ctx = query_ctx jq
+    , goal = notReduced <$> query_goal jq
+    , term = "{!!}" :> notReduced UnsolvedMeta
+    , premises = []
+    }
+
+  addHoleE :: ScopeEntry' -> ScopeEntry'
+  addHoleE e = e { holes = Just [sample] }
+
+  -- TODO: place within the correct definition (possibly in the middle of the scope)
+  addHole :: [ScopeEntry] -> [ScopeEntry]
+  addHole [] = error "addHole: empty scope!!"
+  addHole (e:es) = map (fmap $ \e -> e {holes = Just []}) es
+                 <> [(addHoleE <$> e)]
 
 -- | Agda definitions: datatypes, records, functions, postulates and primitives.
 data Definition
@@ -210,13 +251,13 @@ data Term
 
 instance {-# OVERLAPPING #-} ToJSON Head where
   toJSON = object . \case
-    (Ref n)  -> [tag "ScopeReference", "ref-name"  .= toJSON n]
+    (Ref n)  -> [tag "ScopeReference", "name"  .= toJSON n]
     (DB i) -> [tag "DeBruijn",       "index" .= toJSON i]
     where tag s = "tag" .= JSON.String s
 
 instance {-# OVERLAPPING #-} FromJSON Head where
   parseJSON = withObject "Head" $ \o -> o .: "tag" >>= \case
-    String "ScopeReference" -> Ref <$> o .: "ref-name"
+    String "ScopeReference" -> Ref <$> o .: "name"
     String "DeBruijn"       -> DB  <$> o .: "index"
     tag -> fail $ "Cannot parse Head: unexpected \"tag\" field " <> show tag
 
@@ -224,7 +265,7 @@ instance ToJSON Term where
   toJSON = \case
     (Pi isDep (n :~ dom) codom) -> object
       [ tag "Pi"
-      , "bound-name" .= toJSON n -- T0D0: remove if "(nothing) (or _)?"
+      , "name" .= toJSON n -- T0D0: remove if "(nothing) (or _)?"
       , "domain"    .= toJSON dom
       , "codomain"  .= toJSON codom
       ]
@@ -246,12 +287,12 @@ instance ToJSON Term where
 
 instance FromJSON Term where
   parseJSON = withObject "Term" $ \o -> o .: "tag" >>= \case
-    String "Pi" -> Pi True <$> liftA2 (:~) (o .: "bound-name") (o .: "domain")
+    String "Pi" -> Pi True <$> liftA2 (:~) (o .: "name") (o .: "domain")
                            <*> o .: "codomain"
       -- T0D0: also serialise `isDep`
     String "Lambda" -> Lam <$> liftA2 (:~) (o .: "abstraction") (o .: "body")
     String "Application"    -> App <$> o .: "head" <*> o .: "arguments"
-    String "ScopeReference" -> flip App [] . Ref <$> o .: "ref-name"
+    String "ScopeReference" -> flip App [] . Ref <$> o .: "name"
     String "DeBruijn"       -> flip App [] . DB  <$> o .: "index"
     String "Literal"  -> Lit   <$> o .: "literal"
     String "Sort"     -> Sort  <$> o .: "sort"
@@ -271,8 +312,8 @@ jsonOpts = defaultOptions
       "scopeGlobal"  -> "scope-global"
       "scopeLocal"   -> "scope-local"
       "scopePrivate" -> "scope-private"
-      "refName"      -> "ref-name"
-      "boundName"    -> "bound-name"
+      "refName"      -> "name"
+      "boundName"    -> "name"
       s -> s
   }
 
@@ -287,12 +328,12 @@ encode = encodePretty' $ defConfig
       , "tag"
       , "original", "simplified", "reduced", "normalised"
       , "telescope", "patterns", "fields"
-      , "bound-name" , "domain", "codomain"
+      , "name" , "domain", "codomain"
       , "abstraction", "body"
       , "sort", "level", "literal"
       , "head", "arguments"
       , "variants", "reference", "variant"
-      , "ref-name", "index"
+      , "name", "index"
       , "scope-global", "scope-local", "scope-private"
       , "type", "definition", "holes"
       , "ctx", "goal", "term", "premises"
